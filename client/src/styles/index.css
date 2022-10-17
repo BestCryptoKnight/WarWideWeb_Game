@@ -1,0 +1,55 @@
+:root {
+  --online: #44b700;
+  --offline: #b74400;
+}
+
+body {
+  font-family: 'Roboto';
+  font-size: 16px;
+}
+
+.App {
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.header {
+  width: 100% !important;
+  padding: 0 1rem !important;
+  background-color: whitesmoke !important;
+  color: black !important;
+
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+}
+
+.error {
+  margin: 0.5rem;
+  color: red;
+  text-align: center;
+}
+
+/*
+  Extra Small Devices, Phones 
+  @media only screen and (min-width: 480px) {}
+*/
+
+/*
+  Small Devices, Tablets
+  @media only screen and (min-width: 768px) {}
+*/
+
+/*
+  Medium Devices, Desktops
+  @media only screen and (min-width: 992px) {}
+*/
+
+/*
+  Large Devices, Wide Screens
+  @media only screen and (min-width: 1200px) {}
+*/
