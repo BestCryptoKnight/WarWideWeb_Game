@@ -40,8 +40,6 @@ async function register(request, response, next) {
 
     // Create account
     const newAccount = new Account({username, password: hash, walletaddress : walletAddress })
-    console.log(newAccount);
-
     await newAccount.save()
 
     // Remove password from response data

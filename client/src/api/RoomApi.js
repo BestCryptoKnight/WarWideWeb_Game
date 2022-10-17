@@ -3,13 +3,13 @@ import axios from "../utils/axios";
 
 // const [room, setRoom] = useState(null);
 
-
-export const createRoom = (formData = {}) =>
+export const createRoom = (roomData = {}) =>
   new Promise((resolve, reject) => {
     axios
-      .post("/room/createRoom", formData)
-      .then(({ data: { data: roomData } }) => {
-        // setRoom(roomData);
+      .post("/room/createroom", roomData)
+      .then(({ result }) => {
+        console.log(result);
+        // setRoom(roomData)
         resolve(true);
       })
       .catch((error) => {
@@ -18,12 +18,12 @@ export const createRoom = (formData = {}) =>
       });
   });
 
-export const getRoom = (formData = {}) =>
+export const getRoom = (roomName) =>
   new Promise((resolve, reject) => {
     axios
-      .get("/room/getRoom", formData)
-      .then(({ data: { data: roomData } }) => {
-        // setRoom(roomData);
+      .get("/room/getroom", roomName)
+      .then(({ result }) => {
+        console.log(result);
         resolve(true);
       })
       .catch((error) => {
@@ -32,11 +32,11 @@ export const getRoom = (formData = {}) =>
       });
   });
 
-export const deleteRoom = (formData = {}) =>
+export const deleteRoom = (roomName = {}) =>
   new Promise((resolve, reject) => {
     axios
-      .get("/room/deleteRoom", formData)
-      .then(({ data: { data: roomData } }) => {
+      .post("/room/deleteRoom", roomName)
+      .then(({ result }) => {
         // setRoom(roomData);
         resolve(true);
       })
