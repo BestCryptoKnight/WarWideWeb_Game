@@ -1,10 +1,76 @@
 const Image = require("../../models/Image");
+const readExcel = require('read-excel-file/node');
+const fs = require('fs');
+
+const read_excel = async (req, res) => {
+    await Image.remove();
+    readExcel(fs.createReadStream('E:/upwork/datas.xlsx'))
+        .then((rows) => {
+            let sRow = 0;
+            let eRow = 0;
+            let sCol = 0;
+            let eCol = 0;
+            eCol = rows[0].length;
+            eRow = rows.length;
+            console.log(eCol, eRow);
+
+            let colData = [];
+            //Create insertion object to send to insertMany API of mongoose
+            for (var i = sRow + 1; i < eRow; i++) {
+                var obj = {};
+                for (var j in rows[i]) {
+                    obj[rows[sRow][j]] = rows[i][j];
+                }
+                colData.push(obj);
+            }
+            console.log(colData);
+
+            Image.insertMany(colData)
+                .then((result) =>
+                    res.json(result))
+                .catch((error) =>
+                    res.json(error)
+                );
+        });
+}
 
 // Display All Image Data
-const image_index = (req, res) => {
-    Image.find(function (err, images) {
-        res.json(images);
-    });
+const image_index = async (req, res) => {
+    try {
+        let query = Image.find();
+
+        const page = parseInt(req.query.page) || 1;
+        const pageSize = parseInt(req.query.limit) || 4;
+        const skip = (page - 1) * pageSize;
+        const total = await Image.countDocuments();
+
+        const pages = Math.ceil(total / pageSize);
+
+        query = query.skip(skip).limit(pageSize);
+
+        if (page > pages) {
+            return res.status(404).json({
+                status: "fail",
+                message: "No page found",
+            });
+        }
+
+        const result = await query;
+
+        res.status(200).json({
+            status: "success",
+            count: result.length,
+            page,
+            pages,
+            data: result,
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            status: "error",
+            message: "Server Error",
+        });
+    }
 };
 
 // Create New Image
@@ -61,6 +127,7 @@ const image_delete = (req, res) => {
 };
 
 module.exports = {
+    read_excel,
     image_index,
     image_details,
     image_create_post,
