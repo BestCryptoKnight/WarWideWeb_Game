@@ -1,7 +1,7 @@
 import { useAuth } from "./contexts/AuthContext";
 import Header from "./components/Header";
 import Dashboard from "./pages/dashboard";
-
+import Admin from "./pages/admin";
 export default function App() {
   const { isLoggedIn } = useAuth();
 
@@ -9,7 +9,7 @@ export default function App() {
     <div className="App">
       <Header />
 
-      {isLoggedIn ? <Dashboard/> : <LoggedOutText />}
+      {isLoggedIn ? <Dashboard /> : <LoggedOutText />}
     </div>
   );
 }
@@ -18,12 +18,12 @@ const LoggedInDashboard = () => {
   // const { account } = useAuth();
 
   return (
-    <div >
-      sfsefgse
-    </div>
+    <p>
+      Good
+    </p>
   );
 };
 
 const LoggedOutText = () => (
-  <p>dawdawf</p>
+  <Admin />
 );
