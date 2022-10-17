@@ -57,13 +57,7 @@ const image_index = async (req, res) => {
 
         const result = await query;
 
-        res.status(200).json({
-            status: "success",
-            count: result.length,
-            page,
-            pages,
-            data: result,
-        });
+        res.status(200).send(result);
     } catch (error) {
         console.log(error);
         res.status(500).json({
