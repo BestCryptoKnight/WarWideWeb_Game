@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import React, { Fragment, useState } from "react";
 import {
   AppBar,
   IconButton,
@@ -16,11 +16,11 @@ import io from "socket.io-client";
 
 const socket = io.connect('http://127.0.0.1:8080');
 
-export default function dashboard() {
-  socket.emit("joinRoom", {username:"fa", roomName:"dawd"})
-  socket.on("message",data => console.log(data));
-  
-  console.log(socket);
+export default function Dashboard() {
+  const [sockets, setSocketes] = React.useState();
+  React.useEffect(() => setSocketes(socket),[socket])
+  // socket.on("message",data => console.log(data.userId));
+  // console.log(socket);
   return (
     <div style={{ height: "100%", width: "100%" }}>
       <CreateRoomComponent userName="a" roomName="a1" socket={socket} />

@@ -40,19 +40,22 @@ mongo.connect();
  
 
   //initializing the socket io connection
-  io.on("connection", (socket) => {
+  socket.on("connection", (socket) => {
+    console.log('connected'); 
     //for a new user joining the room
     socket.on("joinRoom", ({ username, roomname }) => {
+      console.log(username);
       //* create user
       const p_user = join_User(socket.id, username, roomname);
-      console.log(socket.id, "=id");
-      socket.join(p_user.room);
+      // console.log(socket.id, "=id");
+      //socket.join(p_user.room);
 
       //display a welcome message to the user who have joined a room
       socket.emit("message", {
-        userId: p_user.id,
-        username: p_user.username,
-        text: `Welcome ${p_user.username}`,
+        //userId: p_user.id,
+        username: username,
+        id: socket.id
+        //text: `Welcome ${p_user.username}`,
       });
 
       //displays a joined room message to all other room users except that particular user

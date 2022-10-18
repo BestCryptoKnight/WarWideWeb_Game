@@ -19,6 +19,8 @@ export default function CreateRoomComponent(roomInfo) {
 
   function createRoom() {
     const path = `/room/${roomSubPath}/${userName}`  
+    socket.emit("joinRoom", {username:userName, roomName:roomSubPath})
+    socket.on("message", data => console.log(data))
     navigate(path);
   }
 
