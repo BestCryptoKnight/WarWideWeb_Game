@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import axios from "../utils/axios";
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
-import { Button } from "@mui/material";
 
 const Admin = () => {
     const limit = 10;
