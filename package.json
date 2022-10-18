@@ -1,20 +1,20 @@
 {
-  "homepage": "https://github.com/belferink1996/MERN-template#readme",
-  "name": "mern-application",
+  "homepage": "https://github.com/HadesHappy/WarWideWeb#readme",
+  "name": "WarWideWeb-application",
   "version": "0.1.0",
   "description": "",
   "private": true,
   "main": "",
   "license": "ISC",
   "keywords": [],
-  "author": "Ben Elferink <ben.elferink@icloud.com> (https://www.linkedin.com/in/ben-elferink-37ba251b9)",
+  "author": "James Chan <happyhades123@gmail.com> (https://github.com/HadesHappy/WarWideWeb)",
   "repository": {
     "type": "git",
-    "url": "https://github.com/belferink1996/MERN-template.git"
+    "url": "https://github.com/HadesHappy/WarWideWeb"
   },
   "bugs": {
-    "url": "https://github.com/belferink1996/MERN-template/issues",
-    "email": "ben.elferink@icloud.com"
+    "url": "https://github.com/HadesHappy/WarWideWeb/issues",
+    "email": "happyhades123@gmail.com"
   },
   "scripts": {
     "install": "concurrently \"cd ./server && npm i\" \"cd ./client && npm i\"",

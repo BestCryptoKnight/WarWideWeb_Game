@@ -9,7 +9,6 @@ import {
   ListItemButton,
 } from "@mui/material";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-
 import { createRoom, getRoom, deleteRoom } from "../api/RoomApi";
 import CreateRoomComponent from "../components/CreateRoomComponet";
 import io from "socket.io-client";
@@ -22,6 +21,7 @@ export default function Dashboard() {
   // socket.on("message",data => console.log(data.userId));
   // console.log(socket);
   return (
+
     <div style={{ height: "100%", width: "100%" }}>
       <CreateRoomComponent userName="a" roomName="a1" socket={socket} />
       <CreateRoomComponent userName="b" roomName="b1" socket={socket} />
