@@ -6,7 +6,7 @@ import axios from "../utils/axios";
 export const createRoom = (roomData = {}) =>
   new Promise((resolve, reject) => {
     axios
-      .post("/room/createroom", roomData)
+      .post("api/room/createroom", roomData)
       .then(({ result }) => {
         console.log(result);
         // setRoom(roomData)
@@ -21,7 +21,7 @@ export const createRoom = (roomData = {}) =>
 export const getRoom = (roomName) =>
   new Promise((resolve, reject) => {
     axios
-      .get("/room/getroom", roomName)
+      .get("api/room/getroom", roomName)
       .then(({ result }) => {
         console.log(result);
         resolve(true);
@@ -35,7 +35,7 @@ export const getRoom = (roomName) =>
 export const deleteRoom = (roomName = {}) =>
   new Promise((resolve, reject) => {
     axios
-      .post("/room/deleteRoom", roomName)
+      .post("api/room/deleteRoom", roomName)
       .then(({ result }) => {
         // setRoom(roomData);
         resolve(true);

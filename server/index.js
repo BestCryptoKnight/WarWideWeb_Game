@@ -2,7 +2,7 @@ require("dotenv").config(); // Secures variables
 const app = require("./utils/app"); // Backend App (server)
 const mongo = require("./utils/mongo"); // MongoDB (database)
 const { get_Current_User, user_Disconnect, join_User } = require("./dummyuser");
-
+const Routes = require('./routes/index');
 const cors = require("cors");
 
 app.use((req, res, next) => {
@@ -10,18 +10,12 @@ app.use((req, res, next) => {
   next();
 });
 
+
 const { PORT } = require("./constants");
-const authRoutes = require("./routes/auth");
-const roomRoutes = require("./routes/room");
-
-// async function bootstrap() {
 mongo.connect();
-// await mongo.connect();
 
-app.get("/", (req, res) => res.status(200).json({ message: "Hello World!" }));
-app.get("/healthz", (req, res) => res.status(200).send());
-app.use("/auth", authRoutes);
-app.use("/room", roomRoutes);
+app.use('/api', Routes);
+
 app.use(cors());
 
 var http = require("http").createServer(app);
