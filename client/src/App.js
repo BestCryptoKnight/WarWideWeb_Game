@@ -11,22 +11,9 @@ export default function App() {
     
     <BrowserRouter>
       <Header/>
-      <Router/>
+      {isLoggedIn ? <Router /> : <LoggedOutText />}
     </BrowserRouter>
-    // <Router>
-    //   <div>
-    //     <Header />
-    //     <Routes>
-    //       <Route path="/" component={Dashboard} />
-    //       <Route path="/room" component={Room} />
-    //     </Routes>
-    //   </div>
-    // </Router>
-    // <div className="App">
-    //   <Header />
-    //   {isLoggedIn ? <Dashboard /> : <LoggedOutText />}
 
-    //  </div>
   );
 }
 

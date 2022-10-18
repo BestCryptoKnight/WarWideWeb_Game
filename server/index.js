@@ -46,7 +46,7 @@ mongo.connect();
     socket.on("joinRoom", ({ username, roomname }) => {
       console.log(username);
       //* create user
-      const p_user = join_User(socket.id, username, roomname);
+      //const p_user = join_User(socket.id, username, roomname);
       // console.log(socket.id, "=id");
       //socket.join(p_user.room);
 
@@ -59,17 +59,17 @@ mongo.connect();
       });
 
       //displays a joined room message to all other room users except that particular user
-      socket.broadcast.to(p_user.room).emit("message", {
-        userId: p_user.id,
-        username: p_user.username,
-        text: `${p_user.username} has joined the chat`,
-      });
+      // socket.broadcast.to(p_user.room).emit("message", {
+      //   userId: p_user.id,
+      //   username: p_user.username,
+      //   text: `${p_user.username} has joined the chat`,
+      // });
     });
 
     //user sending message
     socket.on("chat", (text) => {
       //gets the room user and the message sent
-      const p_user = get_Current_User(socket.id);
+      //const p_user = get_Current_User(socket.id);
 
       io.to(p_user.room).emit("message", {
         userId: p_user.id,
