@@ -1,26 +1,43 @@
 require("dotenv").config(); // Secures variables
 const app = require("./utils/app"); // Backend App (server)
 const mongo = require("./utils/mongo"); // MongoDB (database)
-const socket = require("socket.io");
+const { get_Current_User, user_Disconnect, join_User } = require("./dummyuser");
+
+const cors = require("cors");
+
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  next();
+});
 
 const { PORT } = require("./constants");
 const authRoutes = require("./routes/auth");
 const roomRoutes = require("./routes/room");
 
-async function bootstrap() {
-  await mongo.connect();
+// async function bootstrap() {
+mongo.connect();
+  // await mongo.connect();
 
   app.get("/", (req, res) => res.status(200).json({ message: "Hello World!" }));
   app.get("/healthz", (req, res) => res.status(200).send());
   app.use("/auth", authRoutes);
   app.use("/room", roomRoutes);
+  app.use(cors());
 
-  let server = app.listen(PORT, () => {
+  var http = require("http").createServer(app);
+
+  let io = http.listen(PORT, () => {
     console.log(`✅ Server is listening on port: ${PORT}`);
   });
 
+  const socket = require("socket.io")(http,{
+    cors: {
+        origin:'http://localhost:3000'
+    }
+  });
+
   // socket io
-  const io = socket(server);
+ 
 
   //initializing the socket io connection
   io.on("connection", (socket) => {
@@ -72,6 +89,6 @@ async function bootstrap() {
       }
     });
   });
-}
+// }
 
-bootstrap();
+// bootstrap();

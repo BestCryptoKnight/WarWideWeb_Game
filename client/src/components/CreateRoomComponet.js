@@ -20,7 +20,6 @@ export default function CreateRoomComponent(roomInfo) {
   function createRoom() {
     const path = `/room/${roomSubPath}/${userName}`  
     navigate(path);
-    console.log(socket);
   }
 
   return (
