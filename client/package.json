@@ -18,7 +18,11 @@
     "axios": "^0.24.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-scripts": "^4.0.3"
+    "react-router-dom": "^6.4.2",
+    "react-scripts": "^4.0.3",
+    "socket.io": "^4.5.3",
+    "socket.io-client": "^4.5.3",
+    "switch": "^0.0.0"
   },
   "eslintConfig": {
     "extends": [
