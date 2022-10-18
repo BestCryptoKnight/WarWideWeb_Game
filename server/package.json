@@ -16,7 +16,7 @@
     "joi": "^17.4.2",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.0.12",
-    "read-excel-file": "^5.5.1"
+    "read-excel-file": "^5.5.1",
     "socket.io": "^4.5.3"
   },
   "devDependencies": {

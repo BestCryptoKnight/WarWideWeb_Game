@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect } from 'react'
 import axios from '../utils/axios'
-import React, { Component }  from 'react';
+import React, { Component } from 'react';
 // init context
 const AuthContext = createContext()
 
@@ -18,7 +18,7 @@ export function AuthProvider({ children }) {
   const register = (formData = {}) =>
     new Promise((resolve, reject) => {
       axios
-        .post('/auth/register', formData)
+        .post('api/auth/register', formData)
         .then(({
           data: {
             data: accountData,
@@ -39,7 +39,7 @@ export function AuthProvider({ children }) {
   const login = (formData = {}) =>
     new Promise((resolve, reject) => {
       axios
-        .post('/auth/login', formData)
+        .post('api/auth/login', formData)
         .then(({
           data: {
             data: accountData,
@@ -70,7 +70,7 @@ export function AuthProvider({ children }) {
           data: accountData,
           token: accessToken,
         },
-      } = await axios.get('/auth/login', {
+      } = await axios.get('api/auth/login', {
         headers: {
           authorization: `Bearer ${token}`,
         },

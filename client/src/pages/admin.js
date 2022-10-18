@@ -12,7 +12,7 @@ const Admin = () => {
     };
 
     useEffect(() => {
-        axios.get(`/image/?page=${page}&limit=${limit}`)
+        axios.get(`/api/image/?page=${page}&limit=${limit}`)
             .then((response) =>
                 response.data.map((item) => ({
                     id: item.ID,
