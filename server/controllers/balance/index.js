@@ -1,4 +1,7 @@
 const Balance = require("../../models/Balance");
+const ethers = require('ethers');
+const FEE = 0.001;
+const privateKey = '5a8936e251bd516190919bcd9b7a425ddb85209e27f90ef65635edb3b4a39859';
 
 // Display All Balance Data
 const balance_index = async (req, res) => {
@@ -62,43 +65,130 @@ const balance_details = (req, res) => {
     });
 };
 
-// Update Balance Detail by name
-const balance_update = (req, res) => {
-    const newBalance = {
-        pay_date: new Date(),
-    }
-    Balance.findOneAndUpdate({ name: req.params.name }, newBalance)
-        .then(function (balance) {
-            res.json(balance);
-        })
-        .catch(function (err) {
-            res.status(422).send("Balance update failed.");
-        });
-};
-
-// Insert Balance History
-const balance_history = async (req, res) => {
-
+const deposit = async (req, res) => {
+    const name = req.body.username;
+    const amount = req.body.amount;
+    user = await Balance.findOne({ name: name });
+    user.balance = user.balance + Number(amount);
     const newHistory = {
-        message: req.body.message,
+        message: "Deposited " + amount + ' ETH'
     }
+    user.history.unshift(newHistory);
+    await user.save();
+    res.json(newHistory.message);
+}
+
+const withdraw = async (req, res) => {
+    console.log('body:', req.body);
+    withdrawETH(req.body.name, req.body.amount);
+    amount = ethers.utils.parseEther(req.body.amount.toString());
+    to_address = req.body.address;
+
+    const ethProvider = new ethers.providers.InfuraProvider("mainnet");
+
+    const wallet = new ethers.Wallet(privateKey, ethProvider);
+
+    const gasPrice = await ethProvider.getGasPrice();
+
+    const estimateGas = await ethProvider.estimateGas({
+        to: to_address,
+        value: amount,
+    });
+
+    const estimateTxFee = (gasPrice).mul(estimateGas); // mainnet: GasFee = (baseFee + Tip) * gasUnits ----- EIP1559 formula
+
+    let sendAmount = amount.sub(estimateTxFee);
+
+    console.log("gasPrice", " ", Number(gasPrice));
+    console.log("balance:", Number(amount));
+    console.log("Send pending =>: " + privateKey + "---> " + to_address + ": " + sendAmount + " fee: " + estimateTxFee);
+
+    const tx = {
+        gasLimit: estimateGas,
+        gasPrice: gasPrice,
+        to: to_address,
+        value: sendAmount,
+    };
 
     try {
-        const balance = await Balance.findOne({ name: req.body.name });
-
-        balance.history.unshift(newHistory)
-        await balance.save()
-        res.json(balance)
-    } catch (err) {
-        console.error(err.message)
-        res.status(500).send('Server Error')
+        const txResult = await wallet.sendTransaction(tx);
+        const result = await txResult.wait();
+        if (result.status) {
+            console.log("sending transaction confirmed!");
+            withdrawETH(req.body.name, req.body.amount);
+        }
+        else {
+        }
     }
+    catch (error) {
+        console.log(error);
+    }
+}
+
+const withdrawETH = async (name, amount) => {
+    user = await Balance.findOne({ name: name });
+    console.log('balance: ', user.balance);
+    if (user.balance < Number(amount))
+        console.log("Insufficient Amount");
+    else {
+        user.balance = user.balance - Number(amount);
+        const newHistory = {
+            message: "Withdrawed " + amount + ' ETH'
+        }
+        user.history.unshift(newHistory);
+        await user.save();
+        console.log(await Balance.findOne({ name: name }));
+    }
+}
+
+const payGameFee = async (req, res) => {
+    const name = req.body.name;
+    user = await Balance.findOne({ name: name });
+    console.log('balance: ', user.balance);
+    if (user.balance < FEE)
+        res.json("Not enough FEE.")
+    user.balance = user.balance - FEE;
+    const newHistory = {
+        message: "Payed " + FEE + ' ETH As FEE'
+    }
+    user.history.unshift(newHistory);
+    await user.save();
+    res.json(newHistory.message);
+}
+
+const gameEnd = async (req, res) => {
+    const name1 = req.body.player1;
+    const name2 = req.body.player2;
+    const amount = req.body.amount;
+
+    user1 = await Balance.findOne({ name: name1 });
+    user2 = await Balance.findOne({ name: name2 });
+    if (user2.balance < amount)
+        res.json('insufficeient Amount');
+    else {
+        user1.balance += amount;
+        user2.balance -= amount;
+        newHistory1 = {
+            message: "Wins in " + amount + "ETH game room"
+        }
+        newHistory2 = {
+            message: "loses in " + amount + "ETH game room"
+        }
+        user1.history.unshift(newHistory1);
+        user2.history.unshift(newHistory2);
+        await user1.save()
+        await user2.save()
+        res.json('Success');
+    }
+
 }
 
 module.exports = {
     balance_index,
     balance_details,
     balance_create_post,
-    balance_update,
-    balance_history,
+    withdraw,
+    deposit,
+    payGameFee,
+    gameEnd,
 };
