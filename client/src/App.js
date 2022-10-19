@@ -8,10 +8,10 @@ export default function App() {
   return (
     <BrowserRouter>
       <Header />
-      <Router />
+      {isLoggedIn ? <Router /> : <LoggedOutText />}
     </BrowserRouter>
   );
 }
 
-const LoggedOutText = () => <p>dawdawf</p>;
+const LoggedOutText = () => <div className = 'homepage' />;
 
