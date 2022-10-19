@@ -24,7 +24,7 @@ async function register(request, response, next) {
 
   try {
     const {username, password, walletAddress} = request.body
-    // console.log(walletAddress)
+    // console.log("dwa")
     // Verify account username as unique
     const existingAccount = await Account.findOne({username})
     if (existingAccount) {

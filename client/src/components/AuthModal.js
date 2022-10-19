@@ -8,8 +8,13 @@ import {
   IconButton,
   Icon,
 } from "@mui/material";
+import Alert from '@mui/material/Alert';
+import './AuthModal.css'
 import { makeStyles } from "@material-ui/core/styles";
 import { useAuth } from "../contexts/AuthContext";
+import logo1 from "../asset/metamask.ico";
+// import ToastService from "react-material-toast";
+
 
 const useStyles = makeStyles({
   root: {
@@ -30,6 +35,11 @@ const useStyles = makeStyles({
     marginLeft: "10%",
     height: "10px",
   },
+  walletBtn:{
+    backgroundImage: `url(${logo1})`,
+    backgroundSize: "100% 100%",
+    width:'300px'
+  }
 });
 
 const textFieldSx = { mx: 2, my: 0.5 };
@@ -45,6 +55,7 @@ export default function AuthModal({
   const [formData, setFormData] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [isWalletConnected, setWalletState] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -52,13 +63,19 @@ export default function AuthModal({
   };
 
   async function walletConnect(e) {
+    
     if (typeof window.ethereum !== "undefined") {
+
       const useraddress = await window.ethereum.request({
         method: "eth_requestAccounts",
       });
       const { name, value } = e.target;
-      await setFormData((prev) => ({ ...prev, [name]: useraddress[0] }));
+      console.log(name)
+      await setFormData((prev) => ({ ...prev, "walletAddress" : useraddress[0] }));
+      setWalletState(true);
+
     } else {
+      setWalletState(false);
       window.open("https://metamask.io/download/");
     }
   }
@@ -77,21 +94,32 @@ export default function AuthModal({
     setLoading(false);
   };
 
+  const classes = useStyles();
+
+
   const disabledLoginButton = !formData["username"] || !formData["password"];
   const disabledRegisterButton = !formData["username"] || !formData["password"];
 
   return (
-    <Dialog open={open} onClose={close}>
+    
+    <Dialog open={open} onClose={close}
+    className="c-modal"
+    >
+      {isWalletConnected ? <SuccessAlert/> :  <FalseAlert/>}
       {isRegisterMode ? (
         <RegisterForm
+          classeName = {classes.dialog}
           formData={formData}
           handleChange={handleChange}
           onClick={walletConnect}
         />
       ) : (
-        <LoginForm formData={formData} handleChange={handleChange} onClick={walletConnect} />
+        <LoginForm
+          formData={formData}
+          handleChange={handleChange}
+          onClick={walletConnect}
+        />
       )}
-
       {error && <span className="error">{error}</span>}
 
       {loading ? (
@@ -124,14 +152,15 @@ function LoginForm({ formData, handleChange, onClick }) {
   return (
     <Fragment>
       <DialogTitle>Login to your account</DialogTitle>
-      <div>
+      <div className={classes.conBtn} >
         <Button
-          className={classes.conBtn}
-          variant="contained"
+          variant="outlined"
           onClick={onClick}
-          name = "walletAddress"
+          name="walletAddress"
         >
-          Wallet Connect
+          <Icon className={classes.walletBtn} ></Icon>
+          <span style={{width:'20px'}} ></span>
+          <p >Wallet Connect</p>
         </Button>
       </div>
       <div className={classes.span}></div>
@@ -165,16 +194,17 @@ function RegisterForm({ formData, handleChange, onClick }) {
   return (
     <Fragment>
       <div className={classes.regForm}>
-        <DialogTitle>Sign Up</DialogTitle>
+        <DialogTitle color="#D42C94">Sign Up</DialogTitle>
       </div>
-      <div>
+      <div className={classes.conBtn}>
         <Button
-          className={classes.conBtn}
-          variant="contained"
+          variant="outlined"
           onClick={onClick}
-          name = "walletAddress"
+          name="walletAddress"
         >
-          Wallet Connect
+          <Icon className={classes.walletBtn}></Icon>
+          <span style={{width:'20px'}}></span>
+          <p>Wallet Connect</p>
         </Button>
       </div>
       <div className={classes.span}></div>
@@ -197,7 +227,23 @@ function RegisterForm({ formData, handleChange, onClick }) {
         variant="filled"
         sx={textFieldSx}
         required
+
       />
     </Fragment>
   );
 }
+function SuccessAlert(){
+  return(
+    <Fragment>
+      <Alert severity="success">Wallet Connected!</Alert>
+    </Fragment>
+  )
+}
+function FalseAlert(){
+  return(
+    <Fragment>
+      <Alert severity="error">Wallet disconnected!</Alert>
+    </Fragment>
+  )
+}
+

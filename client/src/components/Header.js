@@ -7,28 +7,60 @@ import {
   List,
   ListSubheader,
   ListItemButton,
+  Button,
   Icon,
 } from "@mui/material";
 import OnlineIndicator from "./OnlineIndicator";
 import AuthModal from "./AuthModal";
 import { useAuth } from "../contexts/AuthContext";
-import iconImg from "../asset/icon.png";
-
+import avatarImg from "../asset/icon.png";
 import { makeStyles } from "@material-ui/core/styles";
-
+import { useMediaQuery } from "react-responsive";
 const useStyles = makeStyles({
   header: {
     background: "linear-gradient(290deg, #1B1251,#390A7C, #E33B86)",
+    width: "100%",
     height: "90px",
   },
-  icon: {
-    backgroundImage: `url(${iconImg})`,
-    width:'70px',
-    height:'70px'
+  avatar: {
+    backgroundImage: `url(${avatarImg})`,
+    backgroundSize: "100% 100%",
+    marginTop: "15px",
+  },
+  label: {
+    fontFamily: "Algerian",
+    fontSize: "30px",
+    color: "white",
+  },
+  btn_pannel: {
+    float: "right",
+    width: "30%",
+    height: "30px",
+    marginTop: "30px",
+    minWidth: "300px",
+    display: "flex",
+    minWidth: "450px",
+  },
+  help: {
+    width: "15%",
+    height: "100%",
+    textAlign: "center",
+    fontFamily: "Times New Roman",
+    fontWeight: "bold",
+    fontSize: "20px",
+    color: "#D42C94",
+    borderRadius: "15px",
+    "&:hover": {
+      backgroundColor: "white",
+      cursor: "pointer",
+    },
   },
 });
 
 export default function Header() {
+  let isLaptopOrMobile = useMediaQuery({
+    minWidth: 430,
+  });
   const { isLoggedIn, account, logout } = useAuth();
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -62,21 +94,69 @@ export default function Header() {
 
   return (
     <div className={classes.header}>
-      
-      {/* <IconButton onClick={openPopover}>
-        <OnlineIndicator online={isLoggedIn}>
-          <Avatar src={account?.username || ""} alt={account?.username || ""} />
-        </OnlineIndicator>
-      </IconButton>
+      {isLaptopOrMobile ? (
+        <div>
+          <div className={classes.btn_pannel}>
+            <div className={classes.help} style={{ minWidth: "100px" }}>
+              help
+            </div>
+            <span style={{ width: "10%" }}></span>
+            <div className={classes.help} style={{ minWidth: "120px" }}>
+              how to play
+            </div>
+            <span style={{ width: "10%" }}></span>
+            {isLoggedIn ? (
+              <div
+                className={classes.help}
+                style={{ minWidth: "100px" }}
+                onClick={logout}
+              >
+                logout
+              </div>
+            ) : (
+              <>
+                <div
+                  className={classes.help}
+                  style={{ minWidth: "100px" }}
+                  onClick={clickRegister}
+                >
+                  register
+                </div>
+                <span style={{ width: "10%" }}></span>
+                <div
+                  className={classes.help}
+                  style={{ minWidth: "100px" }}
+                  onClick={clickLogin}
+                >
+                  login
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+      ) : (
+        <div>
+          <IconButton onClick={openPopover}>
+            <OnlineIndicator online={isLoggedIn}>
+              <Avatar
+                src={account?.username || ""}
+                alt={account?.username || ""}
+                className={classes.avatar}
+              />
+            </OnlineIndicator>
+          </IconButton>
+        </div>
+      )}
       <Popover
         anchorEl={anchorEl}
         open={popover}
         onClose={closePopover}
-        anchorOrigin={{vertical: 'bottom', horizontal: 'right'}}
-        transformOrigin={{vertical: 'top', horizontal: 'right'}}>
-        <List style={{minWidth: '200px'}}>
-          <ListSubheader style={{textAlign: 'center'}}>
-            Hello, {isLoggedIn ? account.username : 'Guest'}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+        transformOrigin={{ vertical: "top", horizontal: "right" }}
+      >
+        <List style={{ minWidth: "200px" }}>
+          <ListSubheader style={{ textAlign: "center" }}>
+            Hello, {isLoggedIn ? account.username : "Guest"}
           </ListSubheader>
 
           {isLoggedIn ? (
@@ -85,47 +165,18 @@ export default function Header() {
             <Fragment>
               <ListItemButton onClick={clickLogin}>Login</ListItemButton>
               <ListItemButton onClick={clickRegister}>Reigster</ListItemButton>
+              <ListItemButton>Help</ListItemButton>
+              <ListItemButton>How to play</ListItemButton>
             </Fragment>
           )}
         </List>
-      </Popover> */}
+      </Popover>
+      <AuthModal
+        open={authModal}
+        close={() => setAuthModal(false)}
+        isRegisterMode={register}
+        toggleRegister={() => setRegister((prev) => !prev)}
+      />
     </div>
-    // <AppBar className='header' position='static'>
-
-    //   <IconButton onClick={openPopover}>
-    //     <OnlineIndicator online={isLoggedIn}>
-    //       <Avatar src={account?.username || ''} alt={account?.username || ''} />
-    //     </OnlineIndicator>
-    //   </IconButton>
-
-    //   <Popover
-    //     anchorEl={anchorEl}
-    //     open={popover}
-    //     onClose={closePopover}
-    //     anchorOrigin={{vertical: 'bottom', horizontal: 'right'}}
-    //     transformOrigin={{vertical: 'top', horizontal: 'right'}}>
-    //     <List style={{minWidth: '200px'}}>
-    //       <ListSubheader style={{textAlign: 'center'}}>
-    //         Hello, {isLoggedIn ? account.username : 'Guest'}
-    //       </ListSubheader>
-
-    //       {isLoggedIn ? (
-    //         <ListItemButton onClick={logout}>Logout</ListItemButton>
-    //       ) : (
-    //         <Fragment>
-    //           <ListItemButton onClick={clickLogin}>Login</ListItemButton>
-    //           <ListItemButton onClick={clickRegister}>Reigster</ListItemButton>
-    //         </Fragment>
-    //       )}
-    //     </List>
-    //   </Popover>
-
-    //   <AuthModal
-    //     open={authModal}
-    //     close={() => setAuthModal(false)}
-    //     isRegisterMode={register}
-    //     toggleRegister={() => setRegister((prev) => !prev)}
-    //   />
-    // </AppBar>
   );
 }
