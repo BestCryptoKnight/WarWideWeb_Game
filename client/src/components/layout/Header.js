@@ -91,15 +91,6 @@ export default function Header() {
     closePopover();
   };
 
-  useEffect(() => {
-    if (isLoggedIn) {
-      navigate('/main');
-    }
-    else {
-      navigate('/');
-    }
-  }, [isLoggedIn]);
-
   return (
     <div className={classes.header}>
       {isLaptopOrMobile ? (

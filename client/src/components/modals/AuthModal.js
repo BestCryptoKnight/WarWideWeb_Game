@@ -13,6 +13,7 @@ import './AuthModal.css'
 import { makeStyles } from "@material-ui/core/styles";
 import { useAuth } from "../../contexts/AuthContext";
 import logo1 from "../../asset/metamask.ico";
+import { useNavigate } from 'react-router-dom';
 // import ToastService from "react-material-toast";
 
 
@@ -51,6 +52,7 @@ export default function AuthModal({
   toggleRegister,
 }) {
   const { login, register } = useAuth();
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({});
   const [loading, setLoading] = useState(false);
@@ -86,6 +88,7 @@ export default function AuthModal({
 
     try {
       isRegisterMode ? await register(formData) : await login(formData);
+      navigate('/main');
       close();
     } catch (error) {
       setError(error);

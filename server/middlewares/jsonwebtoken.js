@@ -1,13 +1,13 @@
 const jwt = require('jsonwebtoken')
-const {JWT_SECRET} = require('../constants')
+const { JWT_SECRET } = require('../constants')
 
 const signToken = (payload = {}, expiresIn = '12h') => {
-  const token = jwt.sign(payload, JWT_SECRET, {expiresIn})
+  const token = jwt.sign(payload, JWT_SECRET, { expiresIn })
 
   return token
 }
 
-const authorizeBearerToken = (request, response, next) => {
+const authorizeBearerToken = async (request, response, next) => {
   try {
     const token = request.headers.authorization?.split(' ')[1]
     if (!token) {
@@ -15,16 +15,17 @@ const authorizeBearerToken = (request, response, next) => {
         message: 'Token not provided',
       })
     }
-
-    const auth = jwt.verify(token, JWT_SECRET)
-    if (!auth) {
-      return response.status(401).json({
-        message: 'Unauthorized - invalid token',
-      })
+    else {
+      const auth = jwt.verify(token, JWT_SECRET)
+      if (!auth) {
+        return response.status(401).json({
+          message: 'Unauthorized - invalid token',
+        })
+      }
+      request.auth = auth
+      next()
     }
 
-    request.auth = auth
-    next()
   } catch (error) {
     console.error(error)
     return response.status(401).json({

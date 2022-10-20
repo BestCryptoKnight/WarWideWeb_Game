@@ -1,6 +1,8 @@
 const joi = require('joi')
 const bcrypt = require('bcrypt')
 const Account = require('../../models/Account')
+const Balance =  require('../../models/Balance')
+
 const {signToken} = require('../../middlewares/jsonwebtoken')
 
 async function register(request, response, next) {
@@ -42,12 +44,14 @@ async function register(request, response, next) {
     const newAccount = new Account({username, password: hash, walletaddress : walletAddress })
     await newAccount.save()
 
+    const newBalance = new Balance({name: username})
+    await newBalance.save()
     // Remove password from response data
     newAccount.password = undefined
     delete newAccount.password
 
     // Generate access token
-    const token = signToken({uid: newAccount._id, role: newAccount.role})
+    const token = signToken({username: newAccount.username, role: newAccount.role})
 
     response.status(201).json({
       message: 'Succesfully registered',

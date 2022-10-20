@@ -1,7 +1,13 @@
+import axios from "../utils/axios";
+import HEADER from '../utils/header';
 import { ethers } from 'ethers';
 import { GAME_ADDRESS } from "../constants";
 import { toast } from "react-toastify";
-import axios from './axios';
+
+const getBalance = async (name) => {
+    const result = await axios.get(`/api/balance/${name}`,HEADER);
+    return result.data.balance;
+}
 
 const getMetamaskBalance = async (_address) => {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -43,7 +49,7 @@ const deposit = async (username, amount) => {
                 name: username,
                 amount: amount,
             }
-            const res = await axios.post('/api/balance/deposit', data);
+            const res = await axios.post('/api/balance/deposit', data, HEADER);
             console.log('res');
         }
     }
@@ -60,11 +66,11 @@ const withdraw = async (name, address, amount) => {
             address: address,
             amount: amount,
         }
-        const result = await axios.post('/api/balance/withdraw', data);
+        const result = await axios.post('/api/balance/withdraw', data, HEADER);
         console.log(result);
     } catch (error) {
         console.log(error);
     }
 }
 
-export { getMetamaskBalance, deposit, withdraw }
+export { getMetamaskBalance, deposit, withdraw, getBalance }

@@ -7,7 +7,6 @@ const privateKey = '5a8936e251bd516190919bcd9b7a425ddb85209e27f90ef65635edb3b4a3
 const balance_index = async (req, res) => {
     try {
         let query = Balance.find();
-
         const page = parseInt(req.query.page) || 1;
         const pageSize = parseInt(req.query.limit) || 4;
         const skip = (page - 1) * pageSize;
@@ -52,14 +51,10 @@ const balance_create_post = (req, res) => {
 
 // Show a particular Balance Detail by name
 const balance_details = (req, res) => {
-    console.log('data: ', req.params.name);
     Balance.findOne({ name: req.params.name }, function (err, balance) {
         if (!balance) {
             res.status(404).send("No result found");
         } else {
-            const total = new Date().getTime() - new Date(balance.pay_date).getTime();
-            const hours = (Math.floor((total) / 1000)) / 3600;
-            console.log(hours);
             res.json(balance);
         }
     });
