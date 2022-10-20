@@ -1,19 +1,17 @@
-import { Fragment, useState } from "react";
+import { Fragment, useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 import {
-  AppBar,
   IconButton,
   Avatar,
   Popover,
   List,
   ListSubheader,
   ListItemButton,
-  Button,
-  Icon,
 } from "@mui/material";
-import OnlineIndicator from "./OnlineIndicator";
-import AuthModal from "./AuthModal";
-import { useAuth } from "../contexts/AuthContext";
-import avatarImg from "../asset/icon.png";
+import OnlineIndicator from "../OnlineIndicator";
+import AuthModal from "../modals/AuthModal";
+import { useAuth } from "../../contexts/AuthContext";
+import avatarImg from "../../asset/icon.png";
 import { makeStyles } from "@material-ui/core/styles";
 import { useMediaQuery } from "react-responsive";
 const useStyles = makeStyles({
@@ -67,6 +65,7 @@ export default function Header() {
   const [popover, setPopover] = useState(false);
   const [authModal, setAuthModal] = useState(false);
   const [register, setRegister] = useState(false);
+  const navigate = useNavigate();
 
   const classes = useStyles();
 
@@ -92,6 +91,15 @@ export default function Header() {
     closePopover();
   };
 
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate('/main');
+    }
+    else {
+      navigate('/');
+    }
+  }, [isLoggedIn]);
+
   return (
     <div className={classes.header}>
       {isLaptopOrMobile ? (
@@ -111,7 +119,7 @@ export default function Header() {
                 style={{ minWidth: "100px" }}
                 onClick={logout}
               >
-                 logout
+                logout
               </div>
             ) : (
               <>

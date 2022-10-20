@@ -11,8 +11,8 @@ import {
 import Alert from '@mui/material/Alert';
 import './AuthModal.css'
 import { makeStyles } from "@material-ui/core/styles";
-import { useAuth } from "../contexts/AuthContext";
-import logo1 from "../asset/metamask.ico";
+import { useAuth } from "../../contexts/AuthContext";
+import logo1 from "../../asset/metamask.ico";
 // import ToastService from "react-material-toast";
 
 
@@ -35,10 +35,10 @@ const useStyles = makeStyles({
     marginLeft: "10%",
     height: "10px",
   },
-  walletBtn:{
+  walletBtn: {
     backgroundImage: `url(${logo1})`,
     backgroundSize: "100% 100%",
-    width:'300px'
+    width: '300px'
   }
 });
 
@@ -63,7 +63,7 @@ export default function AuthModal({
   };
 
   async function walletConnect(e) {
-    
+
     if (typeof window.ethereum !== "undefined") {
 
       const useraddress = await window.ethereum.request({
@@ -71,7 +71,7 @@ export default function AuthModal({
       });
       const { name, value } = e.target;
       console.log(name)
-      await setFormData((prev) => ({ ...prev, "walletAddress" : useraddress[0] }));
+      await setFormData((prev) => ({ ...prev, "walletAddress": useraddress[0] }));
       setWalletState(true);
 
     } else {
@@ -101,14 +101,14 @@ export default function AuthModal({
   const disabledRegisterButton = !formData["username"] || !formData["password"];
 
   return (
-    
+
     <Dialog open={open} onClose={close}
-    className="c-modal"
+      className="c-modal"
     >
-      {isWalletConnected ? <SuccessAlert/> :  <FalseAlert/>}
+      {isWalletConnected ? <SuccessAlert /> : <FalseAlert />}
       {isRegisterMode ? (
         <RegisterForm
-          classeName = {classes.dialog}
+          classeName={classes.dialog}
           formData={formData}
           handleChange={handleChange}
           onClick={walletConnect}
@@ -159,7 +159,7 @@ function LoginForm({ formData, handleChange, onClick }) {
           name="walletAddress"
         >
           <Icon className={classes.walletBtn} ></Icon>
-          <span style={{width:'20px'}} ></span>
+          <span style={{ width: '20px' }} ></span>
           <p >Wallet Connect</p>
         </Button>
       </div>
@@ -203,7 +203,7 @@ function RegisterForm({ formData, handleChange, onClick }) {
           name="walletAddress"
         >
           <Icon className={classes.walletBtn}></Icon>
-          <span style={{width:'20px'}}></span>
+          <span style={{ width: '20px' }}></span>
           <p>Wallet Connect</p>
         </Button>
       </div>
@@ -232,15 +232,15 @@ function RegisterForm({ formData, handleChange, onClick }) {
     </Fragment>
   );
 }
-function SuccessAlert(){
-  return(
+function SuccessAlert() {
+  return (
     <Fragment>
       <Alert severity="success">Wallet Connected!</Alert>
     </Fragment>
   )
 }
-function FalseAlert(){
-  return(
+function FalseAlert() {
+  return (
     <Fragment>
       <Alert severity="error">Wallet disconnected!</Alert>
     </Fragment>
