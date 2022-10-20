@@ -111,7 +111,7 @@ export default function Header() {
                 style={{ minWidth: "100px" }}
                 onClick={logout}
               >
-                logout
+                 logout
               </div>
             ) : (
               <>
