@@ -10,7 +10,7 @@ import './AuthModal.css'
 import { makeStyles } from "@material-ui/core/styles";
 import { useAuth } from "../../contexts/AuthContext";
 import Alert from '@mui/material/Alert';
-import { deposit, getMetamaskBalance } from "../../utils/wallet";
+import { deposit, getMetamaskBalance } from '../../api/UserApi';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 

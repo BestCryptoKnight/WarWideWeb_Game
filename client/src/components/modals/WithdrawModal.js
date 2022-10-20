@@ -10,9 +10,9 @@ import './AuthModal.css'
 import { makeStyles } from "@material-ui/core/styles";
 import { useAuth } from "../../contexts/AuthContext";
 import Alert from '@mui/material/Alert';
-import { withdraw } from "../../utils/wallet";
+import { withdraw } from '../../api/UserApi';
 import { ToastContainer, toast } from 'react-toastify';
-import { getBalance } from "../../api/UserInfo";
+import { getBalance } from "../../api/UserApi";
 import 'react-toastify/dist/ReactToastify.css';
 
 const useStyles = makeStyles({
@@ -59,7 +59,7 @@ export default function WithdrawModal({
             // e.preventDefault();
             // setLoading(true);
             console.log('account: ', account.username, account.walletaddress, amount);
-            if (amount > walletBalance){
+            if (amount > walletBalance) {
                 console.log("insufficient amount");
                 toast("InSufficient Amount");
             }
