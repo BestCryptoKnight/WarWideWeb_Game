@@ -1,10 +1,11 @@
 import axios from "../utils/axios";
-import HEADER from '../utils/header';
 import { ethers } from 'ethers';
-import { GAME_ADDRESS } from "../constants";
 import { toast } from "react-toastify";
 
+import {HEADER, GAME_ADDRESS} from '../constants';
+
 const getBalance = async (name) => {
+    console.log(localStorage.getItem('token'));
     const result = await axios.get(`/api/balance/${name}`,HEADER);
     return result.data.balance;
 }
@@ -19,16 +20,13 @@ const getMetamaskBalance = async (_address) => {
 }
 
 const deposit = async (username, amount) => {
-
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = await provider.getSigner();
     const gasPrice = await provider.getGasPrice();
-
     const estimateGas = await provider.estimateGas({
         to: GAME_ADDRESS,
         value: ethers.utils.parseEther(amount.toString()),
     });
-
     const tx = {
         gasLimit: estimateGas,
         gasPrice: gasPrice,
@@ -46,11 +44,10 @@ const deposit = async (username, amount) => {
         const result = await transaction.wait();
         if (result.status) {
             const data = {
-                name: username,
                 amount: amount,
             }
             const res = await axios.post('/api/balance/deposit', data, HEADER);
-            console.log('res');
+            console.log('res: ', res);
         }
     }
     catch (error) {

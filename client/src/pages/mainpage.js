@@ -4,7 +4,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import mainPageImg from '../asset/mainpage.png';
 import { useAuth } from '../contexts/AuthContext';
 import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
 
 import Deposit from '../components/game/deposit';
 import Withdraw from '../components/game/withdraw';
@@ -66,8 +65,6 @@ const MainPage = () => {
                     <button className={classes.room}>0.3ETH</button>
                 </div>
             </div>
-            
-            
         </div>
     )
 }

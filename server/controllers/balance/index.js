@@ -61,7 +61,7 @@ const balance_details = (req, res) => {
 };
 
 const deposit = async (req, res) => {
-    const name = req.body.username;
+    const name = req.auth.username;
     const amount = req.body.amount;
     user = await Balance.findOne({ name: name });
     user.balance = user.balance + Number(amount);
@@ -93,66 +93,64 @@ const getAvailability = async (req, res) => {
 }
 
 const withdraw = async (req, res) => {
-    console.log('body:', req.body);
-    withdrawETH(req.body.name, req.body.amount);
-    amount = ethers.utils.parseEther(req.body.amount.toString());
-    to_address = req.body.address;
+    const name = req.auth.username;
+    console.log('name: ', name);
 
-    const ethProvider = new ethers.providers.InfuraProvider("mainnet");
-
-    const wallet = new ethers.Wallet(privateKey, ethProvider);
-
-    const gasPrice = await ethProvider.getGasPrice();
-
-    const estimateGas = await ethProvider.estimateGas({
-        to: to_address,
-        value: amount,
-    });
-
-    const estimateTxFee = (gasPrice).mul(estimateGas); // mainnet: GasFee = (baseFee + Tip) * gasUnits ----- EIP1559 formula
-
-    let sendAmount = amount.sub(estimateTxFee);
-
-    console.log("gasPrice", " ", Number(gasPrice));
-    console.log("balance:", Number(amount));
-    console.log("Send pending =>: " + privateKey + "---> " + to_address + ": " + sendAmount + " fee: " + estimateTxFee);
-
-    const tx = {
-        gasLimit: estimateGas,
-        gasPrice: gasPrice,
-        to: to_address,
-        value: sendAmount,
-    };
-
-    try {
-        const txResult = await wallet.sendTransaction(tx);
-        const result = await txResult.wait();
-        if (result.status) {
-            console.log("sending transaction confirmed!");
-            withdrawETH(req.body.name, req.body.amount);
-        }
-        else {
-        }
-    }
-    catch (error) {
-        console.log(error);
-    }
-}
-
-const withdrawETH = async (name, amount) => {
     user = await Balance.findOne({ name: name });
-    console.log('balance: ', user.balance);
-    if (user.balance < Number(amount))
-        console.log("Insufficient Amount");
-    else {
-        user.balance = user.balance - Number(amount);
-        const newHistory = {
-            message: "Withdrawed " + amount + ' ETH'
-        }
-        user.history.unshift(newHistory);
-        await user.save();
-        console.log(await Balance.findOne({ name: name }));
+    if(user.balance < req.body.amount){
+        res.json('insufficient amount');
     }
+    else{
+        amount = ethers.utils.parseEther(req.body.amount.toString());
+        to_address = req.body.address;
+
+        const ethProvider = new ethers.providers.InfuraProvider("mainnet");
+
+        const wallet = new ethers.Wallet(privateKey, ethProvider);
+
+        const gasPrice = await ethProvider.getGasPrice();
+
+        const estimateGas = await ethProvider.estimateGas({
+            to: to_address,
+            value: amount,
+        });
+
+        const estimateTxFee = (gasPrice).mul(estimateGas); // mainnet: GasFee = (baseFee + Tip) * gasUnits ----- EIP1559 formula
+
+        let sendAmount = amount.sub(estimateTxFee);
+
+        console.log("gasPrice", " ", Number(gasPrice));
+        console.log("balance:", Number(amount));
+        console.log("Send pending =>: " + privateKey + "---> " + to_address + ": " + sendAmount + " fee: " + estimateTxFee);
+
+        const tx = {
+            gasLimit: estimateGas,
+            gasPrice: gasPrice,
+            to: to_address,
+            value: sendAmount,
+        };
+
+        try {
+            const txResult = await wallet.sendTransaction(tx);
+            const result = await txResult.wait();
+            if (result.status) {
+                console.log("sending transaction confirmed!");
+                user.balance = user.balance - req.body.amount;
+                const newHistory = {
+                    message: "Withdrawed " + req.body.amount + ' ETH'
+                }
+                user.history.unshift(newHistory);
+                await user.save();
+                res.json('success');
+            }
+            else {
+            }
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
+    
 }
 
 const payGameFee = async (req, res) => {
