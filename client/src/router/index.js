@@ -11,7 +11,7 @@ export default function Router() {
         element:<Dashboard/>
       },
       {
-        path:"/room",
+        path:"main/room",
         element:<Room/>
       },
       {

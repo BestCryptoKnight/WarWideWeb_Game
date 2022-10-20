@@ -1,4 +1,5 @@
 import { Fragment, useState } from "react";
+import { useNavigate, useLocation } from 'react-router';
 import "./room.css";
 import { makeStyles } from "@material-ui/core/styles";
 import Profile from "../components/game/profile";
@@ -192,12 +193,21 @@ function Mousedown(e) {
 }
 
 function RoomLaptop(roomInfo) {
+  const location = useLocation();
+
   const classes = useStyles();
   const user1 = roomInfo.roomInfo.user1;
   const user2 = roomInfo.roomInfo.user2;
 
   return (
     <div style={{ display: "flex", overflowY: "auto" }}>
+
+      <div>url: {location.state.url}</div>
+      <div>user1: {location.state.user1}</div>
+      <div>user2: {location.state.user2}</div>
+      <div>isFull: {location.state.isFull}</div>
+      <div>Amount: {location.state.amount}</div>
+
       <div className={classes.profileEventPan}>
         <div className={classes.profilePan}>
           <div className={classes.Profile}>

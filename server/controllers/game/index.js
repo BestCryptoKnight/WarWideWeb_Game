@@ -22,7 +22,7 @@ const loadData = async (req, res) => {
     const randomNumber = randomIntFromInterval(1, 200);
     console.log('random: ', randomNumber);
     const item = await Image.findOne({ ID: randomNumber });
-    const url = baseUrl + '/' + item.ID.toString();
+    const url = baseUrl + '/' + item.ID.toString() + '.png';
     const data = {
         url: url,
         description: item.Description,
@@ -51,7 +51,7 @@ const joinRoom = async (req, res) => {
                     user2: '',
                     amount: amount,
                     url: rooms1,
-                    isFull: false
+                    isFull: 'false'
                 }
             }
             else {
@@ -61,7 +61,7 @@ const joinRoom = async (req, res) => {
                     user2: name,
                     amount: amount,
                     url: rooms1,
-                    isFull: true
+                    isFull: 'true'
                 }
             }
         }
@@ -75,7 +75,7 @@ const joinRoom = async (req, res) => {
                     user2: '',
                     amount: amount,
                     url: rooms2,
-                    isFull: false
+                    isFull: 'false'
                 }
             }
             else {
@@ -85,7 +85,7 @@ const joinRoom = async (req, res) => {
                     user2: name,
                     amount: amount,
                     url: rooms2,
-                    isFull: true
+                    isFull: 'true'
                 }
             }
         }
@@ -99,7 +99,7 @@ const joinRoom = async (req, res) => {
                     user2: '',
                     amount: amount,
                     url: rooms3,
-                    isFull: false
+                    isFull: 'false'
                 }
             }
             else {
@@ -109,7 +109,7 @@ const joinRoom = async (req, res) => {
                     user2: name,
                     amount: amount,
                     url: rooms3,
-                    isFull: true
+                    isFull: 'true'
                 }
             }
         }

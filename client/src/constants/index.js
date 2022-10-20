@@ -6,9 +6,15 @@ const HEADER = {
     'Authorization': `Bearer ${localStorage.getItem('token')}`
   }
 }
+const PRICE1 = 1
+const PRICE2 = 2
+const PRICE3 = 3
 
 export {
   BACKEND_URL,
   GAME_ADDRESS,
   HEADER,
+  PRICE1,
+  PRICE2,
+  PRICE3
 }
