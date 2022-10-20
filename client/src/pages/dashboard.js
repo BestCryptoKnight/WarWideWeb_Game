@@ -1,8 +1,8 @@
 import { makeStyles } from "@material-ui/core/styles";
-import logo1 from "../asset/logo1.png";
-import logo2 from "../asset/logo2.png";
-import label1 from "../asset/label1.png";
-import label2 from "../asset/label2.png";
+import logo1 from "../assets/img/logo1.png";
+import logo2 from "../assets/img/logo2.png";
+import label1 from "../assets/img/label1.png";
+import label2 from "../assets/img/label2.png";
 
 
 // import io from "socket.io-client";
