@@ -9,6 +9,7 @@ const getMetamaskBalance = async (_address) => {
     const balance = await provider.getBalance(_address);
     const balanceInEther = ethers.utils.formatEther(balance);
     console.log('account address and balance: ', { selectedAddress: accounts[0], balance: balanceInEther });
+    return balanceInEther;
 }
 
 const deposit = async (username, amount) => {
@@ -56,7 +57,7 @@ const withdraw = async (name, address, amount) => {
     try {
         const data = {
             name: name,
-            address: GAME_ADDRESS,
+            address: address,
             amount: amount,
         }
         const result = await axios.post('/api/balance/withdraw', data);
