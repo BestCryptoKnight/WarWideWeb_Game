@@ -2,6 +2,8 @@ import { Fragment, useState } from "react";
 import "./room.css";
 import { makeStyles } from "@material-ui/core/styles";
 import Profile from "../components/game/profile";
+import Counter from "../components/game/counter";
+
 import { useMediaQuery } from "react-responsive";
 import logo from "../assets/img/logo3.png";
 import logo1 from "../assets/img/startbtnLogo.png";
@@ -120,7 +122,7 @@ const useStyles = makeStyles({
     width: "45%",
     height: "100%",
     marginTop: "50px",
-    minWidth: "380px",
+    minWidth: "420px",
     minHeight: "650px",
     background: "#641284",
     borderRadius: "20px",
@@ -164,6 +166,12 @@ const useStyles = makeStyles({
     color:'#641284',
     borderBottomColor:'#222',
     borderBottomWidth:'30px'
+  },
+  counter:{
+    width:'200px',
+    height:'200px',
+    marginTop:'100px',
+    background:'white'
   }
 });
 
@@ -245,7 +253,11 @@ function RoomLaptop(roomInfo) {
             <Input className={classes.input} placeholder="$"></Input>
           </div>
         </div>
-        <div className={classes.counterPan}> </div>
+        <div className={classes.counterPan}> 
+          <div className={classes.counter}>
+            <Counter/>
+          </div>
+        </div>
       </div>
     </div>
   );
