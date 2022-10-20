@@ -34,11 +34,19 @@ const useStyles = makeStyles({
     fontSize:'18px',
     color:'white',
   },
+  balanceLabel: {
+    fontFamily:'Arial Black',
+    fontSize:'13px',
+    color:'#00B0F0',
+    marginLeft: "-39%",
+
+  },
 });
 
 export default function Profile(info) {
   const classes = useStyles();
   const user = info.user;
+  const balance = 0.12244444444;
   //   console.log(info.user);
   // const navigate = useNavigate();
   return (
@@ -46,7 +54,7 @@ export default function Profile(info) {
       <div className={classes.avatar}>
         <Avatar style={{ width: "100%", height: "100%" }} />
         <p className={classes.userLabel}>{user}</p>
-        <p className={classes.userLabel}>{user}</p>
+      <div className={classes.balanceLabel}>{balance}</div>
 
       </div>
 
