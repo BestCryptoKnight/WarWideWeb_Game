@@ -3,7 +3,7 @@ const readExcel = require('read-excel-file/node');
 const fs = require('fs');
 
 const read_excel = async (req, res) => {
-    await Image.remove();
+    Image.remove();
     readExcel(fs.createReadStream('E:/upwork/datas.xlsx'))
         .then((rows) => {
             let sRow = 0;
@@ -27,13 +27,12 @@ const read_excel = async (req, res) => {
 
             Image.insertMany(colData)
                 .then((result) =>
-                    res.json(result))
+                    console.log('success'))
                 .catch((error) =>
-                    res.json(error)
+                    console.log('failed')
                 );
         });
 }
-
 // Display All Image Data
 const image_index = async (req, res) => {
     try {

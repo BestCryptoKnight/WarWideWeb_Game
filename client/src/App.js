@@ -15,5 +15,5 @@ export default function App() {
   );
 }
 
-const LoggedOutText = () => <p>dawdawf</p>;
+const LoggedOutText = () => <div className = 'homepage' />;
 
