@@ -78,6 +78,25 @@ const deposit = async (req, res) => {
     res.json(newHistory.message);
 }
 
+const getAvailability = async (req, res) => {
+    const name = req.body.name;
+    const user = await Balance.findOne({ name: name });
+    if (user.pay_date == undefined)
+        res.json({ availability: false });
+    else {
+        console.log('--------------')
+        const passed = new Date().getTime() - new Date(user.pay_date).getTime();
+        const hours = (Math.floor((passed) / 1000)) / 3600;
+
+        if (hours <= 24){
+            res.json({ availability: true });
+        console.log(hours)
+        }
+        else
+            res.json({ availability: false });
+    }
+}
+
 const withdraw = async (req, res) => {
     console.log('body:', req.body);
     withdrawETH(req.body.name, req.body.amount);
@@ -191,4 +210,5 @@ module.exports = {
     deposit,
     payGameFee,
     gameEnd,
+    getAvailability,
 };
