@@ -154,7 +154,7 @@ const withdraw = async (req, res) => {
 }
 
 const payGameFee = async (req, res) => {
-    const name = req.body.name;
+    const name = req.auth.username;
     user = await Balance.findOne({ name: name });
     console.log('balance: ', user.balance);
     if (user.balance < FEE)
