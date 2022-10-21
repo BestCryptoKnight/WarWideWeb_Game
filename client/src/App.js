@@ -3,6 +3,7 @@ import Header from "./components/layout/Header";
 import { BrowserRouter, Route } from "react-router-dom";
 import Router from "../src/router/index";
 import Dashboard from "./pages/dashboard";
+import { ToastContainer } from "react-toastify";
 
 
 export default function App() {
@@ -11,6 +12,7 @@ export default function App() {
     <BrowserRouter>
       <Header />
       {isLoggedIn ? <Router /> : <Dashboard/>}
+      <ToastContainer />
     </BrowserRouter>
   );
 }

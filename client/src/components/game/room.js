@@ -1,7 +1,7 @@
 import React from 'react'
 import { joinRoom } from '../../api/RoomApi'
 import { useNavigate } from 'react-router-dom'
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Room = (props) => {
@@ -20,7 +20,6 @@ const Room = (props) => {
     return (
         <>
             <button onClick={handleClick}>{props.price} ETH</button>
-            <ToastContainer />
         </>
     )
 }

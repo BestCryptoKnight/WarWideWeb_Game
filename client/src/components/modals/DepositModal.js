@@ -56,14 +56,13 @@ export default function DepositModal({
     const clickSubmit = async (e) => {
         try {
             e.preventDefault();
-            console.log('account: ', account.username, amount);
             if (amount > walletBalance)
                 toast("Insufficient Amount");
             else {
                 toast("Waiting for confirm")
                 //                setLoading(true);
 
-                await deposit(account.username, amount);
+                await deposit(account.name, amount);
                 setLoading(false);
                 close();
             }
@@ -73,7 +72,7 @@ export default function DepositModal({
     };
 
     useEffect(() => {
-        getMetamaskBalance(account.walletaddress)
+        getMetamaskBalance(account.wallet)
             .then((result) =>
                 setWalletBalance(result)
             )

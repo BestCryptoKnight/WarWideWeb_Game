@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, useState, useEffect } from "react";
 import { useNavigate, useLocation } from 'react-router';
 
 import "./room.css";
@@ -200,7 +200,7 @@ const useStyles = makeStyles({
 export default function Room() {
   const [picUrl, setPicUrl] = useState("");
 
-  useEffect(() => {}, [picUrl]);
+  useEffect(() => { }, [picUrl]);
 
   let isLaptopOrMobile = useMediaQuery({
     minWidth: 430,
@@ -229,22 +229,22 @@ function Mousedown(e) {
 
 function RoomLaptop(roomInfo) {
 
- const location = useLocation();
+  const location = useLocation();
   //const [baseUrl, setBaseUrl] = useState(url('../assets/img/demoProduct.png'));
   //const img = url({baseUrl});
-  const [myStyle,setMyStyle]=useState({backgroundImage: "url('https://media.geeksforgeeks.org/wp-content/uploads/rk.png')"});
+  const [myStyle, setMyStyle] = useState({ backgroundImage: "url('https://media.geeksforgeeks.org/wp-content/uploads/rk.png')" });
   const [startFlag, setStart] = useState(false);
-  const PictureFetch= async () =>  {
+  const PictureFetch = async () => {
     await loadData()
       .then((res) => {
         console.log(res.data.url)
-        setMyStyle({backgroundImage: `url(${res.data.url})`});
+        setMyStyle({ backgroundImage: `url(${res.data.url})` });
         //window.document.getElementById("product").backgroundImage = res.data.url;
         console.log(window.document.getElementById("product"));
       })
       .catch((error) => alert(error));
   }
-  
+
   const Counting = async () => {
     setStart(true);
   };
@@ -253,7 +253,7 @@ function RoomLaptop(roomInfo) {
     PictureFetch();
     Counting();
   }
- 
+
   const classes = useStyles();
   const user1 = roomInfo.roomInfo.user1;
   const user2 = roomInfo.roomInfo.user2;
@@ -320,7 +320,7 @@ function RoomLaptop(roomInfo) {
         </div>
         <div className={classes.counterPan}>
           <div className={classes.counter}>
-            <Counter startFlag={startFlag}/>
+            <Counter startFlag={startFlag} />
           </div>
           <div className={classes.price}>
             <div className={classes.dolar}>$</div>
