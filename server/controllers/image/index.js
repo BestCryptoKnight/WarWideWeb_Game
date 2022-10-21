@@ -4,7 +4,7 @@ const fs = require('fs');
 
 const read_excel = async (req, res) => {
     Image.remove();
-    readExcel(fs.createReadStream('E:/upwork/datas.xlsx'))
+    readExcel(fs.createReadStream('E:/datas.xlsx'))
         .then((rows) => {
             let sRow = 0;
             let eRow = 0;

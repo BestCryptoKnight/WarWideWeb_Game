@@ -41,14 +41,8 @@ async function login(request, response, next) {
       });
     }
 
-    // Wallet verify
-    const walletOk = bcrypt.compare(
-      walletAddress,
-      foundAccount.walletaddress
-    );
-    console.log(walletOk)
-
-    if (!walletOk) {
+    console.log(foundAccount.walletddress);
+    if (walletAddress != foundAccount.walletaddress) {
       return response.status(400).json({
         message: "Use the registered Wallet.",
       });

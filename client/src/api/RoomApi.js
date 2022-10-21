@@ -1,4 +1,5 @@
 import axios from "../utils/axios";
+import { HEADER } from "../constants";
 
 // const [room, setRoom] = useState(null);
 
@@ -44,3 +45,15 @@ export const deleteRoom = (roomName = {}) =>
         reject(error?.response?.data?.message || error.message);
       });
   });
+
+const joinRoom = async (amount) => {
+  const res = await axios.post("/api/game/joinRoom", amount, HEADER);
+  console.log("res: ", res);
+};
+
+const loadData = async () => {
+  const res = await axios.get("/api/game", HEADER);
+  return res;
+};
+
+export { joinRoom, loadData };
