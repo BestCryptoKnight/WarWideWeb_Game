@@ -22,7 +22,7 @@ const loadData = async (req, res) => {
     const randomNumber = randomIntFromInterval(1, 200);
     console.log('random: ', randomNumber);
     const item = await Image.findOne({ ID: randomNumber });
-    const url = baseUrl + '/' + item.ID.toString() + '.png';
+    const url = baseUrl + '/' + item.ID.toString() + '.jpg';
     const data = {
         url: url,
         description: item.Description,
@@ -34,6 +34,8 @@ const loadData = async (req, res) => {
 const joinRoom = async (req, res) => {
     const name = req.auth.username;
     const amount = req.body.amount;
+    console.log('name: ', name);
+    console.log('amount: ', amount);
     const user = await Balance.findOne({ name: name });
     if (user.balance < amount) {
         res.json('can not join this room');

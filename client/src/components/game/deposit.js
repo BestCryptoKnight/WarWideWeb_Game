@@ -4,7 +4,6 @@ import DepositModal from '../modals/DepositModal';
 
 const Deposit = () => {
     const [depositModal, setDepositModal] = useState(false);
-
     const clickDeposit = () => {
         setDepositModal(true);
     }

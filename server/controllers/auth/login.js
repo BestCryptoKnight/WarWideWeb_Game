@@ -40,19 +40,13 @@ async function login(request, response, next) {
         message: "Bad credentials",
       });
     }
-
-    // Wallet verify
-    const walletOk = bcrypt.compare(
-      walletAddress,
-      foundAccount.walletaddress
-    );
-    console.log(walletOk)
-
-    if (!walletOk) {
+  
+    if (walletAddress != foundAccount.walletaddress) {
       return response.status(400).json({
         message: "Use the registered Wallet.",
       });
     }
+  
     // Remove password from response data
     foundAccount.password = undefined;
     delete foundAccount.password;

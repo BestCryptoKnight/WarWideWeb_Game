@@ -9,6 +9,9 @@ import Deposit from '../components/game/deposit';
 import Withdraw from '../components/game/withdraw';
 import Room from '../components/game/room';
 
+// import io from "socket.io-client";
+// const socket = io.connect('http://127.0.0.1:8080');
+
 const useStyles = makeStyles({
     mainpage: {
         background: "linear-gradient(290deg, #1B1251,#390A7C, #E33B86)",
@@ -62,9 +65,9 @@ const MainPage = () => {
             </Stack>
             <div className={classes.mainImg}>
                 <div className={classes.container}>
-                    <Room price="1" className = {classes.room}/>
-                    <Room price="2" className={classes.room} />
-                    <Room price="3" className={classes.room} />
+                    <Room price="-1" balance={balance} className={classes.room} />
+                    <Room price="0.01" balance={balance} className={classes.room} />
+                    <Room price="0.02" balance={balance} className={classes.room} />
                 </div>
             </div>
         </div>
