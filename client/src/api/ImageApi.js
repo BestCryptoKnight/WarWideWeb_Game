@@ -1,7 +1,6 @@
 import axios from '../utils/axios';
 
 export const addItem = async (item) => {
-    console.log('here: ', item);
     const data = {
         id: item.id,
         description: item.description,

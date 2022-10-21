@@ -18,11 +18,12 @@ export function AuthProvider({ children }) {
   const register = (formData = {}) =>
     new Promise((resolve, reject) => {
       console.log(formData);
-
+      console.log('---------------');
       axios
         .post("api/auth/register", formData)
         .then(({ data: { data: accountData, token: accessToken } }) => {
           setAccount(accountData);
+          console.log('token: ', accessToken)
           setToken(accessToken);
           setIsLoggedIn(true);
           resolve(true);

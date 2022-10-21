@@ -5,17 +5,15 @@ import { toast } from "react-toastify";
 import {HEADER, GAME_ADDRESS} from '../constants';
 
 const getBalance = async (name) => {
-    console.log(localStorage.getItem('token'));
     const result = await axios.get(`/api/balance/${name}`,HEADER);
     return result.data.balance;
 }
 
 const getMetamaskBalance = async (_address) => {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const accounts = await provider.send("eth_requestAccounts", []);
+ //   const accounts = await provider.send("eth_requestAccounts", []);
     const balance = await provider.getBalance(_address);
     const balanceInEther = ethers.utils.formatEther(balance);
-    console.log('account address and balance: ', { selectedAddress: accounts[0], balance: balanceInEther });
     return balanceInEther;
 }
 

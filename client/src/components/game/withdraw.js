@@ -16,7 +16,6 @@ const Withdraw = () => {
                 close={() => setWithdrawModal(false)}
             />
         </>
-
     )
 }
 

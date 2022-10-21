@@ -7,6 +7,10 @@ import Stack from '@mui/material/Stack';
 
 import Deposit from '../components/game/deposit';
 import Withdraw from '../components/game/withdraw';
+import Room from '../components/game/room';
+
+// import io from "socket.io-client";
+// const socket = io.connect('http://127.0.0.1:8080');
 
 const useStyles = makeStyles({
     mainpage: {
@@ -32,6 +36,7 @@ const useStyles = makeStyles({
         fontSize: '3rem',
         opacity: '0.7',
         borderRadius: '15px',
+        cursor: 'pointer',
     }
 });
 
@@ -60,9 +65,9 @@ const MainPage = () => {
             </Stack>
             <div className={classes.mainImg}>
                 <div className={classes.container}>
-                    <button className={classes.room}>0.1ETH</button>
-                    <button className={classes.room}>0.2ETH</button>
-                    <button className={classes.room}>0.3ETH</button>
+                    <Room price="-1" balance={balance} className={classes.room} />
+                    <Room price="0.01" balance={balance} className={classes.room} />
+                    <Room price="0.02" balance={balance} className={classes.room} />
                 </div>
             </div>
         </div>
