@@ -40,7 +40,6 @@ async function login(request, response, next) {
         message: "Bad credentials",
       });
     }
-  
     if (walletAddress != foundAccount.walletaddress) {
       return response.status(400).json({
         message: "Use the registered Wallet.",

@@ -1,14 +1,17 @@
 import { Fragment, useState } from "react";
 import { useNavigate, useLocation } from 'react-router';
+
 import "./room.css";
 import { makeStyles } from "@material-ui/core/styles";
 import Profile from "../components/game/profile";
+import Counter from "../components/game/counter";
+
 import { useMediaQuery } from "react-responsive";
 import logo from "../assets/img/logo3.png";
 import logo1 from "../assets/img/startbtnLogo.png";
 import logo2 from "../assets/img/exitbtnLogo.png";
 import defaultProduct from "../assets/img/demoProduct.png";
-
+import { loadData } from "../api/RoomApi";
 import {
   AppBar,
   IconButton,
@@ -22,6 +25,8 @@ import {
 import SmileIcon from "@material-ui/icons/Mood";
 import { Input } from "@material-ui/core";
 // import { useNavigate } from "react-router-dom";
+
+// const basePicUrl = "../assets/img/demoProduct.png";
 
 const useStyles = makeStyles({
   mainboard: {
@@ -121,7 +126,7 @@ const useStyles = makeStyles({
     width: "45%",
     height: "100%",
     marginTop: "50px",
-    minWidth: "380px",
+    minWidth: "420px",
     minHeight: "650px",
     background: "#641284",
     borderRadius: "20px",
@@ -139,7 +144,6 @@ const useStyles = makeStyles({
     position: "absolute",
     width: "30%",
     height: "90%",
-    background: "black",
     marginLeft: "65%",
     marginTop: "5%",
   },
@@ -147,7 +151,7 @@ const useStyles = makeStyles({
     width: "100%",
     height: "70%",
     marginTop: "5%",
-    backgroundImage: `url(${defaultProduct})`,
+    // backgroundImage: `url(${defaultProduct})`,
     backgroundSize: "100% 100%",
   },
   inputPan: {
@@ -156,19 +160,48 @@ const useStyles = makeStyles({
     marginTop: "30px",
     background: "white",
   },
-  input:{
-    width:'100%',
-    marginTop:'2px',
-    fontSize:'30px',
-    fontFamily:'Britannic Bold',
-    fontWeight:'bold',
-    color:'#641284',
-    borderBottomColor:'#222',
-    borderBottomWidth:'30px'
-  }
+  input: {
+    width: "100%",
+    marginTop: "2px",
+    fontSize: "30px",
+    fontFamily: "Britannic Bold",
+    fontWeight: "bold",
+    color: "#641284",
+    borderBottomColor: "#222",
+    borderBottomWidth: "30px",
+  },
+  counter: {
+    width: "220px",
+    height: "220px",
+    marginTop: "100px",
+  },
+  price: {
+    width: "220px",
+    height: "70px",
+    marginTop: "100px",
+    background: "#E03889",
+    borderRadius: "20px",
+    fontFamily: "Algerian",
+    fontSize: "50px",
+    color: "white",
+    textAlign: "center",
+    display: "flex",
+  },
+  dolar: {
+    width: "70px",
+    height: "70px",
+  },
+  dolarLabel: {
+    width: "100px",
+    height: "70px",
+  },
 });
 
 export default function Room() {
+  const [picUrl, setPicUrl] = useState("");
+
+  useEffect(() => {}, [picUrl]);
+
   let isLaptopOrMobile = useMediaQuery({
     minWidth: 430,
   });
@@ -183,6 +216,8 @@ export default function Room() {
   );
 }
 
+
+
 function Mousedown(e) {
   // console.log("a");
   const id = e.target.id;
@@ -193,8 +228,32 @@ function Mousedown(e) {
 }
 
 function RoomLaptop(roomInfo) {
-  const location = useLocation();
 
+ const location = useLocation();
+  //const [baseUrl, setBaseUrl] = useState(url('../assets/img/demoProduct.png'));
+  //const img = url({baseUrl});
+  const [myStyle,setMyStyle]=useState({backgroundImage: "url('https://media.geeksforgeeks.org/wp-content/uploads/rk.png')"});
+  const [startFlag, setStart] = useState(false);
+  const PictureFetch= async () =>  {
+    await loadData()
+      .then((res) => {
+        console.log(res.data.url)
+        setMyStyle({backgroundImage: `url(${res.data.url})`});
+        //window.document.getElementById("product").backgroundImage = res.data.url;
+        console.log(window.document.getElementById("product"));
+      })
+      .catch((error) => alert(error));
+  }
+  
+  const Counting = async () => {
+    setStart(true);
+  };
+
+  function GameStart() {
+    PictureFetch();
+    Counting();
+  }
+ 
   const classes = useStyles();
   const user1 = roomInfo.roomInfo.user1;
   const user2 = roomInfo.roomInfo.user2;
@@ -222,7 +281,11 @@ function RoomLaptop(roomInfo) {
         <div className={classes.buttonsPan}>
           <div className={classes.button1}>
             {/* <IconButton className={classes.btn1main} variant="contained" color="primary">Start</IconButton> */}
-            <button id="GameStart" className={classes.btn1main}>
+            <button
+              id="GameStart"
+              className={classes.btn1main}
+              onClick={GameStart}
+            >
               Start
             </button>
             {/* <Button variant="contained" color="secondary" startIcon={<SmileIcon />}>
@@ -250,12 +313,20 @@ function RoomLaptop(roomInfo) {
           >
             Description
           </div>
-          <div className={classes.picPan}></div>
+          <div id="product" className={classes.picPan} style={myStyle}></div>
           <div className={classes.inputPan}>
             <Input className={classes.input} placeholder="$"></Input>
           </div>
         </div>
-        <div className={classes.counterPan}> </div>
+        <div className={classes.counterPan}>
+          <div className={classes.counter}>
+            <Counter startFlag={startFlag}/>
+          </div>
+          <div className={classes.price}>
+            <div className={classes.dolar}>$</div>
+            <div className={classes.dolarLabel}>?</div>
+          </div>
+        </div>
       </div>
     </div>
   );
