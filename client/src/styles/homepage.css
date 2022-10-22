@@ -1,0 +1,53 @@
+.homepage {
+    background-image: url('../assets/img/gamepage.jpg');
+    /* Used if the image is unavailable */
+    height: 90vh;
+    /* You must set a specified height */
+    background-position: center;
+    /* Center the image */
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+.homepage-container {
+    background-image: url('../assets/img/homepage.png');
+    background-position: center;
+    /* Center the image */
+    background-repeat: no-repeat;
+    background-size: 60% 80%;
+    padding-top: 70vh;
+}
+
+.row-justify-center {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.rules {
+    background-image: url('../assets/img/rules.png');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    width: 15vw;
+    height: 10vh;
+    cursor: pointer;
+}
+
+.play-now {
+    background-image: url('../assets/img/play_now.png');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    width: 20vw;
+    height: 15vh;
+    cursor: pointer;
+}
+
+.how-to-play {
+    background-image: url('../assets/img/how_to_play.png');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    width: 20vw;
+    height: 10vh;
+    cursor: pointer;
+}

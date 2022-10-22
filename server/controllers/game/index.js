@@ -1,5 +1,5 @@
 const Image = require("../../models/Image");
-const Balance = require('../../models/Balance');
+const User = require('../../models/User');
 const baseRoomUrl = 'room/';
 const baseUrl = 'https://drive.google.com/drive/folders/1l3YgdWuyB-V7mC-SLBut5lpcZZ52KLOj';
 const min = 100000;
@@ -34,11 +34,14 @@ const loadData = async (req, res) => {
 }
 
 const joinRoom = async (req, res) => {
-    const name = req.auth.username;
+    const name = req.auth.name;
     const amount = req.body.amount;
     console.log('name: ', name);
     console.log('amount: ', amount);
-    const user = await Balance.findOne({ name: name });
+    const user = await User.findOne({ name: name });
+    if (!user) {
+        res.json('Invalid User');
+    }
     if (user.balance < amount) {
         res.json('can not join this room');
     }

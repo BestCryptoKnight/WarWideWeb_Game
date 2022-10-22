@@ -1,0 +1,99 @@
+.startButtonDown {
+    opacity: 0.5;
+}
+
+.room {
+    width: 300px;
+    border-radius: 10px;
+    box-shadow: -3.828px -3.828px 6px 0px rgb(255 200 39 / 40%),
+        3px 5px 8px 0px rgb(255 82 1 / 20%);
+    padding: 35px 50px;
+    text-align: center;
+    background: transparent;
+    position: relative;
+    transition: all ease .3s;
+    overflow: hidden;
+    z-index: 1;
+    font-family: "Open Sans", sans-serif;
+    margin: 20px;
+}
+
+.room-container {
+    position: relative;
+    z-index: 1;
+}
+
+.image-box {
+    width: 100%;
+    height: 20vh;
+    margin: auto;
+    border: 1px solid rgba(255, 255, 255, 0.17);
+    border-radius: 10px;
+    background: #2e0327;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.room-image {
+    background-image: url('../assets/img/prize.png');
+    height: 10vh;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 70% 100%;
+}
+
+.text-white {
+    color: white;
+    font-family: Myriad Pro;
+}
+
+.invest-text {
+    color: white;
+    margin: 1rem;
+    font-family: Myriad Pro;
+    font-size: 18px;
+}
+
+.text-price {
+    color: #FFC827;
+    font-family: Myriad Pro;
+    margin-bottom: 1rem;
+    font-size: 30px;
+}
+
+.play-button {
+    background: linear-gradient(0deg, #ff9c19 40%, #ffdd2d 110%);
+    padding: 12px 35px;
+    font-size: 19px;
+    font-weight: 500;
+    font-family: Myriad Pro;
+    cursor: pointer;
+    outline: none;
+    -webkit-transition: all ease .3s;
+    -moz-transition: all ease .3s;
+    transition: all ease .3s;
+    border-radius: 10px;
+    z-index: 1;
+    border: 0;
+    margin-top: 3vh;
+    margin-bottom: 3vh;
+}
+
+.room-big-circle {
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 100%;
+    left: 0;
+    bottom: 0;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    transform: rotate(45deg);
+    -webkit-transition: all ease .3s;
+    -moz-transition: all ease .3s;
+    transition: all ease .3s;
+    box-shadow: -3.828px -3.828px 6px 0px rgb(255 200 39 / 40%), 3px 5px 8px 0px rgb(255 82 1 / 20%);
+}

@@ -1,7 +1,7 @@
-import { createContext, useContext, useState, useEffect } from "react";
+
+import React, { createContext, useContext, useState, useEffect } from "react";
 import axios from "../utils/axios";
-import React, { Component } from "react";
-// init context
+
 const AuthContext = createContext();
 
 // export the consumer
@@ -17,13 +17,11 @@ export function AuthProvider({ children }) {
 
   const register = (formData = {}) =>
     new Promise((resolve, reject) => {
-      console.log(formData);
-      console.log('---------------');
       axios
         .post("api/auth/register", formData)
         .then(({ data: { data: accountData, token: accessToken } }) => {
           setAccount(accountData);
-          console.log('token: ', accessToken)
+          console.log('register token: ', accessToken)
           setToken(accessToken);
           setIsLoggedIn(true);
           resolve(true);
@@ -36,11 +34,11 @@ export function AuthProvider({ children }) {
 
   const login = (formData = {}) =>
     new Promise((resolve, reject) => {
-      console.log(formData);
       axios
         .post("api/auth/login", formData)
         .then(({ data: { data: accountData, token: accessToken } }) => {
           setAccount(accountData);
+          console.log('login token: ', accessToken);
           setToken(accessToken);
           setIsLoggedIn(true);
           resolve(true);
@@ -57,11 +55,11 @@ export function AuthProvider({ children }) {
     setToken(null);
   };
 
-  const loginWithToken = async () => {
+  const getAccount = async () => {
     try {
       const {
         data: { data: accountData, token: accessToken },
-      } = await axios.get("api/auth/login", {
+      } = await axios.get("api/auth/getAccount", {
         headers: {
           authorization: `Bearer ${token}`,
         },
@@ -90,7 +88,8 @@ export function AuthProvider({ children }) {
   // This "if" statement is "true" only when refreshed, or re-opened the browser,
   // if true, it will then ask the backend for the account information (and will get them if the token hasn't expired)
   useEffect(() => {
-    if (!isLoggedIn && !account && token) loginWithToken();
+    if (!isLoggedIn && !account && token)
+      getAccount();
   }, [isLoggedIn, account, token]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
