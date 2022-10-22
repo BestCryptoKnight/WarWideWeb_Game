@@ -4,11 +4,6 @@ import logo2 from "../assets/img/logo2.png";
 import label1 from "../assets/img/label1.png";
 import label2 from "../assets/img/label2.png";
 
-
-// import io from "socket.io-client";
-
-// const socket = io.connect('http://127.0.0.1:8080');
-
 const useStyles = makeStyles({
   root: {
     borderRadius: 12,

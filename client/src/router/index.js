@@ -3,7 +3,6 @@ import Dashboard from "../pages/dashboard";
 import Room from "../pages/room";
 import Admin from '../pages/admin';
 import MainPage from '../pages/mainpage';
-
 export default function Router() {
     const router= [
       {

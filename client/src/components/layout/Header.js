@@ -11,7 +11,7 @@ import {
 import OnlineIndicator from "../OnlineIndicator";
 import AuthModal from "../modals/AuthModal";
 import { useAuth } from "../../contexts/AuthContext";
-import avatarImg from "../../asset/icon.png";
+import avatarImg from "../../assets/img/icon.png";
 import { makeStyles } from "@material-ui/core/styles";
 import { useMediaQuery } from "react-responsive";
 const useStyles = makeStyles({

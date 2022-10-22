@@ -1,4 +1,5 @@
 const ORIGIN = '*'
+const BASECLIENTURL = "http://localhost"
 const PORT = process.env.PORT || 8080
 
 const PRICE1 = -1
@@ -13,6 +14,7 @@ const JWT_SECRET = process.env.JWT_SECRET || 'unsafe_secret'
 
 module.exports = {
   ORIGIN,
+  BASECLIENTURL,
   PORT,
   MONGO_URI,
   MONGO_OPTIONS,
