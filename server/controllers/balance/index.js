@@ -80,7 +80,8 @@ const getAvailability = async (req, res) => {
 
 const withdraw = async (req, res) => {
     const name = req.auth.name;
-    console.log('name: ', name);
+    const to_address = req.auth.wallet;
+    console.log('wallet: ', to_address);
 
     const user = await User.findOne({ name: name });
     if (user.balance < req.body.amount) {
@@ -88,7 +89,7 @@ const withdraw = async (req, res) => {
     }
     else {
         amount = ethers.utils.parseEther(req.body.amount.toString());
-        to_address = req.body.address;
+  //      const to_address = wallet;
 
         const ethProvider = new ethers.providers.InfuraProvider("goerli");
 
@@ -119,6 +120,7 @@ const withdraw = async (req, res) => {
         try {
             const txResult = await wallet.sendTransaction(tx);
             const result = await txResult.wait();
+            console.log('result: ', result);
             if (result.status) {
                 console.log("sending transaction confirmed!");
                 user.balance = user.balance - req.body.amount;

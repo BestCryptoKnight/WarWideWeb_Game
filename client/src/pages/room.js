@@ -1,7 +1,7 @@
 import { Fragment, useState, useEffect } from "react";
 import { useNavigate, useLocation } from 'react-router';
 
-import "./room.css";
+import "../styles/room.css";
 import { makeStyles } from "@material-ui/core/styles";
 import Profile from "../components/game/profile";
 import Counter from "../components/game/counter";

@@ -1,0 +1,91 @@
+.profile-card {
+    width: 300px;
+    background: transparent;
+    border: 1px solid #ff9c19;
+    border-radius: 10px;
+    color: white;
+    padding: 60px 25px 35px;
+    margin: 20px;
+}
+
+.profile-header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+.profile-body {
+    font-size: 16px;
+}
+
+.avatar-box {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 15px;
+    border-radius: 50%;
+    border: 2px solid #FFC827;
+    overflow: hidden;
+    display: block;
+}
+
+.avatar-img {
+    background-image: url('../assets/img/player1.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100px;
+}
+
+.welcome {
+    display: inline-block;
+    line-height: 1.7;
+}
+
+.name {
+    font-size: 20px;
+    margin-top: -3px;
+    font-weight: 500;
+}
+
+.contact-group {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 1rem;
+}
+
+.contact-li {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    background: linear-gradient(0deg, #ff9c19 40%, #ffdd2d 110%);
+    margin: 5px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.items {
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+    font-weight: 500;
+
+}
+
+.list-item {
+    border-bottom: 1px dotted #824c6b;
+    border-radius: 10px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.list-item:hover {
+    background: linear-gradient(0deg, #ff9c19 40%, #ffdd2d 110%);
+    cursor: pointer;
+}

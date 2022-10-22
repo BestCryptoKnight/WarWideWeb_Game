@@ -17,8 +17,6 @@ export function AuthProvider({ children }) {
 
   const register = (formData = {}) =>
     new Promise((resolve, reject) => {
-      console.log(formData);
-      console.log('---------------');
       axios
         .post("api/auth/register", formData)
         .then(({ data: { data: accountData, token: accessToken } }) => {
@@ -36,7 +34,6 @@ export function AuthProvider({ children }) {
 
   const login = (formData = {}) =>
     new Promise((resolve, reject) => {
-      console.log(formData);
       axios
         .post("api/auth/login", formData)
         .then(({ data: { data: accountData, token: accessToken } }) => {

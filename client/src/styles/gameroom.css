@@ -1,0 +1,7 @@
+.gameroom {
+    background-image: url('../assets/img/gamepage.jpg');
+    min-height: 90vh;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}

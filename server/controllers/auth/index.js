@@ -19,7 +19,7 @@ const register = async (request, response) => {
             if (user) {
                 return response.status(400).json({
                     error: name,
-                    message: `An account already exists with that ${name}`,
+                    message: `An account already exists with ${name}`,
                 })
             }
 

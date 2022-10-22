@@ -8,6 +8,7 @@ const Room = (props) => {
     const navigate = useNavigate();
     const handleClick = async () => {
         console.log('I am clicked...')
+
         if (props.balance <= props.price) {
             toast('You have not enough deposited ETH')
         }
