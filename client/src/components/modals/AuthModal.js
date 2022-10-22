@@ -11,7 +11,7 @@ import Alert from '@mui/material/Alert';
 import './AuthModal.css';
 import { makeStyles } from "@material-ui/core/styles";
 import { useAuth } from "../../contexts/AuthContext";
-import logo1 from "../../asset/metamask.ico";
+import logo1 from "../../assets/img/metamask.ico";
 import { useNavigate } from 'react-router-dom';
 // import ToastService from "react-material-toast";
 

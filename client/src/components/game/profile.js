@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-
+import CircularProgress from "@mui/material/CircularProgress";
 import {
   AppBar,
   IconButton,
@@ -29,35 +29,40 @@ const useStyles = makeStyles({
     marginLeft: "9%",
   },
   userLabel: {
-    textAlign:'center',
-    fontFamily:'Arial Black',
-    fontSize:'18px',
-    color:'white',
+    textAlign: "center",
+    fontFamily: "Arial Black",
+    fontSize: "18px",
+    color: "white",
   },
   balanceLabel: {
-    fontFamily:'Arial Black',
-    fontSize:'13px',
-    color:'#00B0F0',
+    fontFamily: "Arial Black",
+    fontSize: "13px",
+    color: "#00B0F0",
     marginLeft: "-39%",
-
   },
 });
 
 export default function Profile(info) {
   const classes = useStyles();
   const user = info.user;
-  const balance = 0.12244444444;
+  let isUser = false;
+  if (user != "") isUser = true;
+  // const balance = 0.12244444444;
   //   console.log(info.user);
   // const navigate = useNavigate();
   return (
     <div className={classes.mainprofile}>
-      <div className={classes.avatar}>
-        <Avatar style={{ width: "100%", height: "100%" }} />
-        <p className={classes.userLabel}>{user}</p>
-      <div className={classes.balanceLabel}>{balance}</div>
-
-      </div>
-
+      {isUser ? (
+        <div className={classes.avatar}>
+          <Avatar style={{ width: "100%", height: "100%" }} />
+          <p className={classes.userLabel}>{user}</p>
+          <div className={classes.balanceLabel}></div>
+        </div>
+      ) : (
+        <div >
+          <CircularProgress style={{ marginTop:"45%", marginLeft:'35%'}}/>
+        </div>
+      )}
     </div>
   );
 }

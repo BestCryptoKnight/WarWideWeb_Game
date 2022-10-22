@@ -5,28 +5,21 @@ import "../styles/room.css";
 import { makeStyles } from "@material-ui/core/styles";
 import Profile from "../components/game/profile";
 import Counter from "../components/game/counter";
-
+import { getAvailability } from "../api/balanceApi";
 import { useMediaQuery } from "react-responsive";
 import logo from "../assets/img/logo3.png";
 import logo1 from "../assets/img/startbtnLogo.png";
 import logo2 from "../assets/img/exitbtnLogo.png";
 import defaultProduct from "../assets/img/demoProduct.png";
 import { loadData } from "../api/RoomApi";
-import {
-  AppBar,
-  IconButton,
-  Avatar,
-  Popover,
-  List,
-  ListSubheader,
-  ListItemButton,
-  Button,
-} from "@mui/material";
-import SmileIcon from "@material-ui/icons/Mood";
 import { Input } from "@material-ui/core";
-// import { useNavigate } from "react-router-dom";
+import { GAME_START } from "../store/action/constants";
+import { useSelector, useDispatch } from "react-redux";
 
-// const basePicUrl = "../assets/img/demoProduct.png";
+import io from "socket.io-client";
+import { BACKEND_URL } from "../constants";
+
+const socket = io.connect(BACKEND_URL);
 
 const useStyles = makeStyles({
   mainboard: {
@@ -151,7 +144,6 @@ const useStyles = makeStyles({
     width: "100%",
     height: "70%",
     marginTop: "5%",
-    // backgroundImage: `url(${defaultProduct})`,
     backgroundSize: "100% 100%",
   },
   inputPan: {
@@ -198,75 +190,153 @@ const useStyles = makeStyles({
 });
 
 export default function Room() {
-  const [picUrl, setPicUrl] = useState("");
+  const location = useLocation();
+  const url = location.state.url;
+  const user1 = location.state.user1;
+  const user2 = location.state.user2;
+  const isFull = location.state.isFull;
+  const Amount = location.state.amount;
+  // const [isFirst, setFirst] = useState(false);
 
-  useEffect(() => { }, [picUrl]);
+  if (user2 == "") {
+    socket.emit("joinRoom", { username: user1, room: url });
+  } else {
+    socket.emit("joinRoom", { username: user2, room: url });
+  }
+
+  console.log(user1, "-------------------user1");
+  console.log(user2, "-------------------user2");
+
+  const [picUrl, setPicUrl] = useState("");
+  const [socketUser2, setSocketUser2] = useState(user2);
+  const [isFilled, setIsFilled] = useState(false);
+
+  useEffect(() => {
+    socket.on("message", (data) => {
+      if (data.users.length != 1) {
+        setIsFilled(true);
+        setSocketUser2(data.users[1].username);
+      }
+      // setSocketUser2(data.users[1].username);
+    });
+  }, [isFilled]);
 
   let isLaptopOrMobile = useMediaQuery({
     minWidth: 430,
   });
 
-  const roomInfo = { user1: "esai", user2: "hades", socket: "www" };
-
   const classes = useStyles();
   return (
     <div className={classes.mainboard}>
-      {isLaptopOrMobile ? <RoomLaptop roomInfo={roomInfo} /> : <RoomMobile />}
+      {isLaptopOrMobile ? (
+        <RoomLaptop
+          user1={user1}
+          socketUser2={socketUser2}
+          isFilled={isFilled}
+          room={url}
+        />
+      ) : (
+        <RoomMobile />
+      )}
     </div>
   );
 }
 
+function RoomLaptop(state) {
+  const dispatch = useDispatch();
+  const isStart = useSelector((state) => state.gameStart);
 
-
-function Mousedown(e) {
-  // console.log("a");
-  const id = e.target.id;
-  console.log(id);
-  var controller = document.getElementById(id);
-  controller.className = "startButtonDown";
-  // e.target.class = "button2logo"
-}
-
-function RoomLaptop(roomInfo) {
-
-  const location = useLocation();
-  //const [baseUrl, setBaseUrl] = useState(url('../assets/img/demoProduct.png'));
-  //const img = url({baseUrl});
-  const [myStyle, setMyStyle] = useState({ backgroundImage: "url('https://media.geeksforgeeks.org/wp-content/uploads/rk.png')" });
+  const user1 = state.user1;
+  const user2 = state.socketUser2;
+  const isFull = state.isFilled;
+  const room = state.room;
+  const [myStyle, setMyStyle] = useState({
+    backgroundImage: `url(${defaultProduct})`,
+  });
   const [startFlag, setStart] = useState(false);
-  const PictureFetch = async () => {
-    await loadData()
-      .then((res) => {
-        console.log(res.data.url)
-        setMyStyle({ backgroundImage: `url(${res.data.url})` });
-        //window.document.getElementById("product").backgroundImage = res.data.url;
-        console.log(window.document.getElementById("product"));
-      })
-      .catch((error) => alert(error));
-  }
-
-  const Counting = async () => {
-    setStart(true);
-  };
-
-  function GameStart() {
-    PictureFetch();
-    Counting();
-  }
+  const [isFirst, setFirst] = useState(false);
+  const [bidValue, setBid] = useState();
+  const [chatText, setText] = useState();
+  const [chatReceive, setReceive] = useState("");
 
   const classes = useStyles();
-  const user1 = roomInfo.roomInfo.user1;
-  const user2 = roomInfo.roomInfo.user2;
 
+  useEffect(() => {
+    let username = "";
+    if (user2 == "") {
+      setFirst(true);
+      username = user1;
+    } else username = user2;
+    socket.on("start", () => {
+      setStart(true);
+      dispatch({ type: GAME_START, payload: true });
+    });
+    socket.on("valid", () => {
+      // let valid = getAvailability(username);
+      if (true) {
+        socket.emit("valid", { username: username, room: room });
+      } else {
+        alert("Not enough deposit");
+      }
+    });
+    socket.on("winner", (data) => {
+      // let valid = getAvailability(username);
+      console.log(data.winner.user);
+      // if(data.winner.user == username) alert(username + "You win");
+      // else alert("You lost");
+      // alert(data.winner.user + "win");
+    });
+    socket.on("chat", (data) => {
+      console.log(data.text);
+      document.getElementById("chat").value = data.text;
+      // setReceive(data.text);
+    });
+    setWinner();
+    PictureFetch();
+  }, [isFirst, startFlag, isStart]);
+
+  function GameStart() {
+    if (user2 == "") {
+      socket.emit("start", { username: user1, room: room });
+    } else {
+      socket.emit("start", { username: user2, room: room });
+    }
+  }
+  function setWinner() {
+    if (!isStart && bidValue != "") {
+      socket.emit("winner", { bidValue: bidValue });
+      // console.log(bidValue);
+    }
+  }
+  const PictureFetch = async () => {
+    if (startFlag) {
+      await loadData()
+        .then((res) => {
+          console.log(res.data.url);
+          setMyStyle({ backgroundImage: `url(${res.data.url})` });
+          console.log(window.document.getElementById("product"));
+        })
+        .catch((error) => alert(error));
+    }
+  };
+
+  const handleChange = (e) => {
+    setBid(e.target.value);
+  };
+
+  /////////chat
+  const handleChatChange = (e) => {
+    setText(e.target.value);
+  };
+  const sendData = (e) => {
+    if (chatText !== "") {
+      //encrypt the message here
+      socket.emit("chat", chatText);
+      setText("");
+    }
+  };
   return (
     <div style={{ display: "flex", overflowY: "auto" }}>
-
-      <div>url: {location.state.url}</div>
-      <div>user1: {location.state.user1}</div>
-      <div>user2: {location.state.user2}</div>
-      <div>isFull: {location.state.isFull}</div>
-      <div>Amount: {location.state.amount}</div>
-
       <div className={classes.profileEventPan}>
         <div className={classes.profilePan}>
           <div className={classes.Profile}>
@@ -278,27 +348,32 @@ function RoomLaptop(roomInfo) {
           </div>
         </div>
         <div className={classes.logo}></div>
-        <div className={classes.buttonsPan}>
-          <div className={classes.button1}>
-            {/* <IconButton className={classes.btn1main} variant="contained" color="primary">Start</IconButton> */}
-            <button
-              id="GameStart"
-              className={classes.btn1main}
-              onClick={GameStart}
-            >
-              Start
-            </button>
-            {/* <Button variant="contained" color="secondary" startIcon={<SmileIcon />}>
-              Button
-            </Button> */}
-            <div className={classes.button1logo}></div>
+        {isFull ? (
+          <div className={classes.buttonsPan}>
+            {isFirst && !isStart ? (
+              <div className={classes.button1}>
+                <button
+                  id="GameStart"
+                  className={classes.btn1main}
+                  onClick={GameStart}
+                >
+                  Start
+                </button>
+                <div className={classes.button1logo}></div>
+              </div>
+            ) : (
+              <div />
+            )}
+
+            <span className={classes.btnSpan}></span>
+            <div className={classes.button1}>
+              <button className={classes.btn1main}>Exit</button>
+              <div className={classes.button2logo}></div>
+            </div>
           </div>
-          <span className={classes.btnSpan}></span>
-          <div className={classes.button1}>
-            <button className={classes.btn1main}>Exit</button>
-            <div className={classes.button2logo}></div>
-          </div>
-        </div>
+        ) : (
+          <div></div>
+        )}
       </div>
       <span style={{ width: "150px" }}></span>
       <div className={classes.gamePan}>
@@ -315,7 +390,12 @@ function RoomLaptop(roomInfo) {
           </div>
           <div id="product" className={classes.picPan} style={myStyle}></div>
           <div className={classes.inputPan}>
-            <Input className={classes.input} placeholder="$"></Input>
+            <Input
+              className={classes.input}
+              placeholder="$"
+              onChange={handleChange}
+              type="number"
+            ></Input>
           </div>
         </div>
         <div className={classes.counterPan}>
@@ -327,6 +407,17 @@ function RoomLaptop(roomInfo) {
             <div className={classes.dolarLabel}>?</div>
           </div>
         </div>
+      </div>
+      <div>
+        <input
+          onChange={handleChatChange}
+          onKeyPress={(e) => {
+            if (e.key === "Enter") {
+              sendData();
+            }
+          }}
+        ></input>
+        <input id="chat"></input>
       </div>
     </div>
   );

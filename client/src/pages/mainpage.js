@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import mainPageImg from '../asset/mainpage.png';
+import mainPageImg from '../assets/img/mainpage.png';
 import { useAuth } from '../contexts/AuthContext';
 import Stack from '@mui/material/Stack';
 
