@@ -1,7 +1,6 @@
 
 import React, { createContext, useContext, useState, useEffect } from "react";
 import axios from "../utils/axios";
-
 const AuthContext = createContext();
 
 // export the consumer
