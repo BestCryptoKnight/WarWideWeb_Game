@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from "react-router";
 import { makeStyles } from "@material-ui/core/styles";
 import Profile from "../components/game/profile";
 import Counter from "../components/game/counter";
-
+import { getAvailability } from "../api/balanceApi";
 import { useMediaQuery } from "react-responsive";
 import logo from "../assets/img/logo3.png";
 import logo1 from "../assets/img/startbtnLogo.png";
@@ -12,7 +12,6 @@ import defaultProduct from "../assets/img/demoProduct.png";
 import { loadData } from "../api/RoomApi";
 import { Input } from "@material-ui/core";
 import { GAME_START } from "../store/action/constants";
-
 import { useSelector, useDispatch } from "react-redux";
 
 import io from "socket.io-client";
@@ -189,7 +188,6 @@ const useStyles = makeStyles({
 });
 
 export default function Room() {
-
   const location = useLocation();
   const url = location.state.url;
   const user1 = location.state.user1;
@@ -255,14 +253,43 @@ function RoomLaptop(state) {
   });
   const [startFlag, setStart] = useState(false);
   const [isFirst, setFirst] = useState(false);
+  const [bidValue, setBid] = useState();
+  const [chatText, setText] = useState();
+  const [chatReceive, setReceive] = useState("");
+
   const classes = useStyles();
 
   useEffect(() => {
-    if (user2 == "") setFirst(true);
+    let username = "";
+    if (user2 == "") {
+      setFirst(true);
+      username = user1;
+    } else username = user2;
     socket.on("start", () => {
       setStart(true);
       dispatch({ type: GAME_START, payload: true });
     });
+    socket.on("valid", () => {
+      // let valid = getAvailability(username);
+      if (true) {
+        socket.emit("valid", { username: username, room: room });
+      } else {
+        alert("Not enough deposit");
+      }
+    });
+    socket.on("winner", (data) => {
+      // let valid = getAvailability(username);
+      console.log(data.winner.user);
+      // if(data.winner.user == username) alert(username + "You win");
+      // else alert("You lost");
+      // alert(data.winner.user + "win");
+    });
+    socket.on("chat", (data) => {
+      console.log(data.text);
+      document.getElementById("chat").value = data.text;
+      // setReceive(data.text);
+    });
+    setWinner();
     PictureFetch();
   }, [isFirst, startFlag, isStart]);
 
@@ -271,6 +298,12 @@ function RoomLaptop(state) {
       socket.emit("start", { username: user1, room: room });
     } else {
       socket.emit("start", { username: user2, room: room });
+    }
+  }
+  function setWinner() {
+    if (!isStart && bidValue != "") {
+      socket.emit("winner", { bidValue: bidValue });
+      // console.log(bidValue);
     }
   }
   const PictureFetch = async () => {
@@ -286,7 +319,19 @@ function RoomLaptop(state) {
   };
 
   const handleChange = (e) => {
-    console.log(e.target.value);
+    setBid(e.target.value);
+  };
+
+  /////////chat
+  const handleChatChange = (e) => {
+    setText(e.target.value);
+  };
+  const sendData = (e) => {
+    if (chatText !== "") {
+      //encrypt the message here
+      socket.emit("chat", chatText);
+      setText("");
+    }
   };
   return (
     <div style={{ display: "flex", overflowY: "auto" }}>
@@ -303,8 +348,7 @@ function RoomLaptop(state) {
         <div className={classes.logo}></div>
         {isFull ? (
           <div className={classes.buttonsPan}>
-            
-            {(isFirst && !isStart ) ? (
+            {isFirst && !isStart ? (
               <div className={classes.button1}>
                 <button
                   id="GameStart"
@@ -361,6 +405,17 @@ function RoomLaptop(state) {
             <div className={classes.dolarLabel}>?</div>
           </div>
         </div>
+      </div>
+      <div>
+        <input
+          onChange={handleChatChange}
+          onKeyPress={(e) => {
+            if (e.key === "Enter") {
+              sendData();
+            }
+          }}
+        ></input>
+        <input id="chat"></input>
       </div>
     </div>
   );
