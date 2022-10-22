@@ -1,0 +1,47 @@
+.gamepage {
+    background-image: url('../assets/img/gamepage.jpg');
+    min-height: 90vh;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.page-header {
+    font-family: Pyriad Pro;
+    font-weight: 700;
+    font-size: 40px;
+    color: white;
+    padding: 20px;
+    text-align: center;
+
+}
+
+.page-container {
+    padding-top: 10vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.profile {
+    float: right;
+}
+
+.page-info {
+    display: inline;
+}
+
+.cards-group-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+}
+
+.rooms-group-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}

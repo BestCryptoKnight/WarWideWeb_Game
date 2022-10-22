@@ -1,19 +1,14 @@
 const express = require('express')
-const { authorizeBearerToken } = require('../middlewares/jsonwebtoken')
-const register = require('../controllers/auth/register')
-const login = require('../controllers/auth/login')
-const loginWithToken = require('../controllers/auth/login-with-token')
+const { authorizeBearerToken } = require('../middlewares/authMiddleware')
 
-// initialize router
+const authController = require('../controllers/auth')
+
 const router = express.Router()
 
-// POST at route: http://localhost:8080/auth/register
-router.post('/register', [], register)
+router.post('/register', authController.register)
 
-// POST at path: http://localhost:8080/auth/login
-router.post('/login', [], login)
+router.post('/login', authController.login)
 
-// GET at path: http://localhost:8080/auth/account
- router.get('/login', [authorizeBearerToken], loginWithToken)
+router.get('/getAccount', [authorizeBearerToken], authController.getAccount)
 
 module.exports = router

@@ -26,9 +26,9 @@ const authorizeBearerToken = async (request, response, next) => {
         })
       }
       request.auth = auth
+      console.log('auth: ', auth)
       next()
     }
-
   } catch (error) {
     console.error(error)
     return response.status(401).json({

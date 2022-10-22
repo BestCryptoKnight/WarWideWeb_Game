@@ -1,0 +1,44 @@
+.header {
+    background-color: #340b2d;
+    position: sticky;
+    top: 0;
+    border-bottom: 1px solid #824c6b;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-left: 20px;
+    padding-right: 20px;
+    align-items: center;
+    height: 10vh;
+    z-index: 10;
+}
+
+.logo-img {
+    background-image: url('../assets/img/logo.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 15vw;
+    height: 10vh;
+    cursor: pointer;
+}
+
+.menu {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.menu-item {
+    font-size: 16px;
+    font-weight: 600;
+    font-family: "Josefin Sans",
+        sans-serif;
+    min-width: 100px;
+    text-align: center;
+    color: #fff;
+    position: relative;
+    float: right;
+    text-transform: uppercase;
+    cursor: pointer;
+}

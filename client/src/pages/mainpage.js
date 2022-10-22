@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { getBalance } from '../api/UserApi';
 import { makeStyles } from '@material-ui/core/styles';
 import mainPageImg from '../assets/img/mainpage.png';
 import { useAuth } from '../contexts/AuthContext';
@@ -43,31 +42,20 @@ const useStyles = makeStyles({
 const MainPage = () => {
     const classes = useStyles();
     const { account } = useAuth();
-    const [balance, setBalance] = useState(0);
-
-    useEffect(() => {
-        getBalance(account.username)
-            .then((res) => {
-                setBalance(res);
-            })
-            .catch(err => {
-                console.log(err)
-            })
-    }, []);
-
+    console.log('account: ', account);
     return (
         <div className={classes.mainpage}
             style={{ height: "100%", width: "100%", overflowY: "auto" }}>
             <Stack spacing={2} direction="row">
-                <h5>{balance + 'ETH'}</h5>
+                <h5>{account.balance + 'ETH'}</h5>
                 <Deposit />
                 <Withdraw />
             </Stack>
             <div className={classes.mainImg}>
                 <div className={classes.container}>
-                    <Room price="-1" balance={balance} className={classes.room} />
-                    <Room price="0.01" balance={balance} className={classes.room} />
-                    <Room price="0.02" balance={balance} className={classes.room} />
+                    <Room price="-1" balance={account.balance} className={classes.room} />
+                    <Room price="0.01" balance={account.balance} className={classes.room} />
+                    <Room price="0.02" balance={account.balance} className={classes.room} />
                 </div>
             </div>
         </div>

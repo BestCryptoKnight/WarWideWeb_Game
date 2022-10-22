@@ -8,7 +8,7 @@ import {
   Icon,
 } from "@mui/material";
 import Alert from '@mui/material/Alert';
-import './AuthModal.css'
+import './AuthModal.css';
 import { makeStyles } from "@material-ui/core/styles";
 import { useAuth } from "../../contexts/AuthContext";
 import logo1 from "../../assets/img/metamask.ico";
@@ -66,15 +66,11 @@ export default function AuthModal({
   async function walletConnect(e) {
 
     if (typeof window.ethereum !== "undefined") {
-
       const useraddress = await window.ethereum.request({
         method: "eth_requestAccounts",
       });
-      const { name, value } = e.target;
-      console.log(name)
-      await setFormData((prev) => ({ ...prev, "walletAddress": useraddress[0] }));
+      setFormData((prev) => ({ ...prev, "wallet": useraddress[0] }));
       setWalletState(true);
-
     } else {
       setWalletState(false);
       window.open("https://metamask.io/download/");
@@ -99,8 +95,8 @@ export default function AuthModal({
   const classes = useStyles();
 
 
-  const disabledLoginButton = !formData["username"] || !formData["password"];
-  const disabledRegisterButton = !formData["username"] || !formData["password"];
+  const disabledLoginButton = !formData["name"] || !formData["password"];
+  const disabledRegisterButton = !formData["name"] || !formData["password"];
 
   return (
 
@@ -158,7 +154,7 @@ function LoginForm({ formData, handleChange, onClick }) {
         <Button
           variant="outlined"
           onClick={onClick}
-          name="walletAddress"
+          name="wallet"
         >
           <Icon className={classes.walletBtn} ></Icon>
           <span style={{ width: '20px' }} ></span>
@@ -168,9 +164,9 @@ function LoginForm({ formData, handleChange, onClick }) {
       <div className={classes.span}></div>
       <TextField
         label="Username"
-        name="username"
+        name="name"
         type="text"
-        value={formData["username"] || ""}
+        value={formData["name"] || ""}
         onChange={handleChange}
         variant="filled"
         sx={textFieldSx}
@@ -202,7 +198,7 @@ function RegisterForm({ formData, handleChange, onClick }) {
         <Button
           variant="outlined"
           onClick={onClick}
-          name="walletAddress"
+          name="wallet"
         >
           <Icon className={classes.walletBtn}></Icon>
           <span style={{ width: '20px' }}></span>
@@ -212,9 +208,9 @@ function RegisterForm({ formData, handleChange, onClick }) {
       <div className={classes.span}></div>
       <TextField
         label="Username"
-        name="username"
+        name="name"
         type="text"
-        value={formData["username"] || ""}
+        value={formData["name"] || ""}
         onChange={handleChange}
         variant="filled"
         sx={textFieldSx}

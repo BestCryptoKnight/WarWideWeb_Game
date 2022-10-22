@@ -1,25 +1,24 @@
 import axios from "../utils/axios";
 import { ethers } from 'ethers';
-import { toast } from "react-toastify";
-
-import {HEADER, GAME_ADDRESS} from '../constants';
+import { HEADER, GAME_ADDRESS } from '../constants';
+import toast from "react-hot-toast";
 
 const getBalance = async (name) => {
-    const result = await axios.get(`/api/balance/${name}`,HEADER);
+    const result = await axios.get(`/api/balance/${name}`, HEADER);
     return result.data.balance;
 }
 
 const getMetamaskBalance = async (_address) => {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
- //   const accounts = await provider.send("eth_requestAccounts", []);
+    //   const accounts = await provider.send("eth_requestAccounts", []);
     const balance = await provider.getBalance(_address);
     const balanceInEther = ethers.utils.formatEther(balance);
     return balanceInEther;
 }
 
-const deposit = async (username, amount) => {
+const deposit = async (amount) => {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = await provider.getSigner();
+    const signer = provider.getSigner();
     const gasPrice = await provider.getGasPrice();
     const estimateGas = await provider.estimateGas({
         to: GAME_ADDRESS,
@@ -34,8 +33,8 @@ const deposit = async (username, amount) => {
 
     try {
         const transaction = await signer.sendTransaction(tx);
-        toast.promise(transaction.wait(), {
-            pending: `Transaction submitted. Wait for confirmation...`,
+        await toast.promise(transaction.wait(), {
+            loading: `Transaction submitted. Wait for confirmation...`,
             success: 'Transaction confirmed! 👌',
             error: 'Transaction failed! 🤯',
         });
@@ -54,15 +53,9 @@ const deposit = async (username, amount) => {
 
 }
 
-const withdraw = async (name, address, amount) => {
+const withdraw = async (amount) => {
     try {
-        const data = {
-            name: name,
-            address: address,
-            amount: amount,
-        }
-        const result = await axios.post('/api/balance/withdraw', data, HEADER);
-        console.log(result);
+        await axios.post('/api/balance/withdraw', { amount: amount }, HEADER);
     } catch (error) {
         console.log(error);
     }

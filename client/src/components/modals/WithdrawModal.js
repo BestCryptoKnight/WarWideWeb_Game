@@ -12,7 +12,6 @@ import { useAuth } from "../../contexts/AuthContext";
 import Alert from '@mui/material/Alert';
 import { withdraw } from '../../api/UserApi';
 import { ToastContainer, toast } from 'react-toastify';
-import { getBalance } from "../../api/UserApi";
 import 'react-toastify/dist/ReactToastify.css';
 
 const useStyles = makeStyles({
@@ -44,7 +43,6 @@ export default function WithdrawModal({
 }) {
     const { account } = useAuth();
     const [amount, setAmount] = useState(0.1);
-    const [walletBalance, setWalletBalance] = useState();
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const classes = useStyles();
@@ -58,15 +56,14 @@ export default function WithdrawModal({
         try {
             // e.preventDefault();
             // setLoading(true);
-            console.log('account: ', account.username, account.walletaddress, amount);
-            if (amount > walletBalance) {
+            if (amount > account.balance) {
                 console.log("insufficient amount");
                 toast("InSufficient Amount");
             }
             else {
                 console.log('waiting for confirm')
                 toast("Waiting for confirm")
-                await withdraw(account.username, account.walletaddress, amount);
+                await withdraw(account.username, account.wallet, amount);
                 close();
             }
             // setLoading(false);
@@ -75,12 +72,6 @@ export default function WithdrawModal({
         }
     };
 
-    useEffect(() => {
-        getBalance(account.username)
-            .then((result) =>
-                setWalletBalance(result)
-            )
-    }, []);
     return (
         <Dialog open={open} onClose={close}
             className="c-modal"
@@ -88,7 +79,7 @@ export default function WithdrawModal({
             <WithdrawForm
                 classeName={classes.dialog}
                 amount={amount}
-                message={"Available Maximum Amount is " + walletBalance + " ETH"}
+                message={"Available Maximum Amount is " + account.balance + " ETH"}
                 handleChange={handleChange}
             />
             {error && <span className="error">{error}</span>}
