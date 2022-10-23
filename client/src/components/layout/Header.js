@@ -1,8 +1,9 @@
 import React from "react";
 import { useMediaQuery } from "react-responsive";
-import '../../styles/header.css'
-import { useNavigate } from 'react-router-dom'
-import { useAuth } from '../../contexts/AuthContext'
+import "../../styles/header.css";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
+import { Avatar } from "@material-ui/core";
 
 export default function Header() {
   const navigate = useNavigate();
@@ -14,22 +15,42 @@ export default function Header() {
 
   const handleLogOutClick = () => {
     logout();
-    navigate('/');
-  }
+    navigate("/");
+  };
 
   const handleLogInClick = () => {
-    navigate('/signin');
-  }
+    navigate("/signin");
+  };
 
   return (
-    <div className="header">
-      <div className="logo-img" onClick={() => navigate('/')}></div>
-      <div className="menu">
-        {isLoggedIn ? <div className='menu-item' onClick={handleLogOutClick}> LogOut </div> : <div className='menu-item' onClick={handleLogInClick}> SignIn </div>}
-        <div className='menu-item' onClick={() => navigate('/')}>home</div>
-        <div className='menu-item'>faq</div>
-        <div className='menu-item'>contact</div>
-      </div>
+    <div className={isLaptopOrMobile ? "header" : "header-mobile"}>
+      <div className="logo-img" onClick={() => navigate("/")}></div>
+      {isLaptopOrMobile ? (
+        <div className="menu">
+          {isLoggedIn ? (
+            <div className="menu-item" onClick={handleLogOutClick}>
+              {" "}
+              LogOut{" "}
+            </div>
+          ) : (
+            <div className="menu-item" onClick={handleLogInClick}>
+              {" "}
+              SignIn{" "}
+            </div>
+          )}
+          <div className="menu-item" onClick={() => navigate("/")}>
+            home
+          </div>
+          <div className="menu-item">faq</div>
+          <div className="menu-item">contact</div>
+        </div>
+      ) : (
+        <div>
+          <Avatar>
+            
+          </Avatar>
+        </div>
+      )}
     </div>
-  )
+  );
 }

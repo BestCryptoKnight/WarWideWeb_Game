@@ -1,15 +1,13 @@
-import React from 'react'
-import '../styles/gameroom.css'
-import GameBoard from '../components/game/gameboard'
+import React from "react";
+import "../styles/gameroom.css";
+import GameBoard from "../components/game/gameboard";
 
 const GameRoom = () => {
-    return (
-        <div className='gameroom'>
-            <div>
-                <GameBoard />
-            </div>
-        </div>
-    )
-}
+  return (
+    <div>
+      <GameBoard />
+    </div>
+  );
+};
 
 export default GameRoom;
