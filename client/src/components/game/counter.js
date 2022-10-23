@@ -14,16 +14,20 @@ const INITIAL_COUNT = 10;
 
 const useStyles = makeStyles({
   mainprofile: {
-    background: "#E03889",
+    // background: "#E03889",
+    border:"1px solid #B32B4C",
     width: "100%",
     height: "100%",
     borderRadius: "50%",
     textAlign: "center",
-    fontFamily: "Algerian",
-    fontSize: "60px",
-    paddingTop: "70px",
+    fontFamily: "Myriad Pro",
+    fontSize: "35px",
     color: "white",
+    marginLeft:'auto',
+    marginRight: 'auto',
+    alignContent:'center'
   },
+
 });
 
 export default function Counter(info) {
@@ -41,7 +45,7 @@ export default function Counter(info) {
 
   // const isStart = useSelector(GameState => GameState.GameState);
   const handleStart = () => {
-    console.log(start, "10101010")
+    console.log(start, "10101010");
     isStart ? setStatus(STATUS.STARTED) : setStatus(STATUS.STOPPED);
   };
   const handleStop = () => {
@@ -76,8 +80,8 @@ export default function Counter(info) {
 
   return (
     <div className={classes.mainprofile}>
-      {/* {twoDigits(hoursToDisplay)}:{twoDigits(minutesToDisplay)}: */}
       {twoDigits(secondsToDisplay)}
+      {/* {twoDigits(hoursToDisplay)}:{twoDigits(minutesToDisplay)}: */}
     </div>
   );
 }
