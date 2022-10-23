@@ -51,6 +51,12 @@
   margin-right: auto;
   margin-top: 40px;
   min-height: 600px;
+  transition: all 0.5s ease-out;
+  
+}
+.game-mainboard-anim{
+  margin-top: 100%;
+  width: 100%;
 }
 .game-mainboard-mobile {
   width: 90%;
@@ -59,6 +65,11 @@
   margin-right: auto;
   /* margin-top: 5vh; */
   height: 100%;
+  transition: all 0.5s ease-out;
+
+}
+.game-mainboard-mobile-anim {  
+  margin-top: 800px;
 }
 .picture-board {
   background-color: #6f2550;

@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../../styles/gameboard.scss";
 import { useMediaQuery } from "react-responsive";
 import { makeStyles } from "@material-ui/core/styles";
 import Counter from "./counter";
-import { Input, TextField } from "@mui/material";
+import { TextField } from "@mui/material";
 import Chat from "./chat";
+import {animationFunc} from "../../functions/animations"
 
 const useStyles = makeStyles({
   root: {
@@ -43,8 +44,11 @@ const GameBoard = () => {
     minWidth: 430,
   });
 
-  
   const classes = useStyles();
+
+  useEffect(() => {
+    {isLaptopOrMobile? animationFunc("gameboard", "game-mainboard") : animationFunc("gameboard", "game-mainboard-mobile")}
+  }, []);
 
   return (
     <>
@@ -52,8 +56,9 @@ const GameBoard = () => {
         className={isLaptopOrMobile ? "gameboard-laptop" : "gameboard-mobile"}
       >
         <div
+          id="gameboard"
           className={
-            isLaptopOrMobile ? "game-mainboard" : "game-mainboard-mobile"
+            isLaptopOrMobile ? "game-mainboard-anim" : "game-mainboard-mobile-anim"
           }
         >
           <div
