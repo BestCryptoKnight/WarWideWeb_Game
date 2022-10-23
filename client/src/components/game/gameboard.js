@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate, useLocation } from 'react-router';
 import "../../styles/gameboard.scss";
 import { useMediaQuery } from "react-responsive";
 import { makeStyles } from "@material-ui/core/styles";
 import Counter from "./counter";
 import { TextField } from "@mui/material";
 import Chat from "./chat";
-import {animationFunc} from "../../functions/animations"
+import { animationFunc } from "../../functions/animations";
 
 const useStyles = makeStyles({
   root: {
@@ -46,8 +47,20 @@ const GameBoard = () => {
 
   const classes = useStyles();
 
+  const location = useLocation();
+  // const url = location.state.url;
+  // const user1 = location.state.user1;
+  // const user2 = location.state.user2;
+  // const isFull = location.state.isFull;
+  // const Amount = location.state.amount;
+  // const username = {isFull? user1 : user2};
   useEffect(() => {
-    {isLaptopOrMobile? animationFunc("gameboard", "game-mainboard") : animationFunc("gameboard", "game-mainboard-mobile")}
+    {
+      isLaptopOrMobile
+        ? animationFunc("gameboard", "game-mainboard")
+        : animationFunc("gameboard", "game-mainboard-mobile");
+    }
+
   }, []);
 
   return (
@@ -58,7 +71,9 @@ const GameBoard = () => {
         <div
           id="gameboard"
           className={
-            isLaptopOrMobile ? "game-mainboard-anim" : "game-mainboard-mobile-anim"
+            isLaptopOrMobile
+              ? "game-mainboard-anim"
+              : "game-mainboard-mobile-anim"
           }
         >
           <div
