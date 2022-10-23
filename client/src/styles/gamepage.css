@@ -1,23 +1,14 @@
 .gamepage {
-    background-image: url('../assets/img/gamepage.jpg');
-    min-height: 90vh;
+    background-image: url('../assets/img/background.jpg');
+    min-height: 100vh;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    padding-top: 15vh;
 }
 
-.page-header {
-    font-family: "Pyriad Pro";
-    font-weight: 700;
-    font-size: 40px;
-    color: white;
-    padding: 20px;
-    text-align: center;
-
-}
-
-.page-container {
-    padding-top: 10vh;
+.gamepage-container {
+    padding-top: 10px;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -44,4 +35,20 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
+}
+
+@media (max-width: 1199px) {
+    .profile {
+        display: none;
+    }
+}
+
+@media (max-width: 899px) {
+    .cards-group-container {
+        flex-direction: column;
+    }
+
+    .rooms-group-container {
+        flex-direction: column;
+    }
 }
