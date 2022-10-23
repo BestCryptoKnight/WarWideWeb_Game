@@ -62,7 +62,7 @@ const login = async (request, response) => {
     }
     else {
         try {
-            const { username, password, walletAddress } = request.body;
+            const { name, password, wallet } = request.body;
             const user = await User.findOne({ name });
             if (!user) {
                 return response.status(400).json({

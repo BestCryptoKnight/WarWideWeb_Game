@@ -9,48 +9,75 @@ export default function Header() {
   const navigate = useNavigate();
   const { isLoggedIn, logout } = useAuth();
 
-  let isLaptopOrMobile = useMediaQuery({
-    minWidth: 430,
-  });
-
   const handleLogOutClick = () => {
     logout();
-    navigate("/");
-  };
+    navigate('/');
+    triggerMobile();
+
+  }
 
   const handleLogInClick = () => {
-    navigate("/signin");
-  };
+    navigate('/signin');
+    triggerMobile();
+  }
 
+  const handleHomeClick = () => {
+    navigate('/');
+    triggerMobile();
+
+  }
+  const handleContactClick = () => {
+    navigate('/contact')
+    triggerMobile();
+
+  }
+
+  const handleFaqClick = () => {
+    navigate('/faq');
+    triggerMobile();
+
+  }
+
+  const triggerMobile = () => {
+    let classList = document.getElementsByClassName("menu")[0].classList;
+    if (classList.contains('active')) classList.remove("active");
+    else classList.add("active");
+  }
+
+  let string = ''
+  if (isLoggedIn)
+    string = <div onClick={handleLogOutClick}>LogOut</div>
+  else
+    string = <div onClick={handleLogInClick}>LogIn</div>
   return (
-    <div className={isLaptopOrMobile ? "header" : "header-mobile"}>
-      <div className="logo-img" onClick={() => navigate("/")}></div>
-      {isLaptopOrMobile ? (
-        <div className="menu">
-          {isLoggedIn ? (
-            <div className="menu-item" onClick={handleLogOutClick}>
-              {" "}
-              LogOut{" "}
+    <div className="header sticky">
+      <div className="header-container">
+        <div className="header-bottom">
+          <div className="header-bottom-area align-items-center">
+            <div className="logo-img"></div>
+            <ul className="menu">
+              <li>
+                {string}
+              </li>
+              <li>
+                <div onClick={handleHomeClick}>Home</div>
+              </li>
+              <li>
+                <div onClick={handleFaqClick}>Faq</div>
+              </li>
+              <li>
+                <div onClick={handleContactClick}>Contact</div>
+              </li>
+              <button className="btn-close btn-close-white d-lg-none" onClick={triggerMobile}></button>
+            </ul>
+            <div className="header-trigger-wrapper d-flex d-lg-none align-items-center">
+              <div className="header-trigger me-4" onClick={triggerMobile} >
+                <span></span>
+              </div>
             </div>
-          ) : (
-            <div className="menu-item" onClick={handleLogInClick}>
-              {" "}
-              SignIn{" "}
-            </div>
-          )}
-          <div className="menu-item" onClick={() => navigate("/")}>
-            home
           </div>
-          <div className="menu-item">faq</div>
-          <div className="menu-item">contact</div>
         </div>
-      ) : (
-        <div>
-          <Avatar>
-            
-          </Avatar>
-        </div>
-      )}
+      </div>
     </div>
   );
 }

@@ -1,9 +1,8 @@
-.card {
-    background: #340b2d;
-    box-shadow: -3.828px -3.828px 6px 0px rgb(255 200 39 / 40%), 3px 5px 8px 0px rgb(255 82 1 / 20%);
+.card-info {
+    background: #340b2d !important;
     padding: 20px;
-    border-radius: 10px;
-    border: 1px solid #FFC827;
+    border-radius: 10px !important;
+    border: 1px solid #FFC827 !important;
     position: relative;
     -webkit-transition: all ease .3s;
     -moz-transition: all ease .3s;
@@ -17,6 +16,10 @@
     box-sizing: inherit;
 }
 
+.card-info:hover {
+    box-shadow: -3.828px -3.828px 10px 0px rgb(255 200 39 / 40%), 3px 5px 10px 0px rgb(255 82 1 / 20%);
+}
+
 .card-content {
     display: block;
 }
@@ -25,12 +28,12 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    width: 50%;
 }
 
 .input-form {
     display: flex;
     flex-direction: column;
-    max-width: 150px;
     justify-content: center;
     text-align: center;
 }
@@ -53,7 +56,6 @@
 .current-balance {
     padding: auto;
     margin-bottom: 1.5rem;
-    font-family: Myriad Pro;
     color: white;
     font-size: 36px;
     font-weight: 700;
@@ -62,7 +64,6 @@
 
 .white-text {
     text-transform: uppercase;
-    font-family: Myriad Pro;
     color: white;
     font-size: 16px;
 }
@@ -73,7 +74,7 @@
     align-items: center;
 }
 
-.card-img {
+.card-info-img {
     color: #fff;
     background: linear-gradient(0deg, #ff9c19 40%, #ffdd2d 110%);
     font-size: 36px;
@@ -90,11 +91,34 @@
     padding: 10px 10px;
     font-size: 16px;
     font-weight: 700;
-    font-family: Myriad Pro;
     cursor: pointer;
     outline: none;
     border-radius: 10px;
     border: 0;
     color: white;
     text-transform: uppercase;
+}
+
+@media (max-width: 1399px) and (min-width: 700px) {
+    .card-info {
+        width: 250px;
+    }
+
+    .card-info-img {
+        font-size: 30px;
+        width: 70px;
+        height: 70px;
+    }
+
+    .current-balance {
+        font-size: 30px;
+    }
+
+    .white-text {
+        font-size: 12px;
+    }
+
+    .card-input-field {
+        font-size: 12px;
+    }
 }

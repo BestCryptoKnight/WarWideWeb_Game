@@ -1,19 +1,20 @@
 .signup {
-    background-image: url('../assets/img/gamepage.jpg');
-    height: 90vh;
+    background-image: url('../assets/img/background.jpg');
     background-position: center;
     background-repeat: no-repeat;
     background-size: 100% 100%;
     align-items: center;
+    min-height: 100vh;
+    padding-top: 25vh;
 }
 
 .signup-container {
     display: flex;
-    padding-top: 15vh;
     flex-direction: row;
     justify-content: center;
     gap: 10vw;
     align-items: center;
+    padding: 10px;
 }
 
 .account-form-wrapper {
@@ -41,10 +42,12 @@
 
 .account-logo {
     background-image: url('../assets/img/logo.png');
+    background-size: 100% 100%;
     background-position: center;
     background-repeat: no-repeat;
-    height: 20vh;
-    background-size: cover;
+    width: 150px;
+    height: 10vh;
+    margin: 20px auto;
 }
 
 .account-content {
@@ -110,11 +113,11 @@
 
 .wallet-text {
     position: relative;
-    margin-left: 70px;
     font-size: 19px;
     font-weight: 500;
-    font-family: "Josefin Sans", sans-serif;
+    width: 100%;
     outline: none;
+    text-align: center;
     color: white;
 }
 
@@ -134,6 +137,11 @@
     border: 0;
     margin-top: 3vh;
     margin-bottom: 3vh;
+}
+
+.cmn-btn:hover {
+    box-shadow: -3.828px -3.828px 10px 0px rgb(255 200 39 / 40%),
+        3px 5px 10px 0px rgb(255 82 1 / 20%);
 }
 
 .text-base {
@@ -159,4 +167,14 @@
     color: #FFC827;
     margin-left: 10px;
     cursor: pointer;
+}
+
+@media (max-width:900px) {
+    .signup-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 10vw;
+        align-items: center;
+    }
 }

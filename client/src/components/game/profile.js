@@ -1,68 +1,53 @@
-import { useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import CircularProgress from "@mui/material/CircularProgress";
-import {
-  AppBar,
-  IconButton,
-  Avatar,
-  Popover,
-  List,
-  ListSubheader,
-  ListItemButton,
-} from "@mui/material";
-import { margin } from "@mui/system";
-// import { useNavigate } from "react-router-dom";
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import '../../styles/profile.css'
+import { useAuth } from '../../contexts/AuthContext';
+const Profile = (props) => {
+    const { account, logout } = useAuth();
+    const navigate = useNavigate();
+    const handleSignOut = () => {
+        logout();
+        navigate('/');
+    }
 
-const useStyles = makeStyles({
-  mainprofile: {
-    background: "#641284",
-    width: "100%",
-    height: "100%",
-    borderRadius: "15px",
-  },
-  avatar: {
-    position: "absolute",
-    width: "70px",
-    height: "70px",
-    marginTop: "10px",
-    borderRadius: "35px",
-    marginLeft: "9%",
-  },
-  userLabel: {
-    textAlign: "center",
-    fontFamily: "Arial Black",
-    fontSize: "18px",
-    color: "white",
-  },
-  balanceLabel: {
-    fontFamily: "Arial Black",
-    fontSize: "13px",
-    color: "#00B0F0",
-    marginLeft: "-39%",
-  },
-});
-
-export default function Profile(info) {
-  const classes = useStyles();
-  const user = info.user;
-  let isUser = false;
-  if (user != "") isUser = true;
-  // const balance = 0.12244444444;
-  //   console.log(info.user);
-  // const navigate = useNavigate();
-  return (
-    <div className={classes.mainprofile}>
-      {isUser ? (
-        <div className={classes.avatar}>
-          <Avatar style={{ width: "100%", height: "100%" }} />
-          <p className={classes.userLabel}>{user}</p>
-          <div className={classes.balanceLabel}></div>
-        </div>
-      ) : (
-        <div >
-          <CircularProgress style={{ marginTop:"45%", marginLeft:'35%'}}/>
-        </div>
-      )}
-    </div>
-  );
+    let string = '';
+    if (account)
+        string = account.name
+    else
+        string = 'No Name'
+    return (
+        <div className="profile-card">
+            <div className="profile-header">
+                <div className="avatar-box">
+                    <div className="avatar-img" />
+                </div>
+                <div className="welcome">Welcome</div>
+                <div className="name">{string}</div>
+                <div className="contact-group">
+                    <div className="contact-li">
+                        <i className="fa fa-envelope"></i>
+                    </div>
+                    <div className="contact-li">
+                        <i className="fa fa-edit"></i>
+                    </div>
+                    <div className="contact-li">
+                        <i className="fa fa-bell"></i>
+                    </div>
+                </div>
+            </div>
+            <div className="profile-body">
+                <div className="items">
+                    <div className="list-item">Dashboard</div>
+                    <div className="list-item">Deposit History</div>
+                    <div className="list-item">Withdraw History</div>
+                    <div className="list-item">Transaction History</div>
+                    <div className="list-item">Account Settings</div>
+                    <div className="list-item">Security Settings</div>
+                    <div className="list-item" onClick={handleSignOut}>Sign Out</div>
+                </div>
+            </div>
+        </div >
+    )
 }
+
+export default Profile;

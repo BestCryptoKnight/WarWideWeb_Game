@@ -5,10 +5,10 @@ const authController = require('../controllers/auth')
 
 const router = express.Router()
 
+router.get('/getAccount', [authorizeBearerToken], authController.getAccount)
+
 router.post('/register', authController.register)
 
 router.post('/login', authController.login)
-
-router.get('/getAccount', [authorizeBearerToken], authController.getAccount)
 
 module.exports = router

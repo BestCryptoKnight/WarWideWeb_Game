@@ -43,7 +43,7 @@ const SignIn = () => {
             else {
                 await toast.promise(login(formData),
                     {
-                        loading: 'Saving...',
+                        loading: 'connecting...',
                         success: <b>Welcome!</b>,
                         error: <b>Login Failed.</b>,
                     })

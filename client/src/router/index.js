@@ -4,7 +4,6 @@ import { useRoutes } from "react-router-dom";
 import Homepage from "../pages/homepage";
 import Room from "../pages/room";
 import Admin from '../pages/admin';
-import MainPage from '../pages/mainpage';
 import HowToPlay from "../pages/howtoplay";
 import Rule from "../pages/rules";
 import SignUp from "../pages/signup";
@@ -26,10 +25,6 @@ export default function Router() {
     {
       path: "/admin",
       element: <Admin />
-    },
-    {
-      path: '/main',
-      element: <MainPage />
     },
     {
       path: '/rules',
