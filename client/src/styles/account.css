@@ -1,0 +1,39 @@
+p {
+    font-size: 16px;
+}
+
+.security {
+    padding: 5px;
+}
+
+.custom--card {
+    margin-top: 15px;
+    width: 1010px;
+    padding: 10px;
+    background-color: #340b2d;
+}
+
+.iconImg {
+    text-align: center;
+}
+
+.icon{
+    color: #fff !important;
+}
+
+.form-label {
+    float: left;
+}
+
+input {
+    width: 100% !important;
+    background-color: #350b2d !important;
+    color: white !important;
+    border: 1px solid #824c6b !important;
+}
+
+@media (max-width: 1399px) {
+    .custom--card {
+        width: auto;
+    }
+}

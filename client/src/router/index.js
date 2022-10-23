@@ -19,8 +19,8 @@ export default function Router() {
       element: <Homepage />
     },
     {
-      path: "main/room",
-      element: <Room />
+      path: "game/room",
+      element: <GameRoom />
     },
     {
       path: "/admin",
