@@ -1,0 +1,21 @@
+.table--responsive--md {
+    margin: 20px;
+}
+
+.table tbody tr:nth-child(odd) {
+    background: #2e0327;
+}
+
+@media (max-width: 767px) {
+    .table{
+        width: 90vw!important;
+    }
+    .table--responsive--md tbody tr td {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 15px;
+        border: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.17);
+    }
+}
