@@ -7,27 +7,17 @@
     padding-top: 15vh;
 }
 
-<<<<<<< HEAD
 .gamepage-container {
     padding-top: 10px;
-=======
-.page-header {
-    font-family: "Pyriad Pro";
     font-weight: 700;
     font-size: 40px;
     color: white;
-    padding: 20px;
     text-align: center;
-
-}
-
-.page-container {
-    padding-top: 10vh;
->>>>>>> e9d2f035a344911ff8c8c070c8305e53450dc72e
     display: flex;
     flex-direction: row;
     justify-content: center;
 }
+
 
 .profile {
     float: right;

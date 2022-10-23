@@ -9,7 +9,7 @@ const Profile = (props) => {
         logout();
         navigate('/');
     }
-
+    console.log('props:', props);
     let string = '';
     if (account)
         string = account.name
@@ -37,12 +37,12 @@ const Profile = (props) => {
             </div>
             <div className="profile-body">
                 <div className="items">
-                    <div className="list-item">Dashboard</div>
-                    <div className="list-item">Deposit History</div>
-                    <div className="list-item">Withdraw History</div>
-                    <div className="list-item">Transaction History</div>
-                    <div className="list-item">Account Settings</div>
-                    <div className="list-item">Security Settings</div>
+                    <div className="list-item" onClick = {()=>props.setId(0)}>Dashboard</div>
+                    <div className="list-item" onClick={()=>props.setId(1)}>Deposit History</div>
+                    <div className="list-item" onClick={ () => props.setId(2)}>Withdraw History</div>
+                    <div className="list-item" onClick={() => props.setId(3)}>Transaction History</div>
+                    <div className="list-item" onClick={() => props.setId(4)}>Account Settings</div>
+                    <div className="list-item" onClick={() => props.setId(5)}>Security Settings</div>
                     <div className="list-item" onClick={handleSignOut}>Sign Out</div>
                 </div>
             </div>

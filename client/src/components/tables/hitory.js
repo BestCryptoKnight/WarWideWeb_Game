@@ -2,12 +2,21 @@ import React from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import '../../styles/table.css';
 
-const History = () => {
+const History = (props) => {
     const { account } = useAuth();
     let transactions = '';
-
-    if (account)
+    if (account) {
         transactions = account.history;
+        if(props.filter === 'deposit') {
+            transactions = account.history.filter((item) => item.category === 'deposit');
+        }
+        else if(props.filter === 'withdraw') {
+            transactions = account.history.filter((item) => item.category === 'withdraw');
+
+        }
+        else
+            transactions = account.history;
+    }
     return (
         <div className="table--responsive--md">
             <table className="table">

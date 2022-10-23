@@ -43,7 +43,7 @@
     height: 40px;
     padding: 10px;
     outline: 0;
-    font-size: 16px;
+    font-size: 12px;
     border: 1px solid rgba(255, 255, 255, 0.17);
     border-radius: 5px;
     outline: 0;
@@ -89,7 +89,7 @@
 .submit-button {
     background: linear-gradient(0deg, #ff9c19 40%, #ffdd2d 110%);
     padding: 10px 10px;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 700;
     cursor: pointer;
     outline: none;
