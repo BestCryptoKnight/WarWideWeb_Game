@@ -28,6 +28,8 @@
     height: 20vh;
     margin: auto;
     border: 1px solid rgba(255, 255, 255, 0.17);
+    /* background-image: url('../assets/img/prize.png');
+    background-size: 100% 100%; */
     border-radius: 10px;
     background: #2e0327;
     padding: 10px;
@@ -37,6 +39,7 @@
 }
 
 .room-image {
+    width: 100%;
     background-image: url('../assets/img/prize.png');
     height: 10vh;
     background-position: center;
