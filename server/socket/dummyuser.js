@@ -6,16 +6,12 @@ function join_User(id, username, room) {
   const p_user = { id, username, room };
   if (c_users.findIndex((p_user) => p_user.id === id) == -1) {
     c_users.push(p_user);
-    console.log(c_users, "@@@@@@@@@@");
   }
   return p_user;
 }
 
 function broadcastToRoomUsers(room) {
-  // console.log(c_users, "---------------------");
   const room_users = c_users.filter((user) => user.room === room);
-  // console.log("-----------------------------------");
-
   return room_users;
 }
 
@@ -33,6 +29,22 @@ function user_Disconnect(id) {
   }
 }
 
+function setWinner(bidValueArray, price) {
+  let winner = {};
+  console.log(bidValueArray);
+  if (bidValueArray[0].value == "") {
+    return bidValueArray[1];
+  } else if (bidValueArray[1].value == "") {
+    return bidValueArray[0];
+  } else {
+    winner =
+      Math.abs(bidValueArray[0].value - price) >
+      Math.abs(bidValueArray[1].value - price)
+        ? bidValueArray[1]
+        : bidValueArray[0];
+  }
+  return winner;
+}
 // async function getAvailablity(username) {
 //   let availability = false;
 //   const user = await Balance.findOne({ name: username });
@@ -58,5 +70,6 @@ module.exports = {
   broadcastToRoomUsers,
   get_Current_User,
   user_Disconnect,
+  setWinner,
   // getAvailablity,
 };

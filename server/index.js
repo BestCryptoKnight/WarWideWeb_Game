@@ -6,7 +6,7 @@ const {
   user_Disconnect,
   broadcastToRoomUsers,
   join_User,
-  getAvailablity,
+  setWinner
 } = require("./socket/dummyuser");
 
 const Routes = require("./routes/index");
@@ -19,6 +19,8 @@ app.use((req, res, next) => {
 
 const { PORT } = require("./constants");
 const { BASECLIENTURL } = require("./constants");
+const { valid } = require("joi");
+const { validate } = require("./models/Balance");
 mongo.connect();
 
 app.use("/api", Routes);
@@ -49,7 +51,6 @@ server.on("connection", (socket) => {
     const p_user = join_User(socket.id, username, room);
     socket.join(p_user.room);
     let allUsers = broadcastToRoomUsers(p_user.room);
-    console.log(allUsers)
     server.sockets.in(p_user.room).emit("message", { users: allUsers });
   });
 
@@ -59,8 +60,6 @@ server.on("connection", (socket) => {
     const p_user = get_Current_User(socket.id);
 
     socket.to(p_user.room).emit("chat", {
-      userId: p_user.id,
-      username: p_user.username,
       text: text,
     });
   });
@@ -78,41 +77,33 @@ server.on("connection", (socket) => {
     // }
   });
   socket.on("start", ({ username, room }) => {
-    const p_user = join_User(socket.id, username, room);
-    server.sockets.in(p_user.room).emit("valid");
-  });
-  socket.on("valid", ({ username, room }) => {
-    console.log(username);
-    const p_user = join_User(socket.id, username, room);
-    if (validArray.findIndex((p_user) => p_user.username == username) == -1) {
-      validArray.push(p_user);
-    }
-
-    if (validArray.length == 2) {
-      server.sockets.in(p_user.room).emit("start");
-    }
-  });
-  socket.on("winner", ({ bidValue }) => {
-    let winner = "";
+    console.log(username, "username");
+    // const p_user = join_User(socket.id, username, room);
     const p_user = get_Current_User(socket.id);
-    let userVal = { user: p_user.username, value: bidValue };
-    if (bidValueArray.findIndex((user) => user.value === bidValue) == -1) {
-      bidValueArray.push(userVal);
+    console.log(p_user.id);
+    if (validArray.findIndex((user) => user.id == p_user.id) == -1) {
+      validArray.push(p_user);
+      validArray.length == 2
+        ? server.sockets.in(p_user.room).emit("start")
+        : socket.to(p_user.room).emit("startReq", { username });
     }
-    if(bidValueArray.length==3){
-      if (
-        bidValueArray[bidValueArray.length - 1].value >
-        bidValueArray[bidValueArray.length - 2].value
-      ) {
-        winner = bidValueArray[bidValueArray.length-1];
-      }else{
-        winner = bidValueArray[bidValueArray.length-2];
-      }
-      console.log(bidValueArray);
-      server.sockets.in(p_user.room).emit("winner",{winner});
+  });
 
-    }
+  socket.on("setwinner", ({ username, bidValue, price }) => {
+    const realprice = price;
+    let winner = {};
     
+    const p_user = get_Current_User(socket.id);
+    let userInfo = { user: username, value: bidValue };
+    
+    if (bidValueArray.findIndex((user) => user.id === p_user.id) == -1) {
+      bidValueArray.push(userInfo);
+    }
+    if (bidValueArray.length == 2) {
+      
+      winner = setWinner(bidValueArray, realprice);
+      server.sockets.in(p_user.room).emit("winner", { winner });
+    }
   });
 });
 //  }

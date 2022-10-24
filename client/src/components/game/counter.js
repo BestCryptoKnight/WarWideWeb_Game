@@ -1,13 +1,24 @@
 import React, { useEffect, useState } from "react";
 import "../../styles/counter.css";
+import { useSelector, useDispatch } from "react-redux";
+import { GAME_START } from "../../store/action/constants";
 
-const Counter = () => {
+const Counter = (props) => {
   const [countdown, setCount] = useState(10);
+  const isStart = useSelector((state) => state.gameStart);
+  const dispatch = useDispatch();
+  const socket = props.socket;
+  const bidValue = props.gameValue;
+  const username = props.username;
+  const price = props.price;
   const timer = new Promise((resolve, reject) => {
     setInterval(function () {
       return resolve();
     }, 1000);
   });
+
+  console.log(username);
+
   useEffect(() => {
     const tmp = async () => {
       //countdown = --countdown <= 0 ? 10 : countdown;
@@ -15,9 +26,11 @@ const Counter = () => {
       if (countdown > 1) setCount(countdown - 1);
       else {
         setCount(10);
+        socket.emit("setwinner", {username: username, bidValue: bidValue, price: price})
+        dispatch({ type: GAME_START, payload: false });
       }
     };
-    tmp();
+    isStart ? tmp() : console.log("start game");
   }, [countdown]);
   return (
     <div id="countdown">

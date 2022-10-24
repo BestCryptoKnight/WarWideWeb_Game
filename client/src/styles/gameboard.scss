@@ -205,6 +205,32 @@
   background-repeat: no-repeat;
   margin-left: 10px;
   margin-top: 3.5%;
+  :hover{
+    opacity: 0.6;
+    cursor: pointer;
+  }
+  transition: all 0.5s ease-out;
+
+}
+.place-guess-btn-anim {
+  position: relative;
+  background-image: url("../assets/img/Play Button.png");
+  width: 45%;
+  height: 63%;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  margin-left: 10px;
+  margin-top: 3.5%;
+  transition: all 0.1s ease-out;
+  opacity: 0.3;
+  :hover{
+    opacity: 0.6;
+    cursor: pointer;
+  }
+}
+
+.place-guess-btn:hover{
+  opacity: 0.7;
 }
 .counter {
   width: 50px;

@@ -9,13 +9,11 @@ import "@fontsource/roboto";
 import "./styles/index.css";
 
 ReactDOM.render(
-  <React.StrictMode>
-    <AuthProvider>
-      <Provider store={store}>
-        <CssBaseline />
-        <App />
-      </Provider>
-    </AuthProvider>
-  </React.StrictMode>,
+  <AuthProvider>
+    <Provider store={store}>
+      <CssBaseline />
+      <App />
+    </Provider>
+  </AuthProvider>,
   document.getElementById("root")
 );
