@@ -56,7 +56,7 @@ const GameBoard = () => {
     minWidth: 430,
   });
   const [isFilled, setIsFilled] = useState(false);
-
+  const navigate = useNavigate();
   const classes = useStyles();
 
   const location = useLocation();
@@ -83,18 +83,16 @@ const GameBoard = () => {
   });
 
   const PictureFetch = async () => {
-    {
-      isStart
-        ? await loadData()
-            .then((res) => {
-              console.log(res.data.url);
-              setMyStyle({ backgroundImage: `url(${res.data.url})` });
-              // setPrice(res.data.price);
-              console.log(window.document.getElementById("product"));
-            })
-            .catch((error) => alert(error))
-        : console.log("start game");
-    }
+    isStart
+      ? await loadData()
+        .then((res) => {
+          console.log(res.data.url);
+          setMyStyle({ backgroundImage: `url(${res.data.url})` });
+          // setPrice(res.data.price);
+          console.log(window.document.getElementById("product"));
+        })
+        .catch((error) => alert(error))
+      : console.log("start game");
   };
 
   useEffect(() => {
@@ -104,11 +102,9 @@ const GameBoard = () => {
   }, [startGame, isStart]);
 
   const boardAnimation = () => {
-    {
-      isLaptopOrMobile
-        ? animationFunc("gameboard", "game-mainboard")
-        : animationFunc("gameboard", "game-mainboard-mobile");
-    }
+    isLaptopOrMobile
+      ? animationFunc("gameboard", "game-mainboard")
+      : animationFunc("gameboard", "game-mainboard-mobile");
   };
   const userValidate = () => {
     return true;
@@ -246,8 +242,8 @@ const GameBoard = () => {
               ></div>
             </div>
             <div className="changeroom-addfund">
-              <div className="changeroom">CHANGE ROOM</div>
-              <div className="changeroom">ADD FUNDS</div>
+              <div className="changeroom" onClick={()=>navigate('/dashboard')}>CHANGE ROOM</div>
+              <div className="changeroom" onClick = {()=>toast(<button onClick = {() => navigate('/dashboard')}>Yes</button>)}>ADD FUNDS</div>
             </div>
             <div className="chat-board">
               <Chat username={username} roomname={roomname} socket={socket}></Chat>

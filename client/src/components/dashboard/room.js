@@ -5,6 +5,7 @@ import toast from 'react-hot-toast';
 import { useAuth } from '../../contexts/AuthContext';
 import { getAvailability, payFee } from '../../api/balanceApi';
 import { FEE } from '../../constants';
+import '../../styles/room.css'
 
 const Room = (props) => {
     const navigate = useNavigate();
