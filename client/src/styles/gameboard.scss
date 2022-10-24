@@ -30,11 +30,11 @@
 
 
 .gameboard-laptop {
-  background-image: url("../assets/img/gamepage.jpg");
+  background-image: url("../assets/img/background.jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100% 100%;
-  height: 90vh;
+  min-height: 100vh;
   overflow: auto;
 }
 .gameboard-mobile {
@@ -49,7 +49,7 @@
   width: 420px;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 40px;
+  margin-top: 17vh;
   min-height: 600px;
   transition: all 0.5s ease-out;
   
@@ -60,7 +60,7 @@
 }
 .game-mainboard-mobile {
   width: 90%;
-  margin-top: 20px;
+  margin-top: 10vh;
   margin-left: auto;
   margin-right: auto;
   /* margin-top: 5vh; */
@@ -201,10 +201,9 @@
   background-image: url("../assets/img/Play Button.png");
   width: 55%;
   height: 73%;
-  /* background-size: 100% 100%; */
   background-size: 100% 100%;
   background-repeat: no-repeat;
-  margin-left: -70px;
+  margin-left: 10px;
   margin-top: 3.5%;
 }
 .counter {
@@ -339,6 +338,7 @@
     width: 100%;
     input {
       background-color: #5D2F4B;
+      color: white;
       width: 80%;
       padding-left: 1rem;
       text-decoration: none;

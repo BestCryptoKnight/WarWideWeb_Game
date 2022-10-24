@@ -4,19 +4,17 @@ const Balance = require("../models/Balance");
 // joins the user to the specific chatroom
 function join_User(id, username, room) {
   const p_user = { id, username, room };
-  if (c_users.findIndex((p_user) => p_user.id == id) == -1) {
+  if (c_users.findIndex((p_user) => p_user.id === id) == -1) {
     c_users.push(p_user);
+    console.log(c_users, "@@@@@@@@@@");
   }
   return p_user;
-
-  // console.log(c_users, "users");
 }
 
 function broadcastToRoomUsers(room) {
-  console.log(c_users, "---------------------");
+  // console.log(c_users, "---------------------");
   const room_users = c_users.filter((user) => user.room === room);
-  console.log("-----------------------------------");
-  console.log(room_users);
+  // console.log("-----------------------------------");
 
   return room_users;
 }

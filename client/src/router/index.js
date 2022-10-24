@@ -8,7 +8,6 @@ import HowToPlay from "../pages/howtoplay";
 import Rule from "../pages/rules";
 import SignUp from "../pages/signup";
 import SignIn from "../pages/signin";
-// import GamePage from '../pages/game';
 import GameRoom from '../pages/gameroom';
 import GamePage from '../pages/game';
 
@@ -19,8 +18,8 @@ export default function Router() {
       element: <Homepage />
     },
     {
-      path: "main/room",
-      element: <Room />
+      path: "game/room",
+      element: <GameRoom />
     },
     {
       path: "/admin",
@@ -46,10 +45,7 @@ export default function Router() {
       path: '/game',
       element: <GamePage />
     },
-    {
-      path: '/playroom',
-      element: <GameRoom />
-    }
+
   ];
 
   return useRoutes(router);

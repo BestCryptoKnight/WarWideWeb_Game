@@ -47,15 +47,9 @@ server.on("connection", (socket) => {
   socket.on("joinRoom", ({ username, room }) => {
     //* create user
     const p_user = join_User(socket.id, username, room);
-    // console.log(p_user)
-    
     socket.join(p_user.room);
-
-    // socket.emit("message", {
-    //   user: p_user,
-    //   text: "you created room"
-    // });
     let allUsers = broadcastToRoomUsers(p_user.room);
+    console.log(allUsers)
     server.sockets.in(p_user.room).emit("message", { users: allUsers });
   });
 
