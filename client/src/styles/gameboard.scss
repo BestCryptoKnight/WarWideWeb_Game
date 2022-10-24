@@ -34,7 +34,7 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100% 100%;
-  height: 90vh;
+  min-height: 100vh;
   overflow: auto;
 }
 .gameboard-mobile {
@@ -49,7 +49,7 @@
   width: 420px;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 40px;
+  margin-top: 17vh;
   min-height: 600px;
   transition: all 0.5s ease-out;
   
@@ -60,7 +60,7 @@
 }
 .game-mainboard-mobile {
   width: 90%;
-  margin-top: 20px;
+  margin-top: 10vh;
   margin-left: auto;
   margin-right: auto;
   /* margin-top: 5vh; */
@@ -201,11 +201,36 @@
   background-image: url("../assets/img/Play Button.png");
   width: 55%;
   height: 73%;
-  /* background-size: 100% 100%; */
   background-size: 100% 100%;
   background-repeat: no-repeat;
-  margin-left: -70px;
+  margin-left: 10px;
   margin-top: 3.5%;
+  :hover{
+    opacity: 0.6;
+    cursor: pointer;
+  }
+  transition: all 0.5s ease-out;
+
+}
+.place-guess-btn-anim {
+  position: relative;
+  background-image: url("../assets/img/Play Button.png");
+  width: 45%;
+  height: 63%;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  margin-left: 10px;
+  margin-top: 3.5%;
+  transition: all 0.1s ease-out;
+  opacity: 0.3;
+  :hover{
+    opacity: 0.6;
+    cursor: pointer;
+  }
+}
+
+.place-guess-btn:hover{
+  opacity: 0.7;
 }
 .counter {
   width: 50px;
@@ -339,6 +364,7 @@
     width: 100%;
     input {
       background-color: #5D2F4B;
+      color: white;
       width: 80%;
       padding-left: 1rem;
       text-decoration: none;

@@ -16,7 +16,7 @@ const Room = (props) => {
         else {
             const data = await joinRoom(props.value);
             console.log('data: ', data)
-            navigate(`${data.url}`, { state: { ...data } });
+            navigate(`${data.url}`, { state: { ...data } } );
         }
     }
     return (
