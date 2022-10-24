@@ -13,7 +13,7 @@ const Profile = (props) => {
 
     const clickHandle = (item) => {
         switch (item) {
-            case 0: navigate('/dashboard/main'); break;
+            case 0: navigate('/dashboard'); break;
             case 1: navigate('/dashboard/deposit'); break;
             case 2: navigate('/dashboard/withdraw'); break;
             case 3: navigate('/dashboard/transaction'); break;

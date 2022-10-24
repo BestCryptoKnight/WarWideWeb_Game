@@ -11,7 +11,7 @@ const SignUp = () => {
 
   useEffect(() => {
     if(isLoggedIn)
-      navigate('/dashboard/main');
+      navigate('/dashboard');
   }, []);
   
   const handleChange = (e) => {
@@ -49,7 +49,7 @@ const SignUp = () => {
             success: <b>Successfully registered!</b>,
             error: <b>Could not save.</b>,
           })
-        navigate('/game');
+        navigate('/dashboard');
       }
     } catch (error) {
       toast.error(error);

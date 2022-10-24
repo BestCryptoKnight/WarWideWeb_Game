@@ -9,7 +9,7 @@ router.get('/getavailability', balanceController.getAvailability);
 router.get("/:name", balanceController.balance_details);
 router.post('/withdraw', [authorizeBearerToken], balanceController.withdraw);
 router.post('/deposit', [authorizeBearerToken], balanceController.deposit);
-router.post('/payGameFee', [authorizeBearerToken], balanceController.payGameFee);
+router.post('/payGameFee', balanceController.payGameFee);
 router.post('/gameEnd', balanceController.gameEnd);
 
 module.exports = router;

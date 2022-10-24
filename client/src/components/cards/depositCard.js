@@ -20,7 +20,7 @@ const DepositCard = () => {
                 success: <b>Deposit Ended</b>,
                 error: <b>Deposit Failed</b>,
             })
-            navigate('/game');
+            navigate('/dashboard/main');
         } else {
             toast.error('Fill the Amound field.')
         }

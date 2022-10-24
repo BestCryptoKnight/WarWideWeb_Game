@@ -11,7 +11,7 @@ const SignIn = () => {
 
     useEffect(() => {
         if (isLoggedIn)
-            navigate('/dashboard/main');
+            navigate('/dashboard');
     }, []);
 
     const handleChange = (e) => {
@@ -47,7 +47,7 @@ const SignIn = () => {
                         success: <b>Welcome!</b>,
                         error: <b>Login Failed.</b>,
                     })
-                navigate('/game');
+                navigate('/dashboard');
             }
         } catch (error) {
             toast.error(error);

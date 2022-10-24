@@ -39,7 +39,7 @@ export default function Router() {
       element: <SignIn />
     },
     {
-      path: "game/room",
+      path: "dashboard/room",
       element: <GameRoom />
     },
     {
@@ -63,15 +63,7 @@ export default function Router() {
       element: <Contact />
     },
     {
-      path: '/game',
-      element: <GamePage />
-    },
-    {
-      path: '/playroom',
-      element: <GameRoom />
-    },
-    {
-      path: '/dashboard/main',
+      path: '/dashboard/',
       element: <MainBoard />
     },
     {
