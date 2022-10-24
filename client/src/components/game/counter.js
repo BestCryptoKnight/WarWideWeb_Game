@@ -1,110 +1,45 @@
-import React, { useState, useRef, useEffect } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import { toast } from "react-toastify";
+import React, { useEffect, useState } from "react";
+import "../../styles/counter.css";
 import { useSelector, useDispatch } from "react-redux";
-
 import { GAME_START } from "../../store/action/constants";
 
-const STATUS = {
-  STARTED: "Started",
-  STOPPED: "Stopped",
-};
-
-const INITIAL_COUNT = 10;
-
-const useStyles = makeStyles({
-  mainprofile: {
-    // background: "#E03889",
-    border:"1px solid #B32B4C",
-    width: "100%",
-    height: "100%",
-    borderRadius: "50%",
-    textAlign: "center",
-    fontFamily: "Myriad Pro",
-    fontSize: "35px",
-    color: "white",
-    marginLeft:'auto',
-    marginRight: 'auto',
-    alignContent:'center'
-  },
-
-});
-
-export default function Counter(info) {
-  const start = info.startFlag;
-  const classes = useStyles();
-  const [secondsRemaining, setSecondsRemaining] = useState(INITIAL_COUNT);
-  const [status, setStatus] = useState(STATUS.STOPPED);
-  const secondsToDisplay = secondsRemaining % 60;
-  const minutesRemaining = (secondsRemaining - secondsToDisplay) / 60;
-  const minutesToDisplay = minutesRemaining % 60;
-  const hoursToDisplay = (minutesRemaining - minutesToDisplay) / 60;
-
-  const dispatch = useDispatch();
+const Counter = (props) => {
+  const [countdown, setCount] = useState(10);
   const isStart = useSelector((state) => state.gameStart);
+  const dispatch = useDispatch();
+  const socket = props.socket;
+  const bidValue = props.gameValue;
+  const username = props.username;
+  const price = props.price;
+  const timer = new Promise((resolve, reject) => {
+    setInterval(function () {
+      return resolve();
+    }, 1000);
+  });
 
-  // const isStart = useSelector(GameState => GameState.GameState);
-  const handleStart = () => {
-    console.log(start, "10101010");
-    isStart ? setStatus(STATUS.STARTED) : setStatus(STATUS.STOPPED);
-  };
-  const handleStop = () => {
-    setStatus(STATUS.STOPPED);
-  };
-  const handleReset = () => {
-    if (isStart) {
-      setStatus(STATUS.STOPPED);
-      setSecondsRemaining(INITIAL_COUNT);
-    }
-  };
-
-  useInterval(
-    () => {
-      if (secondsRemaining > 0) {
-        setSecondsRemaining(secondsRemaining - 1);
-      } else {
-        setStatus(STATUS.STOPPED);
-        // timer finish detect
-        // console.log(isStart);
-        dispatch({ type: GAME_START, payload: false });
-        handleReset();
-      }
-    },
-    status === STATUS.STARTED ? 1000 : null
-    // passing null stops the interval
-  );
+  console.log(username);
 
   useEffect(() => {
-    handleStart();
-  }, [isStart]);
-
+    const tmp = async () => {
+      //countdown = --countdown <= 0 ? 10 : countdown;
+      await timer;
+      if (countdown > 1) setCount(countdown - 1);
+      else {
+        setCount(10);
+        socket.emit("setwinner", {username: username, bidValue: bidValue, price: price})
+        dispatch({ type: GAME_START, payload: false });
+      }
+    };
+    isStart ? tmp() : console.log("start game");
+  }, [countdown]);
   return (
-    <div className={classes.mainprofile}>
-      {twoDigits(secondsToDisplay)}
-      {/* {twoDigits(hoursToDisplay)}:{twoDigits(minutesToDisplay)}: */}
+    <div id="countdown">
+      <div id="countdown-number">{countdown}</div>
+      <svg>
+        <circle r="18" cx="20" cy="20"></circle>
+      </svg>
     </div>
   );
-}
+};
 
-function useInterval(callback, delay) {
-  const savedCallback = useRef();
-
-  // Remember the latest callback.
-  useEffect(() => {
-    savedCallback.current = callback;
-  }, [callback]);
-
-  // Set up the interval.
-  useEffect(() => {
-    function tick() {
-      savedCallback.current();
-    }
-    if (delay !== null) {
-      let id = setInterval(tick, delay);
-      return () => clearInterval(id);
-    }
-  }, [delay]);
-}
-
-// https://stackoverflow.com/a/2998874/1673761
-const twoDigits = (num) => String(num).padStart(2, "0");
+export default Counter;

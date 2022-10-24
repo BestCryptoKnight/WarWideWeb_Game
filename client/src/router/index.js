@@ -2,7 +2,6 @@ import React from 'react';
 import { useRoutes } from "react-router-dom";
 
 import Homepage from "../pages/homepage";
-import Room from "../pages/room";
 import Admin from '../pages/admin';
 ///////////////////others/////////////////////////
 import HowToPlay from "../pages/other/howtoplay";
@@ -15,7 +14,6 @@ import SignIn from "../pages/auth/signin";
 ////////////////////////////////////////////////////
 // import GamePage from '../pages/game';
 import GameRoom from '../pages/gameroom';
-import GamePage from '../pages/game';
 ////////////////////////////////////////////////////
 import MainBoard from '../pages/dashboard/mainboard';
 import DepositBoard from '../pages/dashboard/depositboard';

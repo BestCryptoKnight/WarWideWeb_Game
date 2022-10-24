@@ -1,11 +1,21 @@
 import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate, useLocation } from "react-router";
 import "../../styles/gameboard.scss";
 import { useMediaQuery } from "react-responsive";
 import { makeStyles } from "@material-ui/core/styles";
 import Counter from "./counter";
 import { TextField } from "@mui/material";
 import Chat from "./chat";
-import {animationFunc} from "../../functions/animations"
+import { animationFunc } from "../../functions/animations";
+import Spinner from "./spinner";
+import io from "socket.io-client";
+import { BACKEND_URL } from "../../constants";
+import toast from "react-hot-toast";
+import { GAME_START, SET_WINNER } from "../../store/action/constants";
+import { loadData } from "../../api/RoomApi";
+import defaultProduct from "../../assets/img/picDemo.png";
+import GameEnd from "./gameEndDialogue";
 
 const useStyles = makeStyles({
   root: {
@@ -39,16 +49,112 @@ const useStyles = makeStyles({
   },
 });
 
+const socket = io.connect(BACKEND_URL);
+
 const GameBoard = () => {
   let isLaptopOrMobile = useMediaQuery({
     minWidth: 430,
   });
+  const [isFilled, setIsFilled] = useState(false);
 
   const classes = useStyles();
 
+  const location = useLocation();
+  const roomname = location.state.url;
+  const user1 = location.state.user1;
+  const user2 = location.state.user2;
+
+  const Amount = location.state.amount;
+
+  // const [username, setUsername] = useState('');
+  // const [otheruser, setOtheruser] = useState('');
+
+  const [joinReq, setJoin] = useState(false);
+  const [username, setUser] = useState(user2 === "" ? user1 : user2);
+  const [otheruser, setOtheruser] = useState(user2 === "" ? user2 : user1);
+  const dispatch = useDispatch();
+
+  const isStart = useSelector((state) => state.gameStart);
+  const [startGame, setStartGame] = useState(false);
+  const [userValue, setUserValue] = useState("");
+  const [price, setPrice] = useState(100);
+  const [myStyle, setMyStyle] = useState({
+    backgroundImage: `url(${defaultProduct})`,
+  });
+
+  const PictureFetch = async () => {
+    {
+      isStart
+        ? await loadData()
+            .then((res) => {
+              console.log(res.data.url);
+              setMyStyle({ backgroundImage: `url(${res.data.url})` });
+              // setPrice(res.data.price);
+              console.log(window.document.getElementById("product"));
+            })
+            .catch((error) => alert(error))
+        : console.log("start game");
+    }
+  };
+
   useEffect(() => {
-    {isLaptopOrMobile? animationFunc("gameboard", "game-mainboard") : animationFunc("gameboard", "game-mainboard-mobile")}
-  }, []);
+    boardAnimation();
+    socketMonitor();
+    PictureFetch();
+  }, [startGame, isStart]);
+
+  const boardAnimation = () => {
+    {
+      isLaptopOrMobile
+        ? animationFunc("gameboard", "game-mainboard")
+        : animationFunc("gameboard", "game-mainboard-mobile");
+    }
+  };
+  const userValidate = () => {
+    return true;
+  };
+  const sendStartReq = () => {
+    socket.emit("start", { username: username, room: roomname });
+  };
+  const handleMouseDown = (e) => {
+    animationFunc("placeBid", "place-guess-btn-anim");
+  };
+  const handleMouseUp = (e) => {
+    animationFunc("placeBid", "place-guess-btn");
+    let isValid = userValidate();
+    isValid ? sendStartReq() : toast.error("Not enough deposit");
+  };
+  const handleCHange = (e) => {
+    setUserValue(e.target.value);
+  };
+  const socketMonitor = () => {
+    joinReq
+      ? console.log("received")
+      : socket.emit("joinRoom", { username: username, room: roomname });
+    socket.on("message", (data) => {
+      setJoin(true);
+      if (data.users.length > 1) {
+        setIsFilled(true);
+        setOtheruser(
+          data.users[0].username == username
+            ? data.users[1].username
+            : data.users[0].username
+        );
+      }
+    });
+    socket.on("startReq", (data) => {
+      const reqUser = data.username;
+      toast.success(reqUser + " is waiting for you now.");
+    });
+    socket.on("start", () => {
+      dispatch({ type: GAME_START, payload: true });
+      setStartGame(true);
+    });
+    socket.on("winner", (data) => {
+      console.log(data);
+      dispatch({ type: SET_WINNER, payload: true });
+    });
+  };
 
   return (
     <>
@@ -58,7 +164,9 @@ const GameBoard = () => {
         <div
           id="gameboard"
           className={
-            isLaptopOrMobile ? "game-mainboard-anim" : "game-mainboard-mobile-anim"
+            isLaptopOrMobile
+              ? "game-mainboard-anim"
+              : "game-mainboard-mobile-anim"
           }
         >
           <div
@@ -66,7 +174,7 @@ const GameBoard = () => {
               isLaptopOrMobile ? "picture-board" : "picture-board-mobile"
             }
           >
-            <div className="realPic" />
+            <div className="realPic" style={myStyle} />
           </div>
           <div
             className={
@@ -77,46 +185,77 @@ const GameBoard = () => {
               <div className="vs-main">
                 <div className="vs-first">
                   <div className="vs-first-logo" />
-                  <div className="userName">Esai111</div>
+                  <div className="userName">{username}</div>
                 </div>
                 <div className="vs-bid-label">
                   <div className="vs-bid-value">
                     <div>
                       <TextField
+                        type="number"
                         size="small"
                         id="outlined-basic"
                         variant="outlined"
                         className={classes.root}
                         defaultValue=""
                         label="$"
+                        onChange={handleCHange}
                       />
-                      <div className="room-price">1$</div>
+                      <div className="room-price">{Amount}$</div>
                     </div>
                   </div>
                 </div>
                 <div className="vs-second">
-                  <div className="vs-second-logo" />
-                  <div className="userName">Hades</div>
+                  {isFilled ? (
+                    <>
+                      <div className="vs-second-logo" />
+                      <div className="userName">{otheruser}</div>
+                    </>
+                  ) : (
+                    <>
+                      <Spinner />
+                      <div
+                        className="userName"
+                        style={{ marginTop: "-50px", color: "white" }}
+                      >
+                        waiting..{" "}
+                      </div>
+                    </>
+                  )}
                 </div>
               </div>
             </div>
             <div className="description">MCLAREN KIDS TOY</div>
             <div className="play-guess">
               <div className="counter">
-                <Counter />
+                {isStart ? (
+                  <Counter
+                    socket={socket}
+                    username={username}
+                    gameValue={userValue}
+                    price={price}
+                  />
+                ) : (
+                  <div></div>
+                )}
               </div>
-              <div className="place-guess-btn"></div>
+              <div
+                id="placeBid"
+                className="place-guess-btn"
+                onMouseDown={handleMouseDown}
+                onMouseUp={handleMouseUp}
+              ></div>
             </div>
             <div className="changeroom-addfund">
               <div className="changeroom">CHANGE ROOM</div>
               <div className="changeroom">ADD FUNDS</div>
             </div>
             <div className="chat-board">
-              <Chat></Chat>
+              <Chat username={username} roomname={roomname} socket={socket}></Chat>
             </div>
           </div>
         </div>
       </div>
+      <GameEnd></GameEnd>
     </>
   );
 };

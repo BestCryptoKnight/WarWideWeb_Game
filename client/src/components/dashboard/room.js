@@ -31,7 +31,7 @@ const Room = (props) => {
         if (account.balance > props.value) {
             const data = await joinRoom(props.value);
             console.log('data: ', data)
-            navigate(`${data.url}`, { state: { ...data } });
+            navigate(`${data.url}`, { state: { ...data } } );
         }
         else {
             toast.error('You do not have enough money');

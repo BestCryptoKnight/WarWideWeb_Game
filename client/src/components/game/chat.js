@@ -9,31 +9,23 @@ function Chat({ username, roomname, socket }) {
 
   const dispatch = useDispatch();
   
-  const dispatchProcess = (encrypt, msg, cipher) => {
-    dispatch(process(encrypt, msg, cipher));
-  };
 
-//   useEffect(() => {
-//     socket.on("message", (data) => {
-//       //decypt the message
-//       const ans = to_Decrypt(data.text, data.username);
-//       dispatchProcess(false, ans, data.text);
-//       console.log(ans);
-//       let temp = messages;
-//       temp.push({
-//         userId: data.userId,
-//         username: data.username,
-//         text: ans,
-//       });
-//       setMessages([...temp]);
-//     });
-//   }, [socket]);
+
+  useEffect(() => {
+    socket.on("chat", (data) => {
+      //decypt the message
+      let temp = messages;
+      temp.push({
+       
+        text: data.text,
+      });
+      setMessages([...temp]);
+    });
+  }, [socket]);
 
   const sendData = () => {
     if (text !== "") {
-      //encrypt the message here
-    //   const ans = to_Encrypt(text);
-    //   socket.emit("chat", ans);
+      socket.emit("chat", text);
       setText("");
     }
   };
