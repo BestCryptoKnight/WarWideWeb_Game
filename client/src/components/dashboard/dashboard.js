@@ -1,5 +1,5 @@
 import React from 'react';
-import Room from '../game/room';
+import Room from './room';
 import BalanceCard from '../cards/balanceCard';
 import DepositCard from '../cards/depositCard';
 import WithdrawCard from '../cards/withdrawCard';

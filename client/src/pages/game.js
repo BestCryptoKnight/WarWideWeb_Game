@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Dashboard from '../components/dashboard/dashboard';
-import Profile from '../components/game/profile';
+import Profile from '../components/dashboard/profile';
 import { useAuth } from '../contexts/AuthContext';
 import History from '../components/tables/hitory';
 import Security from '../components/dashboard/security';
@@ -12,6 +12,7 @@ const GamePage = () => {
     const [id, setId] = useState(0);
     const [string, setString] = useState();
     useEffect(() => {
+        console.log('here id: ', id);
         switch (id) {
             case 0: setString(<Dashboard />); break;
             case 1: setString(<History filter='deposit' />); break;
@@ -28,7 +29,7 @@ const GamePage = () => {
                 <div className="gamepage">
                     <div className='gamepage-container'>
                         <div className='profile'>
-                            <Profile id={id} setId={setId} />
+                            <Profile />
                         </div>
                         <div className='page-info'>
                             {string}

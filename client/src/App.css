@@ -3,6 +3,10 @@
     src: url(assets/fonts/MYRIADPRO-REGULAR.OTF);
 }
 
+@font-face {
+    font-family: "Line Awesome Free";
+    src: url();
+}
 body {
     font-family: Myriad Pro;
 }

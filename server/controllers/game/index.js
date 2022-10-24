@@ -23,10 +23,8 @@ const loadData = async (req, res) => {
     console.log('random: ', randomNumber);
     const item = await Image.findOne({ ID: randomNumber });
 
-    const url = baseUrl + '/' + item.ID.toString() + '.jpg';
-
     const data = {
-        url: url,
+        url: item.url,
         description: item.Description,
         price: item.Price
     }

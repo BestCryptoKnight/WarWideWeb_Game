@@ -1423,6 +1423,10 @@ i {
     background: none !important;
 }
 
+.sub-menu.active {
+    display: block;
+}
+
 .header-trigger.active span::before {
     transform: rotate(-45deg) translate(-11px, 0px);
     background: #fff;
@@ -1833,7 +1837,6 @@ i {
 }
 
 .table {
-    margin: 0;
     border: none;
     width: 100%;
     border-collapse: collapse;

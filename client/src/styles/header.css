@@ -19,15 +19,13 @@
 }
 
 .has-sub-menu {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
     align-items: center;
     border: none;
     outline: none;
     color: white;
     font-family: inherit;
     margin: 0;
+    cursor: pointer;
 }
 
 .logo-img {

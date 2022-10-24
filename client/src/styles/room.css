@@ -97,6 +97,10 @@
     color: white;
 }
 
+.play-button:active {
+    transform: translateY(5px);
+}
+
 .room-big-circle {
     position: absolute;
     content: "";

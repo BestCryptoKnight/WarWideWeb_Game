@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from 'react-router';
 
 import "../styles/room.css";
 import { makeStyles } from "@material-ui/core/styles";
-import Profile from "../components/game/profile";
+import Profile from "../components/dashboard/profile";
 import Counter from "../components/game/counter";
 import { getAvailability } from "../api/balanceApi";
 import { useMediaQuery } from "react-responsive";

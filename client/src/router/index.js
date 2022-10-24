@@ -16,6 +16,13 @@ import SignIn from "../pages/auth/signin";
 // import GamePage from '../pages/game';
 import GameRoom from '../pages/gameroom';
 import GamePage from '../pages/game';
+////////////////////////////////////////////////////
+import MainBoard from '../pages/dashboard/mainboard';
+import DepositBoard from '../pages/dashboard/depositboard';
+import WithdrawBoard from '../pages/dashboard/withdrawboard';
+import TransactionBoard from '../pages/dashboard/transactionboard';
+import AccountBoard from '../pages/dashboard/accountboard';
+import SecurityBoard from '../pages/dashboard/securityboard';
 
 export default function Router() {
   const router = [
@@ -62,7 +69,32 @@ export default function Router() {
     {
       path: '/playroom',
       element: <GameRoom />
-    }
+    },
+    {
+      path: '/dashboard/main',
+      element: <MainBoard />
+    },
+    {
+      path: '/dashboard/deposit',
+      element: <DepositBoard />
+    },
+    {
+      path: '/dashboard/withdraw',
+      element: <WithdrawBoard />
+    },
+    {
+      path: '/dashboard/transaction',
+      element: <TransactionBoard />
+    },
+    {
+      path: '/dashboard/account',
+      element: <AccountBoard />
+    },
+    {
+      path: '/dashboard/security',
+      element: <SecurityBoard />
+    },
+
   ];
 
   return useRoutes(router);

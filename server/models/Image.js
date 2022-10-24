@@ -16,6 +16,10 @@ const imageSchema = new mongoose.Schema({
         required: [true, "price is required"],
         min: [0, "Too Few. Not valid price. Eg. 2500"],
     },
+    url: {
+        type: String,
+        required: [true, "url is required"]
+    }
 });
 
 module.exports = mongoose.model("Image", imageSchema, "Images");

@@ -11,7 +11,7 @@ const SignUp = () => {
 
   useEffect(() => {
     if(isLoggedIn)
-      navigate('/game');
+      navigate('/dashboard/main');
   }, []);
   
   const handleChange = (e) => {

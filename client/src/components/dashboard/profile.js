@@ -2,12 +2,25 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../styles/profile.css'
 import { useAuth } from '../../contexts/AuthContext';
+
 const Profile = (props) => {
     const { account, logout } = useAuth();
     const navigate = useNavigate();
     const handleSignOut = () => {
         logout();
         navigate('/');
+    }
+
+    const clickHandle = (item) => {
+        switch (item) {
+            case 0: navigate('/dashboard/main'); break;
+            case 1: navigate('/dashboard/deposit'); break;
+            case 2: navigate('/dashboard/withdraw'); break;
+            case 3: navigate('/dashboard/transaction'); break;
+            case 4: navigate('/dashboard/account'); break;
+            case 5: navigate('/dashboard/security'); break;
+            default: navigate('/dashboard/main')
+        }
     }
     let string = '';
     if (account)
@@ -36,12 +49,12 @@ const Profile = (props) => {
             </div>
             <div className="profile-body">
                 <div className="items">
-                    <div className="list-item" onClick = {()=>props.setId(0)}>Dashboard</div>
-                    <div className="list-item" onClick={()=>props.setId(1)}>Deposit History</div>
-                    <div className="list-item" onClick={ () => props.setId(2)}>Withdraw History</div>
-                    <div className="list-item" onClick={() => props.setId(3)}>Transaction History</div>
-                    <div className="list-item" onClick={() => props.setId(4)}>Account Settings</div>
-                    <div className="list-item" onClick={() => props.setId(5)}>Security Settings</div>
+                    <div className="list-item" onClick={() => clickHandle(0)}>Dashboard</div>
+                    <div className="list-item" onClick={() => clickHandle(1)}>Deposit History</div>
+                    <div className="list-item" onClick={() => clickHandle(2)}>Withdraw History</div>
+                    <div className="list-item" onClick={() => clickHandle(3)}>Transaction History</div>
+                    <div className="list-item" onClick={() => clickHandle(4)}>Account Settings</div>
+                    <div className="list-item" onClick={() => clickHandle(5)}>Security Settings</div>
                     <div className="list-item" onClick={handleSignOut}>Sign Out</div>
                 </div>
             </div>

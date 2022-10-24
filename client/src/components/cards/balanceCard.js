@@ -6,7 +6,10 @@ const BalanceCard = () => {
     const [balance, setBalance] = useState();
 
     useEffect(() => {
-        setBalance(Math.round(account.balance * 10000) / 10000);
+        if (account)
+            setBalance(Math.round(account.balance * 10000) / 10000);
+        else
+            setBalance(0)
     }, [account])
 
     return (

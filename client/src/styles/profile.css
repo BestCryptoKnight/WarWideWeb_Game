@@ -89,3 +89,7 @@
     background: linear-gradient(0deg, #ff9c19 40%, #ffdd2d 110%);
     cursor: pointer;
 }
+
+.list-item:active {
+    transform: translateY(5px);
+}
