@@ -1,5 +1,6 @@
 .table--responsive--md {
     margin: 20px;
+    width: 980px;
 }
 
 .table tbody tr:nth-child(odd) {
@@ -7,9 +8,10 @@
 }
 
 @media (max-width: 767px) {
-    .table{
-        width: 90vw!important;
+    .table {
+        width: 90vw !important;
     }
+
     .table--responsive--md tbody tr td {
         display: flex;
         align-items: center;

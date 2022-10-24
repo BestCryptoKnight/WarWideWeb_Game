@@ -17,6 +17,7 @@
     text-transform: uppercase;
     cursor: pointer;
 }
+
 .logo-img {
     background-image: url('../assets/img/logo.png');
     background-size: 100% 100%;
@@ -26,6 +27,7 @@
     height: 10vh;
     cursor: pointer;
 }
+
 a {
     text-decoration: none !important;
 }

@@ -79,7 +79,7 @@
 .play-button {
     background: linear-gradient(0deg, #ff9c19 40%, #ffdd2d 110%);
     padding: 12px 35px;
-    font-size: 19px;
+    font-size: 16px;
     font-weight: 700;
     cursor: pointer;
     outline: none;
