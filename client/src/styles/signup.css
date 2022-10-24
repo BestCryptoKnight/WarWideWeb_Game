@@ -144,6 +144,12 @@
         3px 5px 10px 0px rgb(255 82 1 / 20%);
 }
 
+.cmn-btn:active {
+    box-shadow: 7px 6px 28px 1px rgba(0, 0, 0, 0.24);
+    transform: translateY(5px);
+    /* Moving button 4px to y-axis */
+}
+
 .text-base {
     color: #FFC827;
     font-size: 32px;

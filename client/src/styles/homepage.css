@@ -34,6 +34,12 @@
     cursor: pointer;
 }
 
+.rules:active {
+    box-shadow: 7px 6px 28px 1px rgba(0, 0, 0, 0.24);
+    transform: translateY(5px);
+    /* Moving button 4px to y-axis */
+}
+
 .play-now {
     background-image: url('../assets/img/play_now.png');
     background-size: 100% 100%;
@@ -43,6 +49,12 @@
     cursor: pointer;
 }
 
+.play-now:active {
+    box-shadow: 7px 6px 28px 1px rgba(0, 0, 0, 0.24);
+    transform: translateY(5px);
+    /* Moving button 4px to y-axis */
+}
+
 .how-to-play {
     background-image: url('../assets/img/how_to_play.png');
     background-size: 100% 100%;
@@ -50,6 +62,12 @@
     width: 200px;
     height: 70px;
     cursor: pointer;
+}
+
+.how-to-play:active {
+    box-shadow: 7px 6px 28px 1px rgba(0, 0, 0, 0.24);
+    transform: translateY(5px);
+    /* Moving button 4px to y-axis */
 }
 
 .how-to-play:hover {

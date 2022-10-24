@@ -9,7 +9,6 @@ const Profile = (props) => {
         logout();
         navigate('/');
     }
-    console.log('props:', props);
     let string = '';
     if (account)
         string = account.name

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom';
 import Dashboard from '../components/dashboard/dashboard';
 import Profile from '../components/game/profile';
 import { useAuth } from '../contexts/AuthContext';
@@ -9,7 +8,7 @@ import Account from '../components/dashboard/account';
 import '../styles/gamepage.css'
 
 const GamePage = () => {
-    const { account, logout } = useAuth();
+    const { account } = useAuth();
     const [id, setId] = useState(0);
     const [string, setString] = useState();
     useEffect(() => {

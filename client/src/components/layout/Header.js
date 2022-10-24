@@ -1,9 +1,7 @@
 import React from "react";
-import { useMediaQuery } from "react-responsive";
 import "../../styles/header.css";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
-import { Avatar } from "@material-ui/core";
 
 export default function Header() {
   const navigate = useNavigate();

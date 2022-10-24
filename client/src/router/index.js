@@ -4,10 +4,15 @@ import { useRoutes } from "react-router-dom";
 import Homepage from "../pages/homepage";
 import Room from "../pages/room";
 import Admin from '../pages/admin';
-import HowToPlay from "../pages/howtoplay";
-import Rule from "../pages/rules";
-import SignUp from "../pages/signup";
-import SignIn from "../pages/signin";
+///////////////////others/////////////////////////
+import HowToPlay from "../pages/other/howtoplay";
+import Rule from "../pages/other/rules";
+import Faq from '../pages/other/faq';
+import Contact from '../pages/other/contact';
+////////////////////auth////////////////////////////
+import SignUp from "../pages/auth/signup";
+import SignIn from "../pages/auth/signin";
+////////////////////////////////////////////////////
 // import GamePage from '../pages/game';
 import GameRoom from '../pages/gameroom';
 import GamePage from '../pages/game';
@@ -17,6 +22,14 @@ export default function Router() {
     {
       path: "/",
       element: <Homepage />
+    },
+    {
+      path: '/signup',
+      element: <SignUp />
+    },
+    {
+      path: '/signin',
+      element: <SignIn />
     },
     {
       path: "game/room",
@@ -35,12 +48,12 @@ export default function Router() {
       element: <HowToPlay />
     },
     {
-      path: '/signup',
-      element: <SignUp />
+      path: '/faq',
+      element: <Faq />
     },
     {
-      path: '/signin',
-      element: <SignIn />
+      path: '/contact',
+      element: <Contact />
     },
     {
       path: '/game',
