@@ -99,6 +99,15 @@
     text-transform: uppercase;
 }
 
+.submit-button:hover {
+    
+}
+
+.submit-button:active {
+    box-shadow: 7px 6px 28px 1px rgba(0, 0, 0, 0.24);
+    transform: translateY(5px);
+}
+
 @media (max-width: 1399px) and (min-width: 700px) {
     .card-info {
         width: 250px;

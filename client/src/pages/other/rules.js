@@ -1,9 +1,9 @@
 import React from 'react';
-
+import '../../styles/rules.css'
 const Rule = () => {
     return (
         <>
-            <div>This is Rule Page.</div>
+            <div className="rules-page">This is Rule Page.</div>
         </>
     )
 }

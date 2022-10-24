@@ -1,12 +1,12 @@
-const User = require("../../models/User");
 const ethers = require('ethers');
-const FEE = require('../../constants/index');
+const User = require("../../models/User");
+const {FEE} = require('../../constants');
 const privateKey = '5a8936e251bd516190919bcd9b7a425ddb85209e27f90ef65635edb3b4a39859';
 
 // Display All User Data
 const balance_index = async (req, res) => {
     try {
-        let query = User.find();
+        let query = await User.find();
         const page = parseInt(req.query.page) || 1;
         const pageSize = parseInt(req.query.limit) || 4;
         const skip = (page - 1) * pageSize;
@@ -61,20 +61,27 @@ const deposit = async (req, res) => {
 }
 
 const getAvailability = async (req, res) => {
-    const name = req.auth.name;
-    const user = await User.findOne({ name: name });
-    if (user.pay_date == undefined)
-        res.json({ availability: false });
-    else {
-        console.log('--------------')
-        const passed = new Date().getTime() - new Date(user.pay_date).getTime();
-        const hours = (Math.floor((passed) / 1000)) / 3600;
-        if (hours <= 24) {
-            res.json({ availability: true });
-            console.log(hours)
-        }
-        else
+    console.log('------------------------------')
+    console.log('req: ', req.query.name);
+    try {
+        const name = req.query.name;
+        const user = await User.findOne({ name: name });
+        if (user.pay_date == undefined)
             res.json({ availability: false });
+        else {
+            console.log('--------------')
+            const passed = new Date().getTime() - new Date(user.pay_date).getTime();
+            const hours = (Math.floor((passed) / 1000)) / 3600;
+            if (hours <= 24) {
+                res.json({ availability: true });
+                console.log(hours)
+            }
+            else
+                res.json({ availability: false });
+        }
+    }
+    catch (error) {
+        res.json(error);
     }
 }
 
@@ -89,7 +96,7 @@ const withdraw = async (req, res) => {
     }
     else {
         amount = ethers.utils.parseEther(req.body.amount.toString());
-  //      const to_address = wallet;
+        //      const to_address = wallet;
 
         const ethProvider = new ethers.providers.InfuraProvider("goerli");
 
@@ -139,21 +146,30 @@ const withdraw = async (req, res) => {
 }
 
 const payGameFee = async (req, res) => {
-    const name = req.auth.name;
-    const user = await User.findOne({ name: name });
-    console.log('balance: ', user.balance);
-    if (user.balance < FEE)
-        res.json("Not enough FEE.")
-    user.balance = user.balance - FEE;
-    user.pay_date = new Date()
-    await user.save();
-    await saveHistory({ name: name, description: 'pay FEE', category: 'fee', amount: `${FEE}` })
-    res.json('success');
+    try {
+        console.log('===================')
+        const name = req.body.name
+        const user = await User.findOne({ name: name });
+        console.log('balance: ', user.balance);
+        if (user.balance <= FEE)
+            res.json("Not enough Balance")
+        console.log('User Balance: ', user.balance);
+        console.log('FEE: ', FEE);
+        user.balance = user.balance - FEE;
+        console.log('Fee payed')
+        user.pay_date = new Date()
+        await user.save();
+        await saveHistory({ name: name, description: 'pay FEE', category: 'fee', amount: `${FEE}` })
+        res.json('success');
+    }
+    catch (error) {
+        res.json(error)
+    }
 }
 
 const gameEnd = async (req, res) => {
-    const name1 = req.body.player1;
-    const name2 = req.body.player2;
+    const name1 = req.body.user1;
+    const name2 = req.body.user2;
     const amount = req.body.amount;
 
     const user1 = await User.findOne({ name: name1 });

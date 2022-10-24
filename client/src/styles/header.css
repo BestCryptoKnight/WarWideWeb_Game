@@ -18,6 +18,16 @@
     cursor: pointer;
 }
 
+.has-sub-menu {
+    align-items: center;
+    border: none;
+    outline: none;
+    color: white;
+    font-family: inherit;
+    margin: 0;
+    cursor: pointer;
+}
+
 .logo-img {
     background-image: url('../assets/img/logo.png');
     background-size: 100% 100%;

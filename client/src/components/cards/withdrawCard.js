@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import '../../styles/card.css';
 import { useAuth } from '../../contexts/AuthContext';
 import { withdraw } from '../../api/UserApi';
@@ -27,7 +27,7 @@ const WithdrawCard = () => {
                 success: <b>Withdraw Ended</b>,
                 error: <b>Withdraw Failed</b>,
             })
-            navigate('/game');
+            navigate('/dashboard/main');
         }
     }
 

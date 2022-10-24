@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import '../styles/signup.css';
+import '../../styles/signup.css';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
+import { useAuth } from '../../contexts/AuthContext';
 import toast from 'react-hot-toast';
 
 const SignIn = () => {
@@ -11,7 +11,7 @@ const SignIn = () => {
 
     useEffect(() => {
         if (isLoggedIn)
-            navigate('/game');
+            navigate('/dashboard');
     }, []);
 
     const handleChange = (e) => {
@@ -47,7 +47,7 @@ const SignIn = () => {
                         success: <b>Welcome!</b>,
                         error: <b>Login Failed.</b>,
                     })
-                navigate('/game');
+                navigate('/dashboard');
             }
         } catch (error) {
             toast.error(error);

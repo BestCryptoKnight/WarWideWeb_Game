@@ -1,9 +1,10 @@
 import React from 'react';
+import '../../styles/howtoplay.css'
 
 const HowToPlay = () => {
     return(
         <>
-            <div>This is HowToPlay Page.</div>
+            <div className="howtoplay">This is HowToPlay Page.</div>
         </>
     )
 }
