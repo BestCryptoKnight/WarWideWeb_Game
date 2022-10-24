@@ -16,7 +16,7 @@ function Chat({ username, roomname, socket }) {
       //decypt the message
       let temp = messages;
       temp.push({
-       
+        name: data.username,
         text: data.text,
       });
       setMessages([...temp]);
@@ -25,8 +25,15 @@ function Chat({ username, roomname, socket }) {
 
   const sendData = () => {
     if (text !== "") {
+      let temp = messages;
+
+      temp.push({
+        name: username,
+        text: text,
+      });
       socket.emit("chat", text);
       setText("");
+      setMessages([...temp]);
     }
   };
   const messagesEndRef = useRef(null);
@@ -48,7 +55,8 @@ function Chat({ username, roomname, socket }) {
       </div>
       <div className="chat-message">
         {messages.map((i) => {
-          if (i.username === username) {
+          console.log(messages);
+          if (i.name == username) {
             return (
               <div className="message">
                 <p>{i.text}</p>
@@ -66,6 +74,7 @@ function Chat({ username, roomname, socket }) {
         })}
         <div ref={messagesEndRef} />
       </div>
+      <span style={{height:'20px'}}></span>
       <div className="send">
         <input
           placeholder="enter your message"
