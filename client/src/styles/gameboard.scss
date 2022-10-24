@@ -69,7 +69,7 @@
 
 }
 .game-mainboard-mobile-anim {  
-  margin-top: 800px;
+  margin-top: 80px;
 }
 .picture-board {
   background-color: #6f2550;
@@ -251,6 +251,7 @@
   background-color: #6f2550;
   border-bottom: 1px solid #824c6b;
   display: flex;
+  cursor: pointer;
 }
 .changeroom {
   width: 50%;
@@ -261,6 +262,7 @@
   color: #d15d9f;
   padding-top: 5%;
   font-weight: bold;
+  cursor: pointer;
 }
 .chat-board {
   @include scrollbars(5px, $yellowColor, $sendBtnColor);
