@@ -1,10 +1,9 @@
 @import "../globals";
 
-@mixin scrollbars(
-  $size,
+@mixin scrollbars($size,
   $foreground-color,
-  $background-color: mix($foreground-color, white, 50%)
-) {
+  $background-color: mix($foreground-color, white, 50%)) {
+
   //stylesheet for the display in Google Chrome
   &::-webkit-scrollbar {
     height: $size;
@@ -36,6 +35,7 @@
   min-height: 100vh;
   overflow: auto;
 }
+
 .gameboard-mobile {
   padding-top: 20px;
   width: 100%;
@@ -43,6 +43,7 @@
   background-color: #340b2d;
   min-height: 90vh;
 }
+
 .game-mainboard {
   background-color: #340b2d;
   width: 420px;
@@ -52,10 +53,12 @@
   min-height: 600px;
   transition: all 0.5s ease-out;
 }
+
 .game-mainboard-anim {
   margin-top: 100%;
   width: 50%;
 }
+
 .game-mainboard-mobile {
   width: 90%;
   margin-top: 10vh;
@@ -65,9 +68,11 @@
   height: 100%;
   transition: all 0.5s ease-out;
 }
+
 .game-mainboard-mobile-anim {
   margin-top: 80px;
 }
+
 .picture-board {
   background-color: #6f2550;
   border-top-left-radius: 10px;
@@ -78,6 +83,7 @@
   margin-right: auto;
   padding-top: 8px;
 }
+
 .picture-board-mobile {
   background-color: #6f2550;
   border-top-left-radius: 10px;
@@ -88,6 +94,7 @@
   margin-right: auto;
   padding-top: 8px;
 }
+
 .gameboard-main {
   margin-top: -100px;
   width: 100%;
@@ -95,6 +102,7 @@
   margin-left: auto;
   margin-right: auto;
 }
+
 .gameboard-main-mobile {
   margin-top: -120px;
   width: 100%;
@@ -102,15 +110,17 @@
   margin-left: auto;
   margin-right: auto;
 }
+
 .vs-pan {
   background-color: #6f2550;
   width: 100%;
-  height: 210px;
+  height: 180px;
   border-top-left-radius: 30px;
   border-top-right-radius: 30px;
   border-bottom: 1px solid #824c6b;
   padding-top: 65px;
 }
+
 .vs-main {
   width: 90%;
   height: 140px;
@@ -118,61 +128,84 @@
   margin-right: auto;
   display: flex;
 }
+
 .vs-first {
   height: 100%;
   width: 100px;
 }
+
 .vs-second {
   height: 100%;
   width: 100px;
 }
+
 .vs-bid-label {
-  height: 100%;
-  width: 180px;
+  height: 120px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
 }
+
+.vs-input {
+  background-color: #712450 !important;
+}
+
 .vs-bid-value {
-  margin-top: 20px;
-  width: 70%;
-  margin-left: 15%;
-  height: 40px;
+  display: flex;
+  width: 80%;
+  margin-top: 10px;
   border-radius: 5px;
+  border: 1px solid rgba(255, 255, 255, 0.17);
 }
+
 .room-price {
-  font-size: 40px;
+  font-size: 28px;
   color: #c7478f;
   font-family: "Myriad Pro";
   font-weight: bold;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 20px;
+  margin-top: 10px;
   text-align: center;
 }
+
 .vs-first-logo {
   background-image: url("../assets/img/FirstLogo.png");
   background-size: 100% 100%;
-  width: 100%;
-  height: 100px;
+  width: 70px;
+  height: 70px;
 }
+
 .vs-second-logo {
   background-image: url("../assets/img/SecondLogo.png");
   background-size: 100% 100%;
-  width: 100%;
-  height: 100px;
+  width: 70px;
+  height: 70px;
 }
+
 .userName {
   font-size: 20px;
   color: #c7478f;
   font-family: "Myriad Pro";
-  font-weight: bold;
-  margin-left: auto;
-  margin-right: auto;
+  font-weight: 500;
   text-align: center;
 }
+
+.waiting {
+  font-size: 20px;
+  text-align: center;
+  color: white;
+  font-weight: 500;
+  margin-top: -30px;
+}
+
 .span {
   width: 100%;
   height: 2px;
   background-color: #834167;
 }
+
 .description {
   width: 100%;
   height: 40px;
@@ -186,6 +219,7 @@
   padding-top: 5px;
   font-size: 20px;
 }
+
 .play-guess {
   width: 100%;
   height: 80px;
@@ -193,6 +227,7 @@
   border-bottom: 1px solid #824c6b;
   display: flex;
 }
+
 .place-guess-btn {
   position: relative;
   background-image: url("../assets/img/Play Button.png");
@@ -202,12 +237,15 @@
   background-repeat: no-repeat;
   margin-left: 15px;
   margin-top: 2.5%;
+
   :hover {
     opacity: 0.6;
     cursor: pointer;
   }
+
   transition: all 0.5s ease-out;
 }
+
 .place-guess-btn-anim {
   position: relative;
   background-image: url("../assets/img/Play Button.png");
@@ -219,6 +257,7 @@
   margin-top: 3.5%;
   transition: all 0.1s ease-out;
   opacity: 0.3;
+
   :hover {
     opacity: 0.6;
     cursor: pointer;
@@ -228,12 +267,14 @@
 .place-guess-btn:hover {
   opacity: 0.7;
 }
+
 .counter {
   width: 50px;
   height: 50px;
   margin-top: 20px;
   margin-left: 8%;
 }
+
 .place-guess {
   width: 200px;
   height: 70px;
@@ -241,6 +282,7 @@
   margin-top: 20px;
   margin-left: 30px;
 }
+
 .changeroom-addfund {
   width: 100%;
   height: 40px;
@@ -249,6 +291,7 @@
   display: flex;
   cursor: pointer;
 }
+
 .changeroom {
   width: 50%;
   height: 100%;
@@ -260,6 +303,7 @@
   font-weight: bold;
   cursor: pointer;
 }
+
 .chat-board {
   @include scrollbars(5px, $yellowColor, $sendBtnColor);
   width: 100%;
@@ -268,6 +312,7 @@
   background-color: #6f2550;
   overflow: auto;
 }
+
 .chat-history {
   width: 90%;
   height: 150px;
@@ -276,8 +321,8 @@
   background-color: black;
   max-height: 300px;
 }
+
 .realPic {
-  background-image: url("../assets/img/picDemo.png");
   position: relative;
   width: 95%;
   height: 85%;
@@ -298,12 +343,14 @@
   .user-name {
     width: 100%;
     text-align: start;
+
     h2 {
       border-bottom: 1px solid #824c6b;
       font-weight: 300;
       padding-bottom: 0.5rem;
     }
   }
+
   .chat-message {
     @include scrollbars(5px, $backgroundColor, $yellowColor);
     height: 100%;
@@ -318,6 +365,7 @@
       max-width: 250px;
       margin-left: 0px;
       height: 70px;
+
       p {
         color: #b4b6be;
         font-size: 1rem;
@@ -333,6 +381,7 @@
         padding-left: 0.5rem;
         font-weight: 200;
       }
+
       .inform {
         background-color: $redColor;
         display: flex;
@@ -341,6 +390,7 @@
         padding-right: 0.5rem;
         margin-right: 10px;
         max-width: 250px;
+
         p {
           color: white;
           font-size: 1rem;
@@ -358,6 +408,7 @@
         }
       }
     }
+
     .mess-right {
       display: flex;
       margin-left: auto;
@@ -365,7 +416,8 @@
       padding-right: 0.5rem;
       margin-right: 10px;
       max-width: 250px;
-      height:60px;
+      height: 60px;
+
       p {
         color: white;
         font-size: 1rem;
@@ -388,6 +440,7 @@
     height: 50px;
     display: flex;
     width: 100%;
+
     input {
       background-color: #5d2f4b;
       color: white;
@@ -396,15 +449,18 @@
       text-decoration: none;
       border-radius: 5px 0px 0px 5px;
       border: none;
+
       &:focus {
         outline: none;
       }
     }
+
     button {
       background-color: $yellowColor;
       width: 20%;
       border-radius: 0px 5px 5px 0px;
       border: none;
+
       &:hover {
         cursor: pointer;
       }

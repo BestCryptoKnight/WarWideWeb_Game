@@ -83,16 +83,17 @@ const GameBoard = () => {
   const dispatch = useDispatch();
 
   const PictureFetch = async () => {
-    try{
+    try {
       console.log("I am calling");
       const res = await loadData();
-      console.log("Image url: ", `url(${ res.data.url })`);
+      console.log("Image url: ", `url(${res.data.url})`);
+      setPrice(res.data.price);
       setMyStyle({ backgroundImage: `url(${res.data.url})` });
       console.log('myStyle: ', myStyle);
-    } catch(error){
+    } catch (error) {
       toast.error(error)
     }
-    
+
   };
 
   const boardAnimation = () => {
@@ -192,7 +193,7 @@ const GameBoard = () => {
               isLaptopOrMobile ? "picture-board" : "picture-board-mobile"
             }
           >
-            <div className="realPic" style={ {myStyle} } />
+            <div className="realPic" style={myStyle} />
           </div>
           <div
             className={
@@ -207,20 +208,10 @@ const GameBoard = () => {
                 </div>
                 <div className="vs-bid-label">
                   <div className="vs-bid-value">
-                    <div>
-                      <TextField
-                        type="number"
-                        size="small"
-                        id="outlined-basic"
-                        variant="outlined"
-                        className={classes.root}
-                        defaultValue=""
-                        label="$"
-                        onChange={handleCHange}
-                      />
-                      <div className="room-price">{Amount}$</div>
-                    </div>
+                    <i className="fa fa-usd icon"></i>
+                    <input type="number" className="vs-input" step={0.1} onChange={handleCHange}/>
                   </div>
+                  <div className="room-price">{Amount}ETH</div>
                 </div>
                 <div className="vs-second">
                   {isFilled ? (
@@ -232,8 +223,7 @@ const GameBoard = () => {
                     <>
                       <Spinner />
                       <div
-                        className="userName"
-                        style={{ marginTop: "-50px", color: "white" }}
+                        className="waiting"
                       >
                         waiting..{" "}
                       </div>
