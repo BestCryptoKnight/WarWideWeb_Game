@@ -6,7 +6,7 @@ const {
   user_Disconnect,
   broadcastToRoomUsers,
   join_User,
-  setWinner
+  setWinner,
 } = require("./socket/dummyuser");
 
 const Routes = require("./routes/index");
@@ -51,23 +51,37 @@ server.on("connection", (socket) => {
     const p_user = join_User(socket.id, username, room);
     socket.join(p_user.room);
     let allUsers = broadcastToRoomUsers(p_user.room);
-    server.sockets.in(p_user.room).emit("message", { users: allUsers });
+    server.sockets.in(allUsers[0].room).emit("message", { users: allUsers });
   });
 
   //user sending message
   socket.on("chat", (text) => {
     //gets the room user and the message sent
     const p_user = get_Current_User(socket.id);
+    let allUsers = broadcastToRoomUsers(p_user.room);
 
-    socket.to(p_user.room).emit("chat", {
+    socket.to(allUsers[0].room).emit("chat", {
+      username: p_user.username,
       text: text,
     });
   });
 
   //when the user exits the room
-  socket.on("disconnect", () => {
+  socket.on("discon", () => {
     //the user is deleted from array of users and a left room message displayed
-    // const p_user = user_Disconnect(socket.id);
+    const p_user = user_Disconnect(socket.id);
+
+    if (p_user) {
+      socket.to(p_user.room).emit("discon", {
+        username: p_user.username,
+      });
+    }
+    // const p_user = get_Current_User(socket.id);
+    // const username = p_user.username;
+    // const isDelete = user_Disconnect(room);
+    // isDelete == -1 ? server.sockets.in(room).emit("discon",{
+    //   username: username,
+    // }) : console.log("disconnect success");
     // if (p_user) {
     //   io.to(p_user.room).emit("message", {
     //     userId: p_user.id,
@@ -77,10 +91,8 @@ server.on("connection", (socket) => {
     // }
   });
   socket.on("start", ({ username, room }) => {
-    console.log(username, "username");
     // const p_user = join_User(socket.id, username, room);
     const p_user = get_Current_User(socket.id);
-    console.log(p_user.id);
     if (validArray.findIndex((user) => user.id == p_user.id) == -1) {
       validArray.push(p_user);
       validArray.length == 2
@@ -92,15 +104,14 @@ server.on("connection", (socket) => {
   socket.on("setwinner", ({ username, bidValue, price }) => {
     const realprice = price;
     let winner = {};
-    
+
     const p_user = get_Current_User(socket.id);
     let userInfo = { user: username, value: bidValue };
-    
+
     if (bidValueArray.findIndex((user) => user.id === p_user.id) == -1) {
       bidValueArray.push(userInfo);
     }
     if (bidValueArray.length == 2) {
-      
       winner = setWinner(bidValueArray, realprice);
       server.sockets.in(p_user.room).emit("winner", { winner });
     }

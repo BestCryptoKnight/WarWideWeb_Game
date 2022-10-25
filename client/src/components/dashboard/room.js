@@ -14,18 +14,20 @@ const Room = (props) => {
         console.log('I am clicked...')
         const result = await getAvailability(account.name);
         console.log('result: ', result);
-        if (result.availability === true) {
             enterRoom();
-        }
-        else if (account.balance > FEE) {
-            console.log('I should pay fee');
-            await payFee(account.name);
-            console.log('I pay FEE');
-            enterRoom();
-        }
-        else {
-            toast.error('You need to deposit money');
-        }
+
+        // if (result.availability !== true) {
+        //     enterRoom();
+        // }
+        // else if (account.balance > FEE) {
+        //     console.log('I should pay fee');
+        //     await payFee(account.name);
+        //     console.log('I pay FEE');
+        //     enterRoom();
+        // }
+        // else {
+        //     toast.error('You need to deposit money');
+        // }
     }
 
     const enterRoom = async () => {

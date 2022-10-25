@@ -28,7 +28,6 @@
   }
 }
 
-
 .gameboard-laptop {
   background-image: url("../assets/img/background.jpg");
   background-position: center;
@@ -49,14 +48,13 @@
   width: 420px;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 17vh;
+  margin-top: 12vh;
   min-height: 600px;
   transition: all 0.5s ease-out;
-  
 }
-.game-mainboard-anim{
+.game-mainboard-anim {
   margin-top: 100%;
-  width: 100%;
+  width: 50%;
 }
 .game-mainboard-mobile {
   width: 90%;
@@ -66,9 +64,8 @@
   /* margin-top: 5vh; */
   height: 100%;
   transition: all 0.5s ease-out;
-
 }
-.game-mainboard-mobile-anim {  
+.game-mainboard-mobile-anim {
   margin-top: 80px;
 }
 .picture-board {
@@ -178,7 +175,7 @@
 }
 .description {
   width: 100%;
-  height: 60px;
+  height: 40px;
   background-color: #6f2550;
   border-bottom: 1px solid #824c6b;
   font-family: "Myriad Pro";
@@ -186,12 +183,12 @@
   margin-left: auto;
   margin-right: auto;
   text-align: center;
-  padding-top: 12px;
+  padding-top: 5px;
   font-size: 20px;
 }
 .play-guess {
   width: 100%;
-  height: 110px;
+  height: 80px;
   background-color: #6f2550;
   border-bottom: 1px solid #824c6b;
   display: flex;
@@ -199,18 +196,17 @@
 .place-guess-btn {
   position: relative;
   background-image: url("../assets/img/Play Button.png");
-  width: 55%;
+  width: 50%;
   height: 73%;
   background-size: 100% 100%;
   background-repeat: no-repeat;
-  margin-left: 10px;
-  margin-top: 3.5%;
-  :hover{
+  margin-left: 15px;
+  margin-top: 2.5%;
+  :hover {
     opacity: 0.6;
     cursor: pointer;
   }
   transition: all 0.5s ease-out;
-
 }
 .place-guess-btn-anim {
   position: relative;
@@ -223,19 +219,19 @@
   margin-top: 3.5%;
   transition: all 0.1s ease-out;
   opacity: 0.3;
-  :hover{
+  :hover {
     opacity: 0.6;
     cursor: pointer;
   }
 }
 
-.place-guess-btn:hover{
+.place-guess-btn:hover {
   opacity: 0.7;
 }
 .counter {
   width: 50px;
   height: 50px;
-  margin-top: 7%;
+  margin-top: 20px;
   margin-left: 8%;
 }
 .place-guess {
@@ -247,7 +243,7 @@
 }
 .changeroom-addfund {
   width: 100%;
-  height: 70px;
+  height: 40px;
   background-color: #6f2550;
   border-bottom: 1px solid #824c6b;
   display: flex;
@@ -260,14 +256,14 @@
   font-size: 100%;
   text-align: center;
   color: #d15d9f;
-  padding-top: 5%;
+  padding-top: 2%;
   font-weight: bold;
   cursor: pointer;
 }
 .chat-board {
   @include scrollbars(5px, $yellowColor, $sendBtnColor);
   width: 100%;
-  height: 130px;
+  height: 270px;
   max-height: 1000px;
   background-color: #6f2550;
   overflow: auto;
@@ -290,13 +286,12 @@
   background-size: 100% 100%;
 }
 
-
 .chat {
   display: flex;
   width: 400px;
   padding: 1rem;
   justify-content: space-between;
-  height: 200px;
+  height: 270px;
   flex-direction: column;
   background-color: #702550;
 
@@ -306,12 +301,12 @@
     h2 {
       border-bottom: 1px solid #824c6b;
       font-weight: 300;
-      padding-bottom: 1rem;
+      padding-bottom: 0.5rem;
     }
   }
   .chat-message {
     @include scrollbars(5px, $backgroundColor, $yellowColor);
-    height: 70%;
+    height: 100%;
     display: flex;
     overflow-y: auto;
     align-content: flex-start;
@@ -320,8 +315,9 @@
 
     .message {
       padding-left: 0.5rem;
-      max-width: 220px;
+      max-width: 250px;
       margin-left: 0px;
+      height: 70px;
       p {
         color: #b4b6be;
         font-size: 1rem;
@@ -337,20 +333,48 @@
         padding-left: 0.5rem;
         font-weight: 200;
       }
+      .inform {
+        background-color: $redColor;
+        display: flex;
+        margin-left: auto;
+        flex-direction: column;
+        padding-right: 0.5rem;
+        margin-right: 10px;
+        max-width: 250px;
+        p {
+          color: white;
+          font-size: 1rem;
+          font-weight: 300;
+          background-color: $redColor;
+          border-radius: 0px 10px 10px 10px;
+          padding: 1rem;
+        }
+
+        span {
+          padding-left: 0rem;
+          width: 100%;
+          padding-right: 0.5rem;
+          text-align: end;
+        }
+      }
     }
     .mess-right {
       display: flex;
       margin-left: auto;
       flex-direction: column;
       padding-right: 0.5rem;
-      margin-right: 0px;
-      max-width: 220px;
+      margin-right: 10px;
+      max-width: 250px;
+      height:60px;
       p {
-        background-color: $redColor;
-        text-align: end;
         color: white;
-        border-radius: 10px 0px 10px 10px;
+        font-size: 1rem;
+        font-weight: 300;
+        background-color: $redColor;
+        border-radius: 0px 10px 10px 10px;
+        padding: 1rem;
       }
+
       span {
         padding-left: 0rem;
         width: 100%;
@@ -365,7 +389,7 @@
     display: flex;
     width: 100%;
     input {
-      background-color: #5D2F4B;
+      background-color: #5d2f4b;
       color: white;
       width: 80%;
       padding-left: 1rem;
