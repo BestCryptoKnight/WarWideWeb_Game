@@ -7,6 +7,7 @@
     font-family: "Line Awesome Free";
     src: url();
 }
+
 body {
-    font-family: Myriad Pro;
+    font-family: 'Myriad Pro' !important;
 }

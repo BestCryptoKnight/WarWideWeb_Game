@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useLocation } from "react-router";
 import "../../styles/gameboard.scss";
+import "../../styles/modal.css"
 import { useMediaQuery } from "react-responsive";
 import { makeStyles } from "@material-ui/core/styles";
 import Counter from "./counter";
@@ -20,8 +21,7 @@ import {
 import { loadData } from "../../api/RoomApi";
 import defaultProduct from "../../assets/img/picDemo.png";
 import GameEnd from "./gameEndDialogue";
-import DepositCard from "../cards/depositCard";
-import { leaveRoom } from "../../api/RoomApi";
+import Modal from 'react-modal'
 
 const useStyles = makeStyles({
   root: {
@@ -56,6 +56,7 @@ const useStyles = makeStyles({
 });
 
 const socket = io.connect(BACKEND_URL);
+Modal.setAppElement(document.getElementById('root'))
 
 const GameBoard = () => {
   let isLaptopOrMobile = useMediaQuery({
@@ -89,13 +90,17 @@ const GameBoard = () => {
   const dispatch = useDispatch();
 
   const PictureFetch = async () => {
-    isStart
-      ? await loadData()
-          .then((res) => {
-            setMyStyle({ backgroundImage: `url(${res.data.url})` });
-          })
-          .catch((error) => alert(error))
-      : console.log("start game");
+    try {
+      console.log("I am calling");
+      const res = await loadData();
+      console.log("Image url: ", `url(${res.data.url})`);
+      setPrice(res.data.price);
+      setMyStyle({ backgroundImage: `url(${res.data.url})` });
+      console.log('myStyle: ', myStyle);
+    } catch (error) {
+      toast.error(error)
+    }
+
   };
 
   const boardAnimation = () => {
@@ -135,7 +140,7 @@ const GameBoard = () => {
       if (data.users.length > 1) {
         setIsFilled(true);
         setOtheruser(
-          data.users[0].username == username
+          data.users[0].username === username
             ? data.users[1].username
             : data.users[0].username
         );
@@ -180,6 +185,10 @@ const GameBoard = () => {
     };
   }, []);
 
+  useEffect(() => {
+    if (isStart)
+      PictureFetch();
+  }, [isStart])
   return (
     <>
       <div
@@ -213,20 +222,10 @@ const GameBoard = () => {
                 </div>
                 <div className="vs-bid-label">
                   <div className="vs-bid-value">
-                    <div>
-                      <TextField
-                        type="number"
-                        size="small"
-                        id="outlined-basic"
-                        variant="outlined"
-                        className={classes.root}
-                        defaultValue=""
-                        label="$"
-                        onChange={handleCHange}
-                      />
-                      <div className="room-price">{Amount}$</div>
-                    </div>
+                    <i className="fa fa-usd icon"></i>
+                    <input type="number" className="vs-input" step={0.1} onChange={handleCHange}/>
                   </div>
+                  <div className="room-price">{Amount}ETH</div>
                 </div>
                 <div className="vs-second">
                   {isFilled ? (
@@ -238,8 +237,7 @@ const GameBoard = () => {
                     <>
                       <Spinner />
                       <div
-                        className="userName"
-                        style={{ marginTop: "-50px", color: "white" }}
+                        className="waiting"
                       >
                         waiting..{" "}
                       </div>
@@ -270,18 +268,8 @@ const GameBoard = () => {
               ></div>
             </div>
             <div className="changeroom-addfund">
-              <div
-                className="changeroom"
-                onClick={() => navigate("/dashboard")}
-              >
-                CHANGE ROOM
-              </div>
-              <div
-                className="changeroom"
-                onClick={() => toast(<DepositCard />)}
-              >
-                ADD FUNDS
-              </div>
+              <div className="changeroom" onClick={() => navigate('/dashboard')}>CHANGE ROOM</div>
+              <div className="changeroom" onClick={() => { }}>ADD FUNDS</div>
             </div>
             <div className="chat-board">
               <Chat

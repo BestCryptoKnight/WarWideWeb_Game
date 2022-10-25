@@ -2,9 +2,10 @@ p {
     font-size: 16px;
 }
 
-.security{
+.security {
     padding: 5px;
 }
+
 .custom--card {
     margin-top: 15px;
     width: 1010px;
@@ -17,7 +18,7 @@ p {
     text-align: center;
 }
 
-.icon{
+.icon {
     color: #fff !important;
 }
 
@@ -29,11 +30,11 @@ input {
     width: 100% !important;
     background-color: #350b2d !important;
     color: white !important;
-    border:1px solid #824c6b !important;
+    border: 1px solid #824c6b !important;
 }
 
 @media (max-width: 1399px) {
-    .custom--card{
+    .custom--card {
         width: auto;
     }
 }

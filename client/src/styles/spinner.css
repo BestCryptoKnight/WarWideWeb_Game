@@ -1,8 +1,8 @@
 .spin-container {
     text-align: center;
-    width: 100px;
-    height: 100px;
-    margin-top: 50px;
+    width: 80px;
+    height: 80px;
+    margin-top: 20px;
   }
   .spin {
     border: 3px solid #B32A4B;
@@ -62,7 +62,7 @@
   }
   #text {
     color: #D6E3F6;
-    font-family: Arial;
+    font-family: "Myriad Pro";
     font-size: 15px;
     position: relative;
     top: -857px;
