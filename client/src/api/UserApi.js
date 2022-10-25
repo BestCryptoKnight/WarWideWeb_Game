@@ -44,7 +44,6 @@ const deposit = async (amount) => {
                 amount: amount,
             }
             const res = await axios.post('/api/balance/deposit', data, HEADER);
-            console.log('res: ', res);
         }
     }
     catch (error) {

@@ -240,12 +240,13 @@
 
   :hover {
     opacity: 0.6;
-    cursor: pointer;
   }
 
   transition: all 0.5s ease-out;
 }
-
+.pointer {
+  cursor: pointer;
+}
 .place-guess-btn-anim {
   position: relative;
   background-image: url("../assets/img/Play Button.png");

@@ -13,8 +13,12 @@ import Spinner from "./spinner";
 import io from "socket.io-client";
 import { BACKEND_URL } from "../../constants";
 import toast from "react-hot-toast";
-import { GAME_START, SET_WINNER } from "../../store/action/constants";
-import { loadData, leaveRoom } from "../../api/RoomApi";
+import {
+  GAME_START,
+  SET_WINNER,
+  SOCKET_ON,
+} from "../../store/action/constants";
+import { loadData } from "../../api/RoomApi";
 import defaultProduct from "../../assets/img/picDemo.png";
 import GameEnd from "./gameEndDialogue";
 import Modal from 'react-modal'
@@ -75,11 +79,14 @@ const GameBoard = () => {
   const [userValue, setUserValue] = useState("");
   const [price, setPrice] = useState(100);
   const [isFilled, setIsFilled] = useState(false);
+  const [winner, setWinner] = useState({});
   const [myStyle, setMyStyle] = useState({
     backgroundImage: `url(${defaultProduct})`,
   });
 
   const isStart = useSelector((state) => state.gameStart);
+  const isSetWinner = useSelector((state) => state.setWinner);
+
   const dispatch = useDispatch();
 
   const PictureFetch = async () => {
@@ -149,17 +156,23 @@ const GameBoard = () => {
     });
     socket.on("winner", (data) => {
       dispatch({ type: SET_WINNER, payload: true });
+      setWinner(data);
     });
     socket.on("discon", (data) => {
-      console.log("disconnected")
-      toast.error(data.username + "left the room");
+      console.log("disconnected");
+      toast.error(data.username + " left the room");
       navigate("/dashboard");
     });
   };
 
   const socketDisconnect = async () => {
     await socket.emit("discon");
-    isFilled ? console.log('ss') : leaveRoom(Amount);
+    isFilled ? console.log("ss") : leaveRoom(Amount);
+    socket.removeListener("message");
+    socket.removeListener("startReq");
+    socket.removeListener("start");
+    socket.removeListener("winner");
+    socket.removeListener("discon");
   };
   useEffect(() => {
     boardAnimation();
@@ -168,6 +181,7 @@ const GameBoard = () => {
 
     return () => {
       socketDisconnect();
+      setJoinReq(false);
     };
   }, []);
 
@@ -268,7 +282,11 @@ const GameBoard = () => {
           </div>
         </div>
       </div>
-      <GameEnd></GameEnd>
+      {winner === {} ? (
+        <div />
+      ) : (
+        <GameEnd data={winner} username={username}></GameEnd>
+      )}
     </>
   );
 };

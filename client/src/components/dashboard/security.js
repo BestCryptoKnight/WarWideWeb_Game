@@ -10,14 +10,11 @@ const Security = () => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        console.log(e.target.name);
-        console.log(e.target.value);
         setFormData((prev) => ({ ...prev, [name]: value }));
     };
 
     const clickSubmit = async () => {
         try {
-            console.log('data: ', formData);
             if (!formData.currentPassword || !formData.password || !formData.passwordConfirmation)
                 toast.error('fill the all blanks!')
             else if (formData.password !== formData.passwordConfirmation) {
