@@ -8,6 +8,13 @@ const joinRoom = async (amount) => {
   return res.data;
 }
 
+const leaveRoom = async (amount) => {
+  console.log('header:', HEADER);
+  const res = await axios.post('/api/game/leaveRoom', { amount: amount }, HEADER);
+  console.log('res: ', res.data);
+  return res.data;
+}
+
 const loadData = async () => {
   const res = await axios.get('/api/game', HEADER);
   return res;
