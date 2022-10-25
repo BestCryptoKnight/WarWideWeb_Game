@@ -16,6 +16,7 @@ import { GAME_START, SET_WINNER } from "../../store/action/constants";
 import { loadData } from "../../api/RoomApi";
 import defaultProduct from "../../assets/img/picDemo.png";
 import GameEnd from "./gameEndDialogue";
+import DepositCard from "../cards/depositCard";
 
 const useStyles = makeStyles({
   root: {
@@ -243,7 +244,7 @@ const GameBoard = () => {
             </div>
             <div className="changeroom-addfund">
               <div className="changeroom" onClick={()=>navigate('/dashboard')}>CHANGE ROOM</div>
-              <div className="changeroom" onClick = {()=>toast(<button onClick = {() => navigate('/dashboard')}>Yes</button>)}>ADD FUNDS</div>
+              <div className="changeroom" onClick = {()=>toast(<DepositCard />)}>ADD FUNDS</div>
             </div>
             <div className="chat-board">
               <Chat username={username} roomname={roomname} socket={socket}></Chat>
