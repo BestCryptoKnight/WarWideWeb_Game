@@ -18,7 +18,7 @@ import {
   SET_WINNER,
   SOCKET_ON,
 } from "../../store/action/constants";
-import { loadData } from "../../api/RoomApi";
+import { loadData, leaveRoom } from "../../api/RoomApi";
 import defaultProduct from "../../assets/img/picDemo.png";
 import GameEnd from "./gameEndDialogue";
 import Modal from 'react-modal'
@@ -223,7 +223,7 @@ const GameBoard = () => {
                 <div className="vs-bid-label">
                   <div className="vs-bid-value">
                     <i className="fa fa-usd icon"></i>
-                    <input type="number" className="vs-input" step={0.1} onChange={handleCHange}/>
+                    <input type="number" className="vs-input" step={0.1} onChange={handleCHange} />
                   </div>
                   <div className="room-price">{Amount}ETH</div>
                 </div>
