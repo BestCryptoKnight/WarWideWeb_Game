@@ -3,35 +3,39 @@ const readExcel = require('read-excel-file/node');
 const fs = require('fs');
 
 const read_excel = async (req, res) => {
-//    Image.remove();
-    readExcel(fs.createReadStream('E:/upwork/datas.xlsx'))
-        .then((rows) => {
-            let sRow = 0;
-            let eRow = 0;
-            let sCol = 0;
-            let eCol = 0;
-            eCol = rows[0].length;
-            eRow = rows.length;
-            console.log(eCol, eRow);
+    //    Image.remove();
+    try {
+        readExcel(fs.createReadStream('E:/upwork/datas.xlsx'))
+            .then((rows) => {
+                let sRow = 0;
+                let eRow = 0;
+                let sCol = 0;
+                let eCol = 0;
+                eCol = rows[0].length;
+                eRow = rows.length;
+                console.log(eCol, eRow);
 
-            let colData = [];
-            //Create insertion object to send to insertMany API of mongoose
-            for (var i = sRow + 1; i < eRow; i++) {
-                var obj = {};
-                for (var j in rows[i]) {
-                    obj[rows[sRow][j]] = rows[i][j];
+                let colData = [];
+                //Create insertion object to send to insertMany API of mongoose
+                for (var i = sRow + 1; i < eRow; i++) {
+                    var obj = {};
+                    for (var j in rows[i]) {
+                        obj[rows[sRow][j]] = rows[i][j];
+                    }
+                    colData.push(obj);
                 }
-                colData.push(obj);
-            }
-            console.log(colData);
+                console.log(colData);
 
-            Image.insertMany(colData)
-                .then((result) =>
-                    console.log('success'))
-                .catch((error) =>
-                    console.log('failed')
-                );
-        });
+                Image.insertMany(colData)
+                    .then((result) =>
+                        console.log('success'))
+                    .catch((error) =>
+                        console.log('failed')
+                    );
+            });
+    } catch (error) {
+        console.log(error);
+    }
 }
 // read_excel();
 // Display All Image Data
