@@ -22,5 +22,6 @@ const loadData = async () => {
 
 export {
   joinRoom,
-  loadData
+  loadData,
+  leaveRoom
 }

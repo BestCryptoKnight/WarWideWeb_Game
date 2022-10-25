@@ -17,6 +17,7 @@ import { loadData } from "../../api/RoomApi";
 import defaultProduct from "../../assets/img/picDemo.png";
 import GameEnd from "./gameEndDialogue";
 import DepositCard from "../cards/depositCard";
+import { leaveRoom } from "../../api/RoomApi";
 
 const useStyles = makeStyles({
   root: {
@@ -69,6 +70,7 @@ const GameBoard = () => {
   const [username, setUserName] = useState(user2 === "" ? user1 : user2);
   // const [isCreate, setCreate] = useState(user2 ==="" ? false : true);
   const [otheruser, setOtheruser] = useState(user2 === "" ? user2 : user1);
+  const [startGame, setStartGame] = useState(false);
   const [userValue, setUserValue] = useState("");
   const [price, setPrice] = useState(100);
   const [isFilled, setIsFilled] = useState(false);
@@ -138,6 +140,7 @@ const GameBoard = () => {
     });
     socket.on("start", () => {
       dispatch({ type: GAME_START, payload: true });
+      setStartGame(true);
     });
     socket.on("winner", (data) => {
       dispatch({ type: SET_WINNER, payload: true });
@@ -151,7 +154,7 @@ const GameBoard = () => {
 
   const socketDisconnect = async () => {
     await socket.emit("discon");
-    isFilled ? console.log('ss') : console.log("tdawfafgaw"); 
+    isFilled ? console.log('ss') : leaveRoom(Amount); 
   };
   useEffect(() => {
     boardAnimation();
