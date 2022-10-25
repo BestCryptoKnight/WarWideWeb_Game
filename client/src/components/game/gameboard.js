@@ -16,6 +16,7 @@ import { GAME_START, SET_WINNER } from "../../store/action/constants";
 import { loadData } from "../../api/RoomApi";
 import defaultProduct from "../../assets/img/picDemo.png";
 import GameEnd from "./gameEndDialogue";
+import DepositCard from "../cards/depositCard";
 
 const useStyles = makeStyles({
   root: {
@@ -268,6 +269,8 @@ const GameBoard = () => {
               >
                 ADD FUNDS
               </div>
+              <div className="changeroom" onClick={()=>navigate('/dashboard')}>CHANGE ROOM</div>
+              <div className="changeroom" onClick = {()=>toast(<DepositCard />)}>ADD FUNDS</div>
             </div>
             <div className="chat-board">
               <Chat
