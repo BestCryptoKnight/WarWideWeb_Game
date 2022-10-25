@@ -144,7 +144,6 @@ const GameBoard = () => {
       dispatch({ type: SET_WINNER, payload: true });
     });
     socket.on("discon", (data) => {
-      console.log(data, "------------disconnect");
       toast.error(data.username + "left the room");
       navigate("/dashboard");
     });
