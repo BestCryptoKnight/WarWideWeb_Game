@@ -122,7 +122,23 @@ const joinRoom = async (req, res) => {
     }
 }
 
+const leaveRoom = async (req, res) => {
+    const name = req.auth.name;
+    const amount = req.body.amount;
+    console.log('name: ', name);
+    console.log('amount: ', amount);
+    if (amount == PRICE1)
+        flag1 = true
+    else if (amount == PRICE2)
+        flag2 = true;
+    else
+        flag3 = true;
+    res.json('success');
+}
+
 module.exports = {
     loadData,
-    joinRoom
+    joinRoom,
+    leaveRoom,
 }
+
