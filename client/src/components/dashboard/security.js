@@ -20,7 +20,7 @@ const Security = () => {
             console.log('data: ', formData);
             if (!formData.currentPassword || !formData.password || !formData.passwordConfirmation)
                 toast.error('fill the all blanks!')
-            else if (formData.password !== formData.passwordConfirmation){
+            else if (formData.password !== formData.passwordConfirmation) {
                 toast.error(formData.password, formData.passwordConfirmation, 'passwords must be match');
             }
             else {

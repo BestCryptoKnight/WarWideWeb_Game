@@ -1,7 +1,6 @@
 const Image = require("../../models/Image");
 const User = require('../../models/User');
 const baseRoomUrl = 'room/';
-const baseUrl = 'https://drive.google.com/drive/folders/1l3YgdWuyB-V7mC-SLBut5lpcZZ52KLOj';
 const min = 100000;
 const max = 900000;
 
