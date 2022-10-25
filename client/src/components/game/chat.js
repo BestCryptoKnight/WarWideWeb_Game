@@ -10,7 +10,6 @@ function Chat({ username, otheruser, socket }) {
   const dispatch = useDispatch();
 
   const pushNewMessage = (newMsg) => {
-    console.log(messages.length);
     messages.push(newMsg);
     setMessages([...messages]);
   };

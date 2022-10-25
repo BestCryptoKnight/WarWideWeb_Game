@@ -17,7 +17,6 @@ const Counter = (props) => {
     }, 1000);
   });
 
-  console.log(username);
 
   useEffect(() => {
     const tmp = async () => {

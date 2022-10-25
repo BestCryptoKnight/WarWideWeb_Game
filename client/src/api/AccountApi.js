@@ -11,7 +11,6 @@ const changePassword = async (formData) => {
 
 const changeAccount = async (formData) => {
     try {
-        console.log('HEADER: ', HEADER)
         await axios.post('/api/account/changeAccount', formData, HEADER);
     } catch (error) {
         return (error);

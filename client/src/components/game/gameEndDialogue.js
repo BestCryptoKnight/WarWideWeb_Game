@@ -27,7 +27,6 @@ export default function AlertDialogSlide() {
     dispatch({ type: SET_WINNER, payload: false });
 
   };
-  console.log(setWinner);
   return (
     <div>
       {/* <Button variant="outlined" onClick={handleClickOpen}>

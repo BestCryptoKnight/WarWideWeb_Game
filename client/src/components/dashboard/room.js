@@ -11,9 +11,7 @@ const Room = (props) => {
     const navigate = useNavigate();
     const { account } = useAuth();
     const handleClick = async () => {
-        console.log('I am clicked...')
         const result = await getAvailability(account.name);
-        console.log('result: ', result);
             enterRoom();
 
         // if (result.availability !== true) {
@@ -33,7 +31,6 @@ const Room = (props) => {
     const enterRoom = async () => {
         if (account.balance > props.value) {
             const data = await joinRoom(props.value);
-            console.log('data: ', data)
             navigate(`${data.url}`, { state: { ...data } } );
         }
         else {

@@ -1,7 +1,9 @@
 const GAME_START = 'GAME_START'
 const SET_WINNER = 'SET_WINNER'
+const SOCKET_ON = 'SOCKET_ON'
 
 export {
   GAME_START,
   SET_WINNER,
+  SOCKET_ON
 }
