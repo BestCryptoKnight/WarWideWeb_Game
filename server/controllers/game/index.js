@@ -19,12 +19,12 @@ function randomIntFromInterval(min, max) {
 }
 
 const loadData = async (req, res) => {
-    const randomNumber = randomIntFromInterval(1, 200);
+    const randomNumber = randomIntFromInterval(1, 10);
     console.log('random: ', randomNumber);
     const item = await Image.findOne({ ID: randomNumber });
 
     const data = {
-        url: item.url,
+        url: item.Url,
         description: item.Description,
         price: item.Price
     }
@@ -34,8 +34,7 @@ const loadData = async (req, res) => {
 const joinRoom = async (req, res) => {
     const name = req.auth.name;
     const amount = req.body.amount;
-    console.log('name: ', name);
-    console.log('amount: ', amount);
+    console.log('entering name: ', name);
     const user = await User.findOne({ name: name });
     if (!user) {
         res.json('Invalid User');
@@ -56,8 +55,9 @@ const joinRoom = async (req, res) => {
                     user2: '',
                     amount: amount,
                     url: rooms1,
-                    isFull: 'false'
+                    isFull: false
                 }
+                console.log('data: ', data)
             }
             else {
                 flag1 = true;
@@ -66,7 +66,7 @@ const joinRoom = async (req, res) => {
                     user2: name,
                     amount: amount,
                     url: rooms1,
-                    isFull: 'true'
+                    isFull: true
                 }
             }
         }
@@ -80,7 +80,7 @@ const joinRoom = async (req, res) => {
                     user2: '',
                     amount: amount,
                     url: rooms2,
-                    isFull: 'false'
+                    isFull: false
                 }
             }
             else {
@@ -90,7 +90,7 @@ const joinRoom = async (req, res) => {
                     user2: name,
                     amount: amount,
                     url: rooms2,
-                    isFull: 'true'
+                    isFull: true
                 }
             }
         }
@@ -104,7 +104,7 @@ const joinRoom = async (req, res) => {
                     user2: '',
                     amount: amount,
                     url: rooms3,
-                    isFull: 'false'
+                    isFull: false
                 }
             }
             else {
@@ -114,7 +114,7 @@ const joinRoom = async (req, res) => {
                     user2: name,
                     amount: amount,
                     url: rooms3,
-                    isFull: 'true'
+                    isFull: true
                 }
             }
         }
@@ -125,8 +125,7 @@ const joinRoom = async (req, res) => {
 const leaveRoom = async (req, res) => {
     const name = req.auth.name;
     const amount = req.body.amount;
-    console.log('name: ', name);
-    console.log('amount: ', amount);
+    console.log('leaving user: ', name);
 
     if (amount == PRICE1) {
         if (flag1 == false && player1 == name)

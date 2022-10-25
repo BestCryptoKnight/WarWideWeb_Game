@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useLocation } from "react-router";
 import "../../styles/gameboard.scss";
+import "../../styles/modal.css"
 import { useMediaQuery } from "react-responsive";
 import { makeStyles } from "@material-ui/core/styles";
 import Counter from "./counter";
@@ -13,11 +14,10 @@ import io from "socket.io-client";
 import { BACKEND_URL } from "../../constants";
 import toast from "react-hot-toast";
 import { GAME_START, SET_WINNER } from "../../store/action/constants";
-import { loadData } from "../../api/RoomApi";
+import { loadData, leaveRoom } from "../../api/RoomApi";
 import defaultProduct from "../../assets/img/picDemo.png";
 import GameEnd from "./gameEndDialogue";
-import DepositCard from "../cards/depositCard";
-import { leaveRoom } from "../../api/RoomApi";
+import Modal from 'react-modal'
 
 const useStyles = makeStyles({
   root: {
@@ -52,6 +52,7 @@ const useStyles = makeStyles({
 });
 
 const socket = io.connect(BACKEND_URL);
+Modal.setAppElement(document.getElementById('root'))
 
 const GameBoard = () => {
   let isLaptopOrMobile = useMediaQuery({
@@ -82,13 +83,16 @@ const GameBoard = () => {
   const dispatch = useDispatch();
 
   const PictureFetch = async () => {
-    isStart
-      ? await loadData()
-          .then((res) => {
-            setMyStyle({ backgroundImage: `url(${res.data.url})` });
-          })
-          .catch((error) => alert(error))
-      : console.log("start game");
+    try{
+      console.log("I am calling");
+      const res = await loadData();
+      console.log("Image url: ", `url(${ res.data.url })`);
+      setMyStyle({ backgroundImage: `url(${res.data.url})` });
+      console.log('myStyle: ', myStyle);
+    } catch(error){
+      toast.error(error)
+    }
+    
   };
 
   const boardAnimation = () => {
@@ -128,7 +132,7 @@ const GameBoard = () => {
       if (data.users.length > 1) {
         setIsFilled(true);
         setOtheruser(
-          data.users[0].username == username
+          data.users[0].username === username
             ? data.users[1].username
             : data.users[0].username
         );
@@ -154,7 +158,7 @@ const GameBoard = () => {
 
   const socketDisconnect = async () => {
     await socket.emit("discon");
-    isFilled ? console.log('ss') : leaveRoom(Amount); 
+    isFilled ? console.log('ss') : leaveRoom(Amount);
   };
   useEffect(() => {
     boardAnimation();
@@ -166,6 +170,10 @@ const GameBoard = () => {
     };
   }, []);
 
+  useEffect(() => {
+    if (isStart)
+      PictureFetch();
+  }, [isStart])
   return (
     <>
       <div
@@ -184,7 +192,7 @@ const GameBoard = () => {
               isLaptopOrMobile ? "picture-board" : "picture-board-mobile"
             }
           >
-            <div className="realPic" style={myStyle} />
+            <div className="realPic" style={ {myStyle} } />
           </div>
           <div
             className={
@@ -256,8 +264,8 @@ const GameBoard = () => {
               ></div>
             </div>
             <div className="changeroom-addfund">
-              <div className="changeroom" onClick={()=>navigate('/dashboard')}>CHANGE ROOM</div>
-              <div className="changeroom" onClick = {()=>toast(<DepositCard />)}>ADD FUNDS</div>
+              <div className="changeroom" onClick={() => navigate('/dashboard')}>CHANGE ROOM</div>
+              <div className="changeroom" onClick={() => { }}>ADD FUNDS</div>
             </div>
             <div className="chat-board">
               <Chat
