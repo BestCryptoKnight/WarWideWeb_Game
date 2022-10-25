@@ -93,19 +93,27 @@ server.on("connection", (socket) => {
   socket.on("start", ({ username, room }) => {
     // const p_user = join_User(socket.id, username, room);
     const p_user = get_Current_User(socket.id);
+    let allUsers = broadcastToRoomUsers(p_user.room);
     if (validArray.findIndex((user) => user.id == p_user.id) == -1) {
       validArray.push(p_user);
-      validArray.length == 2
-        ? server.sockets.in(p_user.room).emit("start")
-        : socket.to(p_user.room).emit("startReq", { username });
+      if(validArray.length === 2){
+        server.sockets.in(allUsers[0].room).emit("start");
+        validArray = [];
+      }else{
+        socket.to(allUsers[0].room).emit("startReq", { username });
+      }
     }
+    console.log(validArray);
   });
 
   socket.on("setwinner", ({ username, bidValue, price }) => {
     const realprice = price;
     let winner = {};
-
+    let loser = {};
     const p_user = get_Current_User(socket.id);
+    let allUsers = broadcastToRoomUsers(p_user.room);
+
+
     let userInfo = { user: username, value: bidValue };
 
     if (bidValueArray.findIndex((user) => user.id === p_user.id) == -1) {
@@ -113,7 +121,9 @@ server.on("connection", (socket) => {
     }
     if (bidValueArray.length == 2) {
       winner = setWinner(bidValueArray, realprice);
-      server.sockets.in(p_user.room).emit("winner", { winner });
+      loser = winner === bidValueArray[0] ? bidValueArray[1] : bidValueArray[0];
+      server.sockets.in(allUsers[0].room).emit("winner", { winner, loser , realprice});
+      bidValueArray = [];
     }
   });
 });

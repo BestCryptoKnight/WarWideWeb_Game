@@ -17,7 +17,6 @@ function join_User(id, username, room) {
       ? (c_users(c_users.findIndex((p_user) => (p_user.id = id))).id = id)
       : c_users.push(p_userNew)
     : c_users.push(p_userNew);
-  console.log(c_users, "---------users");
   return c_users.find((p_user) => p_user === p_userNew);
 }
 

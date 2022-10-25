@@ -78,13 +78,15 @@ const GameBoard = () => {
   const [userValue, setUserValue] = useState("");
   const [price, setPrice] = useState(100);
   const [isFilled, setIsFilled] = useState(false);
+  const [winner, setWinner] = useState({});
   const [myStyle, setMyStyle] = useState({
     backgroundImage: `url(${defaultProduct})`,
   });
 
   const isStart = useSelector((state) => state.gameStart);
+  const isSetWinner = useSelector((state) => state.setWinner);
+
   const dispatch = useDispatch();
-  const is_socket_on = useSelector((state) => state.socket);
 
   const PictureFetch = async () => {
     isStart
@@ -149,10 +151,11 @@ const GameBoard = () => {
     });
     socket.on("winner", (data) => {
       dispatch({ type: SET_WINNER, payload: true });
+      setWinner(data);
     });
     socket.on("discon", (data) => {
       console.log("disconnected");
-      toast.error(data.username + "left the room");
+      toast.error(data.username + " left the room");
       navigate("/dashboard");
     });
   };
@@ -291,7 +294,11 @@ const GameBoard = () => {
           </div>
         </div>
       </div>
-      <GameEnd></GameEnd>
+      {winner === {} ? (
+        <div />
+      ) : (
+        <GameEnd data={winner} username={username}></GameEnd>
+      )}
     </>
   );
 };
