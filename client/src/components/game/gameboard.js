@@ -65,11 +65,10 @@ const GameBoard = () => {
   const user2 = location.state.user2;
   const Amount = location.state.amount;
 
-  const [joinReq, setJoin] = useState(false);
-  const [username, setUser] = useState(user2 === "" ? user1 : user2);
+  const [joinReq, setJoinReq] = useState(false);
+  const [username, setUserName] = useState(user2 === "" ? user1 : user2);
   // const [isCreate, setCreate] = useState(user2 ==="" ? false : true);
   const [otheruser, setOtheruser] = useState(user2 === "" ? user2 : user1);
-  const [startGame, setStartGame] = useState(false);
   const [userValue, setUserValue] = useState("");
   const [price, setPrice] = useState(100);
   const [isFilled, setIsFilled] = useState(false);
@@ -123,7 +122,7 @@ const GameBoard = () => {
       ? console.log("received")
       : socket.emit("joinRoom", { username: username, room: roomname });
     socket.on("message", (data) => {
-      setJoin(true);
+      setJoinReq(true);
       if (data.users.length > 1) {
         setIsFilled(true);
         setOtheruser(
@@ -139,7 +138,6 @@ const GameBoard = () => {
     });
     socket.on("start", () => {
       dispatch({ type: GAME_START, payload: true });
-      setStartGame(true);
     });
     socket.on("winner", (data) => {
       dispatch({ type: SET_WINNER, payload: true });
@@ -153,6 +151,7 @@ const GameBoard = () => {
 
   const socketDisconnect = async () => {
     await socket.emit("discon");
+    isFilled ? console.log('ss') : console.log("tdawfafgaw"); 
   };
   useEffect(() => {
     boardAnimation();
@@ -254,22 +253,6 @@ const GameBoard = () => {
               ></div>
             </div>
             <div className="changeroom-addfund">
-              <div
-                className="changeroom"
-                onClick={() => navigate("/dashboard")}
-              >
-                CHANGE ROOM
-              </div>
-              <div
-                className="changeroom"
-                onClick={() =>
-                  toast(
-                    <button onClick={() => navigate("/dashboard")}>Yes</button>
-                  )
-                }
-              >
-                ADD FUNDS
-              </div>
               <div className="changeroom" onClick={()=>navigate('/dashboard')}>CHANGE ROOM</div>
               <div className="changeroom" onClick = {()=>toast(<DepositCard />)}>ADD FUNDS</div>
             </div>
