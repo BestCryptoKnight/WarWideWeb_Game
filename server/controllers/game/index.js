@@ -127,12 +127,19 @@ const leaveRoom = async (req, res) => {
     const amount = req.body.amount;
     console.log('name: ', name);
     console.log('amount: ', amount);
-    if (amount == PRICE1)
-        flag1 = true
-    else if (amount == PRICE2)
-        flag2 = true;
-    else
-        flag3 = true;
+
+    if (amount == PRICE1) {
+        if (flag1 == false && player1 == name)
+            flag1 = true
+    }
+    else if (amount == PRICE2) {
+        if (flag2 == false && player2 == name)
+            flag2 = true
+    }
+    else {
+        if (flag3 == false && player3 == name)
+            flag3 = true
+    }
     res.json('success');
 }
 
