@@ -55,74 +55,68 @@ const GameBoard = () => {
   let isLaptopOrMobile = useMediaQuery({
     minWidth: 430,
   });
-  const [isFilled, setIsFilled] = useState(false);
+
   const navigate = useNavigate();
   const classes = useStyles();
-
   const location = useLocation();
   const roomname = location.state.url;
   const user1 = location.state.user1;
   const user2 = location.state.user2;
-
   const Amount = location.state.amount;
-
-  // const [username, setUsername] = useState('');
-  // const [otheruser, setOtheruser] = useState('');
 
   const [joinReq, setJoin] = useState(false);
   const [username, setUser] = useState(user2 === "" ? user1 : user2);
+  // const [isCreate, setCreate] = useState(user2 ==="" ? false : true);
   const [otheruser, setOtheruser] = useState(user2 === "" ? user2 : user1);
-  const dispatch = useDispatch();
-
-  const isStart = useSelector((state) => state.gameStart);
   const [startGame, setStartGame] = useState(false);
   const [userValue, setUserValue] = useState("");
   const [price, setPrice] = useState(100);
+  const [isFilled, setIsFilled] = useState(false);
   const [myStyle, setMyStyle] = useState({
     backgroundImage: `url(${defaultProduct})`,
   });
 
+  const isStart = useSelector((state) => state.gameStart);
+  const dispatch = useDispatch();
+
   const PictureFetch = async () => {
     isStart
       ? await loadData()
-        .then((res) => {
-          console.log(res.data.url);
-          setMyStyle({ backgroundImage: `url(${res.data.url})` });
-          // setPrice(res.data.price);
-          console.log(window.document.getElementById("product"));
-        })
-        .catch((error) => alert(error))
+          .then((res) => {
+            setMyStyle({ backgroundImage: `url(${res.data.url})` });
+          })
+          .catch((error) => alert(error))
       : console.log("start game");
   };
-
-  useEffect(() => {
-    boardAnimation();
-    socketMonitor();
-    PictureFetch();
-  }, [startGame, isStart]);
 
   const boardAnimation = () => {
     isLaptopOrMobile
       ? animationFunc("gameboard", "game-mainboard")
       : animationFunc("gameboard", "game-mainboard-mobile");
   };
+
   const userValidate = () => {
     return true;
   };
+
   const sendStartReq = () => {
     socket.emit("start", { username: username, room: roomname });
   };
+
   const handleMouseDown = (e) => {
     animationFunc("placeBid", "place-guess-btn-anim");
   };
+
   const handleMouseUp = (e) => {
     animationFunc("placeBid", "place-guess-btn");
     let isValid = userValidate();
     isValid ? sendStartReq() : toast.error("Not enough deposit");
   };
+
   const handleCHange = (e) => {
     setUserValue(e.target.value);
   };
+
   const socketMonitor = () => {
     joinReq
       ? console.log("received")
@@ -147,10 +141,27 @@ const GameBoard = () => {
       setStartGame(true);
     });
     socket.on("winner", (data) => {
-      console.log(data);
       dispatch({ type: SET_WINNER, payload: true });
     });
+    socket.on("discon", (data) => {
+      console.log(data, "------------disconnect");
+      toast.error(data.username + "left the room");
+      navigate("/dashboard");
+    });
   };
+
+  const socketDisconnect = async () => {
+    await socket.emit("discon");
+  };
+  useEffect(() => {
+    boardAnimation();
+    socketMonitor();
+    PictureFetch();
+
+    return () => {
+      socketDisconnect();
+    };
+  }, []);
 
   return (
     <>
@@ -242,11 +253,30 @@ const GameBoard = () => {
               ></div>
             </div>
             <div className="changeroom-addfund">
-              <div className="changeroom" onClick={()=>navigate('/dashboard')}>CHANGE ROOM</div>
-              <div className="changeroom" onClick = {()=>toast(<button onClick = {() => navigate('/dashboard')}>Yes</button>)}>ADD FUNDS</div>
+              <div
+                className="changeroom"
+                onClick={() => navigate("/dashboard")}
+              >
+                CHANGE ROOM
+              </div>
+              <div
+                className="changeroom"
+                onClick={() =>
+                  toast(
+                    <button onClick={() => navigate("/dashboard")}>Yes</button>
+                  )
+                }
+              >
+                ADD FUNDS
+              </div>
             </div>
             <div className="chat-board">
-              <Chat username={username} roomname={roomname} socket={socket}></Chat>
+              <Chat
+                username={username}
+                roomname={roomname}
+                socket={socket}
+                otheruser={otheruser}
+              ></Chat>
             </div>
           </div>
         </div>

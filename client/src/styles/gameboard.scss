@@ -28,7 +28,6 @@
   }
 }
 
-
 .gameboard-laptop {
   background-image: url("../assets/img/background.jpg");
   background-position: center;
@@ -52,9 +51,8 @@
   margin-top: 12vh;
   min-height: 600px;
   transition: all 0.5s ease-out;
-  
 }
-.game-mainboard-anim{
+.game-mainboard-anim {
   margin-top: 100%;
   width: 100%;
 }
@@ -66,9 +64,8 @@
   /* margin-top: 5vh; */
   height: 100%;
   transition: all 0.5s ease-out;
-
 }
-.game-mainboard-mobile-anim {  
+.game-mainboard-mobile-anim {
   margin-top: 80px;
 }
 .picture-board {
@@ -205,12 +202,11 @@
   background-repeat: no-repeat;
   margin-left: 15px;
   margin-top: 2.5%;
-  :hover{
+  :hover {
     opacity: 0.6;
     cursor: pointer;
   }
   transition: all 0.5s ease-out;
-
 }
 .place-guess-btn-anim {
   position: relative;
@@ -223,13 +219,13 @@
   margin-top: 3.5%;
   transition: all 0.1s ease-out;
   opacity: 0.3;
-  :hover{
+  :hover {
     opacity: 0.6;
     cursor: pointer;
   }
 }
 
-.place-guess-btn:hover{
+.place-guess-btn:hover {
   opacity: 0.7;
 }
 .counter {
@@ -290,7 +286,6 @@
   background-size: 100% 100%;
 }
 
-
 .chat {
   display: flex;
   width: 400px;
@@ -322,6 +317,7 @@
       padding-left: 0.5rem;
       max-width: 250px;
       margin-left: 0px;
+      height: 70px;
       p {
         color: #b4b6be;
         font-size: 1rem;
@@ -337,6 +333,30 @@
         padding-left: 0.5rem;
         font-weight: 200;
       }
+      .inform {
+        background-color: $redColor;
+        display: flex;
+        margin-left: auto;
+        flex-direction: column;
+        padding-right: 0.5rem;
+        margin-right: 10px;
+        max-width: 250px;
+        p {
+          color: white;
+          font-size: 1rem;
+          font-weight: 300;
+          background-color: $redColor;
+          border-radius: 0px 10px 10px 10px;
+          padding: 1rem;
+        }
+
+        span {
+          padding-left: 0rem;
+          width: 100%;
+          padding-right: 0.5rem;
+          text-align: end;
+        }
+      }
     }
     .mess-right {
       display: flex;
@@ -345,16 +365,8 @@
       padding-right: 0.5rem;
       margin-right: 10px;
       max-width: 250px;
+      height:60px;
       p {
-        // background-color: $redColor;
-        // font-size: 1rem;
-        // font-weight: 300;
-        // border-radius: 10px 0px 10px 10px;
-
-        // text-align: center;
-        // color: white;
-        // border-radius: 5px 0px 5px 5px;
-        // height: 10px;
         color: white;
         font-size: 1rem;
         font-weight: 300;
@@ -362,6 +374,7 @@
         border-radius: 0px 10px 10px 10px;
         padding: 1rem;
       }
+
       span {
         padding-left: 0rem;
         width: 100%;
@@ -376,7 +389,7 @@
     display: flex;
     width: 100%;
     input {
-      background-color: #5D2F4B;
+      background-color: #5d2f4b;
       color: white;
       width: 80%;
       padding-left: 1rem;

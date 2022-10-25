@@ -3,11 +3,22 @@ const Balance = require("../models/Balance");
 
 // joins the user to the specific chatroom
 function join_User(id, username, room) {
-  const p_user = { id, username, room };
-  if (c_users.findIndex((p_user) => p_user.id === id) == -1) {
-    c_users.push(p_user);
-  }
-  return p_user;
+  const p_userNew = { id, username, room };
+  let isRoom =
+    c_users.findIndex((p_user) => p_user.roomname === room) == -1
+      ? false
+      : true;
+  let isUser =
+    c_users.findIndex((p_user) => p_user.username === room) == -1
+      ? false
+      : true;
+  isRoom
+    ? isUser
+      ? (c_users(c_users.findIndex((p_user) => (p_user.id = id))).id = id)
+      : c_users.push(p_userNew)
+    : c_users.push(p_userNew);
+  console.log(c_users, "---------users");
+  return c_users.find((p_user) => p_user === p_userNew);
 }
 
 function broadcastToRoomUsers(room) {
@@ -22,6 +33,15 @@ function get_Current_User(id) {
 
 // called when the user leaves the chat and its user object deleted from array
 function user_Disconnect(id) {
+  // console.log(c_users,"--------room ");
+  // for (var i = 0; i < c_users.length; i++) {
+  //   if (c_users[i].room === room) {
+  //     c_users.splice(i, 1);
+  //     i--;
+  //   }
+  // }
+  // const index = c_users.findIndex((p_user) => p_user.room === room);
+  // return index;
   const index = c_users.findIndex((p_user) => p_user.id === id);
 
   if (index !== -1) {
@@ -31,7 +51,6 @@ function user_Disconnect(id) {
 
 function setWinner(bidValueArray, price) {
   let winner = {};
-  console.log(bidValueArray);
   if (bidValueArray[0].value == "") {
     return bidValueArray[1];
   } else if (bidValueArray[1].value == "") {
