@@ -411,7 +411,7 @@ body {
     font-size: 16px;
     color: rgba(255, 255, 255, 0.8);
     line-height: 1.7;
-    font-family: "Open Sans", sans-serif;
+    font-family: "Myriad Pro";
     background: #350b2d;
     display: flex;
     flex-direction: column;
@@ -429,7 +429,7 @@ h6 {
     margin: 0;
     line-height: 1.4;
     color: #fff;
-    font-family: "Josefin Sans", sans-serif;
+    font-family: "Myriad Pro";
 }
 
 h1 a,
@@ -670,7 +670,7 @@ img {
     position: absolute;
     font-weight: 900;
     font-size: 16px;
-    font-family: "Font Awesome 5 Free";
+    font-family: "Myriad Pro";
     content: '\f00c';
     font-size: 10px;
     color: #fff;
@@ -729,7 +729,7 @@ img {
     position: absolute;
     font-weight: 900;
     font-size: 16px;
-    font-family: "Line Awesome Free";
+    font-family: "Myriad Pro";
     content: '\f14a';
     font-size: 18px;
     color: #FFC827;
@@ -903,7 +903,7 @@ i {
     padding: 12px 35px;
     font-size: 19px;
     font-weight: 500;
-    font-family: "Josefin Sans", sans-serif;
+    font-family: "Myriad Pro";
     cursor: pointer;
     outline: none;
     -webkit-transition: all ease .3s;
@@ -1199,7 +1199,7 @@ i {
     position: absolute;
     font-weight: 900;
     font-size: 16px;
-    font-family: "Line Awesome Free";
+    font-family: "Myriad Pro";
     content: '\f107';
     right: 0;
     top: 50%;
@@ -1213,7 +1213,7 @@ i {
     font-size: 15px;
     font-weight: 600;
     text-transform: uppercase;
-    font-family: "Josefin Sans", sans-serif;
+    font-family: "Myriad Pro";
     color: #fff;
     position: relative;
 }
@@ -1693,7 +1693,7 @@ i {
     position: absolute;
     font-weight: 900;
     font-size: 16px;
-    font-family: "Font Awesome 5 Free";
+    font-family: "Myriad Pro";
     content: '\f30b';
     font-size: 18px;
     right: 0;
@@ -1733,7 +1733,7 @@ i {
 
     .table--responsive--md tbody tr td::before {
         content: attr(data-label);
-        font-family: "Josefin Sans", sans-serif;
+        font-family: "Myriad Pro";
         font-size: 16px;
         color: #fff;
         font-weight: 500;
@@ -1778,7 +1778,7 @@ i {
 
     .table--responsive--lg tbody tr td::before {
         content: attr(data-label);
-        font-family: "Josefin Sans", sans-serif;
+        font-family: "Myriad Pro";
         font-size: 16px;
         color: #fff;
         font-weight: 500;
@@ -1823,7 +1823,7 @@ i {
 
     .table--responsive--xl tbody tr td::before {
         content: attr(data-label);
-        font-family: "Josefin Sans", sans-serif;
+        font-family: "Myriad Pro";
         font-size: 16px;
         color: #fff;
         font-weight: 500;
@@ -1844,7 +1844,7 @@ i {
 
 .table thead tr th {
     padding: 10px 15px;
-    font-family: "Josefin Sans", sans-serif;
+    font-family: "Myriad Pro";
     color: #fff;
     border: none;
     font-size: 15px;
@@ -2548,7 +2548,7 @@ select.form--control option:hover {
 }
 
 .dashboard__card-content .price {
-    font-family: "Open Sans", sans-serif;
+    font-family: "Myriad Pro";
     font-size: 36px;
     color: #fff;
 }
@@ -3291,7 +3291,7 @@ div[class*='col']:last-child .how-item::before {
     position: absolute;
     font-weight: 900;
     font-size: 16px;
-    font-family: "Line Awesome Free";
+    font-family: "Myriad Pro";
     content: '\f107';
     right: 0px;
     top: 50%;
@@ -4006,7 +4006,7 @@ div[class*='col']:nth-child(even)>.faq-item {
     position: absolute;
     font-weight: 900;
     font-size: 16px;
-    font-family: "Line Awesome Free";
+    font-family: "Myriad Pro";
     content: "\f101";
     left: 0;
     top: 6px;
@@ -4080,7 +4080,7 @@ div[class*='col']:nth-child(even)>.faq-item {
     position: absolute;
     font-weight: 900;
     font-size: 16px;
-    font-family: "Line Awesome Free";
+    font-family: "Myriad Pro";
     font-size: 14px;
     content: "\f00c";
     top: -8px;
