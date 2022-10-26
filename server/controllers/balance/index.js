@@ -35,7 +35,6 @@ const balance_index = async (req, res) => {
     }
 };
 
-
 // Show a particular Balance Detail by name
 const balance_details = (req, res) => {
     try {
@@ -182,28 +181,29 @@ const payGameFee = async (req, res) => {
     }
 }
 
-const gameEnd = async (req, res) => {
-    try {
-        const name1 = req.body.user1;
-        const name2 = req.body.user2;
-        const amount = req.body.amount;
+async function gameEnd(username1, username2, roomAmount) {
 
+    const name1 = username1;
+    const name2 = username2;
+    const amount = roomAmount;
+    try {
         const user1 = await User.findOne({ name: name1 });
         const user2 = await User.findOne({ name: name2 });
-        if (user2.balance < amount)
-            res.json('insufficeient Amount');
+        console.log(user2);
+        if (user2.balance <= amount)
+            return false;
         else {
             user1.balance += amount;
             user2.balance -= amount;
             await user1.save()
             await user2.save()
-            await saveHistory({ name: name1, description: 'Wins the game', category: 'winner', amount: amount })
-            await saveHistory({ name: name2, description: 'Loses the game', category: 'loser', amount: amount })
+            await saveHistory({ name: name1, description: 'Wins the game', category: 'Winner', amount: amount })
+            await saveHistory({ name: name2, description: 'Loses the game', category: 'Loser', amount: amount })
 
-            res.json('Success');
+            return true;
         }
     } catch (error) {
-        res.json(error);
+        return false;
     }
 }
 

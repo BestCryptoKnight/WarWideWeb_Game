@@ -6,10 +6,10 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
-import { SET_WINNER } from "../../store/action/constants";
+import { SET_WINNER } from "../../../store/action/constants";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
-import "../../styles/modal.css";
+import "../../../styles/modal.css";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -20,10 +20,10 @@ export default function AlertDialogSlide(datas) {
   const dispatch = useDispatch();
   let username = datas.username;
   let winner = "";
-  let winnerValue = 30;
+  let winnerValue = "";
   let loser = "";
-  let loserValue = 30;
-  let price = 30;
+  let loserValue = "";
+  let price = "";
   let isWinner = false;
   let isSame = false;
   // let winner = (datas.data.winner.user === undefined) ? "winner" : datas.data.winner.user;

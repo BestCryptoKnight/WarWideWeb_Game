@@ -11,6 +11,8 @@ const Counter = (props) => {
   const bidValue = props.gameValue;
   const username = props.username;
   const price = props.price;
+  const amount = props.amount;
+
   const timer = new Promise((resolve, reject) => {
     setInterval(function () {
       return resolve();
@@ -25,13 +27,13 @@ const Counter = (props) => {
       if (countdown > 1) setCount(countdown - 1);
       else {
         setCount(10);
-        socket.emit("setwinner", {username: username, bidValue: bidValue, price: price})
+        socket.emit("setwinner", { username: username, bidValue: bidValue, price: price, amount: amount })
         dispatch({ type: GAME_START, payload: false });
       }
     };
     isStart ? tmp() : console.log("start game");
     return() =>{
-      setCount(10);
+      // setCount(0);
     } 
   }, [countdown]);
   return (

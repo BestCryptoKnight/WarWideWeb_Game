@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { getAvailability, payFee, getBalance } from "../../api/balanceApi";
-import { FEE } from "../../constants";
+import { getAvailability, payFee, getBalance } from "../../../api/balanceApi";
+import { FEE } from "../../../constants";
 import { useDispatch, useSelector } from 'react-redux';
-import { animationFunc } from "../../functions/animations";
+import { animationFunc } from "../../../functions/animations";
 import toast from 'react-hot-toast';
 
 const StartButton = ({ name, amount, socket, room, isFilled }) => {
