@@ -1,7 +1,7 @@
 const ORIGIN = '*'
 const BASECLIENTURL = "http://localhost"
 const PORT = process.env.PORT || 8080
-
+const ETHERPRICE = 1500;
 const PRICE1 = -1
 const PRICE2 = 0.02
 const PRICE3 = 0.03
@@ -23,5 +23,6 @@ module.exports = {
   PRICE1,
   PRICE2,
   PRICE3,
-  FEE
+  FEE,
+  ETHERPRICE,
 }
