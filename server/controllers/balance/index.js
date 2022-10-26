@@ -144,7 +144,7 @@ const withdraw = async (req, res) => {
                     console.log("sending transaction confirmed!");
                     user.balance = user.balance - req.body.amount;
                     await user.save();
-                    await saveHistory({ name: name, description: 'Withdraw ETH', category: 'withdraw', amount: req.body.amount })
+                    await saveHistory({ name: name, description: 'Withdraw ETH', category: 'Withdraw', amount: req.body.amount })
                     res.json('success');
                 }
                 else {

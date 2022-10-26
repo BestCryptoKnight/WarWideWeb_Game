@@ -21,7 +21,6 @@ const StartButton = ({ name, amount, socket, room, isFilled }) => {
 
     const handleClick = async () => {
         const isPayFee = await getAvailability(name);
-        console.log('isPayed: ', isPayFee);
         // if (!isPayFee) {
         //     if (balance >= FEE) {
         //         await payFee(name)

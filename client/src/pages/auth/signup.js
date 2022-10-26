@@ -39,7 +39,6 @@ const SignUp = () => {
 
   const clickSubmit = async () => {
     try {
-      console.log('data: ', formData);
       if (!formData.wallet)
         toast.error('you should connect wallet first.');
       else if (!formData.name || !formData.password || !formData.password1)

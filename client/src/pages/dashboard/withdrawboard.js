@@ -11,7 +11,7 @@ const WithdrawBoard = () => {
                     <Profile />
                 </div>
                 <div className='page-info'>
-                    <History filter='withdraw' />
+                    <History filter='Withdraw' />
                 </div>
             </div>
         </div>

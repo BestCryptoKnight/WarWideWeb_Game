@@ -21,16 +21,16 @@ const SignIn = () => {
 
     const walletConnect = async () => {
         if (typeof window.ethereum !== "undefined") {
-            try{
-            const useraddress = await window.ethereum.request({
-                method: "eth_requestAccounts",
-            });
-            setFormData((prev) => ({ ...prev, "wallet": useraddress[0] }));
-            toast.success('wallet connected.')
-        }
-        catch(error){
-            toast.error(error);
-        }
+            try {
+                const useraddress = await window.ethereum.request({
+                    method: "eth_requestAccounts",
+                });
+                setFormData((prev) => ({ ...prev, "wallet": useraddress[0] }));
+                toast.success('wallet connected.')
+            }
+            catch (error) {
+                toast.error(error);
+            }
         } else {
             toast.error('You should install metamask wallet first.')
             window.open("https://metamask.io/download/");
@@ -39,7 +39,6 @@ const SignIn = () => {
 
     const clickSubmit = async () => {
         try {
-            console.log('data: ', formData);
             if (!formData.wallet)
                 toast.error('you should connect wallet first.');
             else if (!formData.name || !formData.password)
