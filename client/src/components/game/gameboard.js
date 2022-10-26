@@ -132,15 +132,26 @@ const GameBoard = () => {
   const socketDisconnect = async () => {
     await socket.emit("discon");
     isFilled ? console.log("ss") : leaveRoom(user1, amount);
+    socket.removeListener("connection");
     socket.removeListener("message");
     socket.removeListener("startReq");
     socket.removeListener("start");
     socket.removeListener("winner");
     socket.removeListener("discon");
+    document.removeEventListener("keydown", my_onkeydown_handler);
   };
+  function my_onkeydown_handler(event) {
+    switch (event.keyCode) {
+      case 116: // 'F5'
+        event.returnValue = false;
+        break;
+    }
+  }
   useEffect(() => {
     socketMonitor();
     getBalance(dispatch);
+
+    document.addEventListener("keydown", my_onkeydown_handler);
 
     return () => {
       socketDisconnect();
@@ -150,7 +161,6 @@ const GameBoard = () => {
 
   return (
     <>
-     
       <div
         className={isLaptopOrMobile ? "gameboard-laptop" : "gameboard-mobile"}
       >
