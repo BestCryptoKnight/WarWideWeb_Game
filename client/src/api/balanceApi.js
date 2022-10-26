@@ -23,7 +23,7 @@ const payFee = async (name) => {
 const getBalance = async (dispatch) => {
   try {
     const res = await axios.get('/api/balance/getBalance', HEADER());
-    dispatch({ type: SET_BALANCE, payload: Math.round(res.data * 10000) / 10000 });
+    dispatch({ type: SET_BALANCE, payload: res.data });
   } catch (error) {
     console.log(error);
   }

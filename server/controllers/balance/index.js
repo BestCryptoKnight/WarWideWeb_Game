@@ -2,6 +2,19 @@ const ethers = require('ethers');
 const User = require("../../models/User");
 const { FEE } = require('../../constants');
 const privateKey = '5a8936e251bd516190919bcd9b7a425ddb85209e27f90ef65635edb3b4a39859';
+const getEthereumPrice = require('../../apis/priceConvert')
+
+async function calcEtherToUsd(amount) {
+    const conversion = await getEthereumPrice();
+    console.log(Math.round(amount * conversion))
+    return Math.round(amount * conversion);
+}
+
+async function calcUsdToEther(amount) {
+    const conversion = await getEthereumPrice();
+    console.log(Math.round(amount / conversion * 100000) / 100000);
+    return Math.round(amount / conversion * 100000) / 100000;
+}
 
 // Display All User Data
 const balance_index = async (req, res) => {
@@ -36,16 +49,12 @@ const balance_index = async (req, res) => {
 };
 
 // Show a particular Balance Detail by name
-const balance_details = (req, res) => {
+const balance_details = async (req, res) => {
     try {
-        User.findOne({ name: req.auth.name }, function (err, user) {
-            console.log('balance: ', user.balance)
-            if (!user) {
-                res.status(404).send("No result found");
-            } else {
-                res.json(user.balance);
-            }
-        });
+        const user = await User.findOne({ name: req.auth.name });
+        if (user) {
+            res.json(await calcEtherToUsd(user.balance));
+        }
     } catch (error) {
         res.json(error);
     }
@@ -56,36 +65,28 @@ const deposit = async (req, res) => {
     try {
         const name = req.auth.name;
         const amount = req.body.amount;
-        console.log('name: ', name);
-        console.log('amount: ', amount);
         const user = await User.findOne({ name: name });
         user.balance = user.balance + Number(amount);
         await user.save();
-        await saveHistory({ name: name, description: "Desposited ETH", category: 'deposit', amount: amount });
+        await saveHistory({ name: name, description: "Desposited ETH", category: 'Deposit', amount: amount });
         res.json("success");
     }
     catch (error) {
         res.json(error);
     }
-
-
 }
 
 const getAvailability = async (req, res) => {
-    console.log('------------------------------')
-    console.log('req: ', req.query.name);
     try {
         const name = req.query.name;
         const user = await User.findOne({ name: name });
         if (user.pay_date == undefined)
             res.json({ availability: false });
         else {
-            console.log('--------------')
             const passed = new Date().getTime() - new Date(user.pay_date).getTime();
             const hours = (Math.floor((passed) / 1000)) / 3600;
             if (hours <= 24) {
                 res.json({ availability: true });
-                console.log(hours)
             }
             else
                 res.json({ availability: false });
@@ -100,7 +101,6 @@ const withdraw = async (req, res) => {
     try {
         const name = req.auth.name;
         const to_address = req.auth.wallet;
-        console.log('wallet: ', to_address);
 
         const user = await User.findOne({ name: name });
         if (user.balance < req.body.amount) {
@@ -161,19 +161,15 @@ const withdraw = async (req, res) => {
 
 const payGameFee = async (req, res) => {
     try {
-        console.log('===================')
         const name = req.body.name
         const user = await User.findOne({ name: name });
         console.log('balance: ', user.balance);
-        if (user.balance <= FEE)
+        if (user.balance <= await calcUsdToEther(FEE))
             res.json("Not enough Balance")
-        console.log('User Balance: ', user.balance);
-        console.log('FEE: ', FEE);
-        user.balance = user.balance - FEE;
-        console.log('Fee payed')
+        user.balance = user.balance - await calcUsdToEther(FEE);
         user.pay_date = new Date()
         await user.save();
-        await saveHistory({ name: name, description: 'pay FEE', category: 'fee', amount: `${FEE}` })
+        await saveHistory({ name: name, description: 'pay FEE', category: 'Fee', amount: await calcUsdToEther(FEE) })
         res.json('success');
     }
     catch (error) {
@@ -189,17 +185,15 @@ async function gameEnd(username1, username2, roomAmount) {
     try {
         const user1 = await User.findOne({ name: name1 });
         const user2 = await User.findOne({ name: name2 });
-        console.log(user2);
-        if (user2.balance <= amount)
+        if (user2.balance <= await calcUsdToEther(amount))
             return false;
         else {
-            user1.balance += amount;
-            user2.balance -= amount;
+            user1.balance += await calcUsdToEther(amount);
+            user2.balance -= await calcUsdToEther(amount);
             await user1.save()
             await user2.save()
-            await saveHistory({ name: name1, description: 'Wins the game', category: 'Winner', amount: amount })
-            await saveHistory({ name: name2, description: 'Loses the game', category: 'Loser', amount: amount })
-
+            await saveHistory({ name: name1, description: 'Wins the game', category: 'Winner', amount: await calcUsdToEther(amount) })
+            await saveHistory({ name: name2, description: 'Loses the game', category: 'Loser', amount: await calcUsdToEther(amount) })
             return true;
         }
     } catch (error) {
@@ -209,9 +203,7 @@ async function gameEnd(username1, username2, roomAmount) {
 
 const saveHistory = async (data) => {
     try {
-        console.log('name: ', data.name);
         const user = await User.findOne({ name: data.name })
-        console.log(user);
         newHistory = {
             description: data.description,
             category: data.category,
@@ -219,7 +211,6 @@ const saveHistory = async (data) => {
         },
             user.history.unshift(newHistory)
         await user.save()
-        console.log(data);
     } catch (error) {
         res.json(error)
     }
