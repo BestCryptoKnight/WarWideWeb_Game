@@ -108,6 +108,7 @@ server.on("connection",  (socket) => {
     const realprice = price;
     let winner = {};
     let loser = {};
+    let isSame = false;
     const p_user = get_Current_User(socket.id);
     let allUsers = broadcastToRoomUsers(p_user.room);
 
@@ -119,6 +120,7 @@ server.on("connection",  (socket) => {
     if (bidValueArray.length == 2) {
       winner = setWinner(bidValueArray, realprice);
       loser = winner === bidValueArray[0] ? bidValueArray[1] : bidValueArray[0];
+      isSame = winner.value === loser.value? true : false;
       server.sockets
         .in(allUsers[0].room)
         .emit("winner", { winner, loser, realprice });

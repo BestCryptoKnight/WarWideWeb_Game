@@ -25,6 +25,7 @@ export default function AlertDialogSlide(datas) {
   let loserValue = 30;
   let price = 30;
   let isWinner = false;
+  let isSame = false;
   // let winner = (datas.data.winner.user === undefined) ? "winner" : datas.data.winner.user;
   if (datas.data.winner != undefined) {
     winner = datas.data.winner.user;
@@ -33,6 +34,7 @@ export default function AlertDialogSlide(datas) {
     loserValue = datas.data.loser.value;
     price = datas.data.realprice;
     isWinner = winner == username ? true : false;
+    isSame = winnerValue === loserValue ? true : false;
   }
 
   const handleClose = () => {
@@ -57,39 +59,37 @@ export default function AlertDialogSlide(datas) {
         {/* <DialogTitle className="end-dialogue"> */}
         {/* {username == winner ? "Congratulations! You win" : "You Lost"} */}
         {/* </DialogTitle> */}
-        <div className= {isWinner? "modal-header-content-winner" : "modal-header-content-loser"}>
+        <div
+          className={
+            isSame
+              ? "modal-header-content-draw"
+              : isWinner
+              ? "modal-header-content-winner"
+              : "modal-header-content-loser"
+          }
+        >
           <div className="modal-header-text">
-            {username == winner ? "Congratulations! You win" : " You Lost"}
+            {isSame
+              ? "Draw"
+              : username == winner
+              ? "Congratulations! You win"
+              : " You Lost"}
           </div>
         </div>
         <DialogContent>
-          {/* <DialogContentText id="alert-dialog-slide-description"> */}
-            {/* {username == winner
-              ? "Real Price: " +
-                price  +
-                "." +
-                "Your value: " +
-                winnerValue  +
-                " " +
-                loser  +
-                " value: " +
-                loserValue 
-              : "Real Price: " +
-                 price  +
-                "." +
-                "Your value: " +
-                loserValue  +
-                " " +
-                winner +
-                " value: " +
-                winnerValue } */}
-          {/* </DialogContentText> */}
           <div className="dialog-content">
-            <div className="dialog-logo"/>
+            <div className="dialog-logo" />
             <div className="dialog-content-text">
               <div className="dialog-label">price : {" " + price} </div>
-              <div className="dialog-label">Your set value :  {isWinner? winnerValue : loserValue}  </div>
-              <div className="dialog-label"> {isWinner? loser + " set value: "+ loserValue : winner + " set value: " + winnerValue} </div>
+              <div className="dialog-label">
+                Your set value : {isWinner ? winnerValue : loserValue}{" "}
+              </div>
+              <div className="dialog-label">
+                {" "}
+                {isWinner
+                  ? loser + " set value: " + loserValue
+                  : winner + " set value: " + winnerValue}{" "}
+              </div>
             </div>
           </div>
         </DialogContent>
