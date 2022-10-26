@@ -5,7 +5,7 @@ import { SET_BALANCE } from "../store/action/constants";
 const getAvailability = async (name) => {
   try {
     const res = await axios.get(`/api/balance/getavailability?name=${name}`, HEADER());
-    return res.data;
+    return res.data.availability;
   } catch (error) {
     console.log(error)
   }

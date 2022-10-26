@@ -237,6 +237,19 @@
   background-repeat: no-repeat;
   margin-left: 15px;
   margin-top: 2.5%;
+  cursor: not-allowed;
+}
+
+.place-guess-btn-clickable {
+  position: relative;
+  background-image: url("../assets/img/Play Button.png");
+  width: 50%;
+  height: 73%;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  margin-left: 15px;
+  margin-top: 2.5%;
+  cursor: pointer;
 
   :hover {
     opacity: 0.6;
@@ -244,6 +257,7 @@
 
   transition: all 0.5s ease-out;
 }
+
 .pointer {
   cursor: pointer;
 }
@@ -363,9 +377,9 @@
 
     .message {
       padding-left: 0.5rem;
-      max-width: 250px;
+      max-width: 70%;
       margin-left: 0px;
-      height: 70px;
+      height: 50px;
 
       p {
         color: #b4b6be;
@@ -373,7 +387,7 @@
         font-weight: 300;
         background-color: #250202;
         border-radius: 0px 10px 10px 10px;
-        padding: 1rem;
+        padding: 0.5rem;
       }
 
       span {

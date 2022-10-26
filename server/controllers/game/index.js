@@ -133,6 +133,7 @@ const joinRoom = async (req, res) => {
 const leaveRoom = async (req, res) => {
     const name = req.body.name;
     const amount = req.body.amount;
+    console.log('leaving room: ', name)
     if (amount == PRICE1) {
         if (flag1 == false && player1 == name)
             flag1 = true
