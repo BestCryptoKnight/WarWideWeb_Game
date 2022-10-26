@@ -49,7 +49,6 @@ const deposit = async (amount) => {
     catch (error) {
         console.log(error);
     }
-
 }
 
 const withdraw = async (amount) => {

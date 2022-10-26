@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { getAvailability, payFee, getBalance } from "../../api/balanceApi";
 import { FEE } from "../../constants";
 import { useDispatch, useSelector } from 'react-redux';
@@ -19,11 +19,11 @@ const StartButton = ({ name, amount, socket, room, isFilled }) => {
             setButtonClickable(false)
     }, [isFilled, isStart])
 
-    const handleClick = async () =>{
+    const handleClick = async () => {
         console.log("I am clickkkkk")
         const isPayFee = await getAvailability(name);
         console.log('isPayed: ', isPayFee);
-        if (isPayFee) {
+        if (!isPayFee) {
             if (balance >= FEE) {
                 await payFee(name)
                 toast.success('You paid FEE. You could enjoy next 24 hours')
@@ -55,15 +55,15 @@ const StartButton = ({ name, amount, socket, room, isFilled }) => {
     };
 
     let string = ''
-    if(buttonClickable)
-        string = <div id="placeBid" className='place-guess-btn-clickable' onMouseDown={handleMouseDown} onMouseUp={handleMouseUp}></div> 
+    if (buttonClickable)
+        string = <div id="placeBid" className='place-guess-btn-clickable' onMouseDown={handleMouseDown} onMouseUp={handleMouseUp}></div>
     else
         string = <div id="placeBid" className='place-guess-btn'></div>
 
-    return(
+    return (
         <>
             {string}
-        </>        
+        </>
     )
 }
 

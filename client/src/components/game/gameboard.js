@@ -6,21 +6,21 @@ import "../../styles/modal.css";
 import { useMediaQuery } from "react-responsive";
 import { makeStyles } from "@material-ui/core/styles";
 import Counter from "./counter";
+import { leaveRoom } from '../../api/RoomApi'
 import Chat from "./chat";
 import { animationFunc } from "../../functions/animations";
 import Spinner from "./spinner";
 import io from "socket.io-client";
-import { BACKEND_URL, FEE } from "../../constants";
+import { BACKEND_URL } from "../../constants";
 import toast from "react-hot-toast";
 import {
   GAME_START,
   SET_WINNER,
-  SOCKET_ON,
 } from "../../store/action/constants";
-import { loadData, leaveRoom } from "../../api/RoomApi";
 import defaultProduct from "../../assets/img/picDemo.png";
 import GameEnd from "./gameEndDialogue";
 import StartButton from "./start";
+import { getBalance } from "../../api/balanceApi";
 
 const useStyles = makeStyles({
   root: {
@@ -55,7 +55,6 @@ const useStyles = makeStyles({
 });
 
 const socket = io.connect(BACKEND_URL);
-Modal.setAppElement(document.getElementById("root"));
 
 const GameBoard = () => {
   let isLaptopOrMobile = useMediaQuery({
@@ -75,6 +74,7 @@ const GameBoard = () => {
   const [otheruser, setOtheruser] = useState(user2 === "" ? user2 : user1);
   const [userValue, setUserValue] = useState("");
   const [price, setPrice] = useState(0);
+  const [description, setDescription] = useState('Description Here');
   const [isFilled, setIsFilled] = useState(false);
   const [winner, setWinner] = useState({});
   const [myStyle, setMyStyle] = useState({
@@ -118,9 +118,14 @@ const GameBoard = () => {
     socket.on("start", (data) => {
       dispatch({ type: GAME_START, payload: true });
       console.log(data);
-      setMyStyle({ backgroundImage: `url(${data.url})` });
-      setPrice(data.price);
-      setStartGame(true);
+      if(data){
+        setMyStyle({ backgroundImage: `url(${data.url})` });
+        setPrice(data.price);
+        setDescription(data.description);
+      }
+      else{
+        console.log('No Data.')
+      }
     });
     socket.on("winner", (data) => {
       dispatch({ type: SET_WINNER, payload: true });
@@ -145,7 +150,7 @@ const GameBoard = () => {
   useEffect(() => {
     boardAnimation();
     socketMonitor();
-    // PictureFetch();
+    getBalance(dispatch);
 
     return () => {
       socketDisconnect();
@@ -206,7 +211,7 @@ const GameBoard = () => {
                 </div>
               </div>
             </div>
-            <div className="description">MCLAREN KIDS TOY</div>
+            <div className="description">{description}</div>
             <div className="play-guess">
               <div className="counter">
                 {isStart ? (
@@ -220,7 +225,7 @@ const GameBoard = () => {
                   <div></div>
                 )}
               </div>
-              <StartButton name={username} amount={amount} socket={socket} room={roomname} isFilled={isFilled}/>
+              <StartButton name={username} amount={amount} socket={socket} room={roomname} isFilled={isFilled} />
             </div>
             <div className="changeroom-addfund">
               <div
@@ -229,7 +234,7 @@ const GameBoard = () => {
               >
                 CHANGE ROOM
               </div>
-              <div className="changeroom" onClick={() => {}}>
+              <div className="changeroom" onClick={() => { }}>
                 ADD FUNDS
               </div>
             </div>

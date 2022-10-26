@@ -18,20 +18,27 @@ function randomIntFromInterval(min, max) {
 }
 
 async function loadData() {
-    const randomNumber = randomIntFromInterval(1, 10);
-    console.log('random: ', randomNumber);
-    const item = await Image.findOne({ ID: randomNumber });
+    try {
+        const randomNumber = randomIntFromInterval(1, 10);
+        console.log('random: ', randomNumber);
+        const item = await Image.findOne({ ID: randomNumber });
         const data = {
             url: item.Url,
             description: item.Description,
             price: item.Price
         }
-        res.json(data);
+        return data;
     }
     catch (error) {
         console.log(error);
+        const item = await Image.findOne({ ID: 0 });
+        const data = {
+            url: item.Url,
+            description: item.Description,
+            price: item.Price
+        }
+        return data;
     }
-    return data;
 }
 
 const joinRoom = async (req, res) => {
