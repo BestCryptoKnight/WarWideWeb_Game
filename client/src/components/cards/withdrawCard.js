@@ -12,7 +12,6 @@ const WithdrawCard = () => {
 
     const handleChange = (e) => {
         const { value } = e.target;
-        console.log(value);
         setAmount(value);
     }
 
@@ -21,11 +20,16 @@ const WithdrawCard = () => {
         if (amount > balance || amount === 0)
             toast.error('Insufficient Amount');
         else {
+            const btn = document.querySelector(".withdraw-submit-button")
+            btn.classList.add("button--loading");
+            btn.classList.add("disabled");
             await toast.promise(withdraw(amount), {
                 loading: 'waiting...',
                 success: <b>Withdraw Ended</b>,
                 error: <b>Withdraw Failed</b>,
             })
+            btn.classList.remove("button--loading");
+            btn.classList.remove("disabled")
             getBalance(dispatch);
         }
     }
@@ -35,7 +39,9 @@ const WithdrawCard = () => {
             <div className="deposit-card-content">
                 <div className="input-form">
                     <input placeholder='Amount in ETH' className='card-input-field' onChange={handleChange} required />
-                    <div className="submit-button" onClick={handleClick}>Withdraw</div>
+                    <button className="withdraw-submit-button" onClick={handleClick}>
+                        <div className='button-text'>Withdraw</div>
+                    </button>
                 </div>
             </div>
             <div className="img-box">

@@ -16,11 +16,16 @@ const DepositCard = () => {
 
     const handleSubmit = async () => {
         if (amount > 0) {
+            const btn = document.querySelector(".deposit-submit-button")
+            btn.classList.add("button--loading");
+            btn.classList.add('disabled')
             await toast.promise(deposit(amount), {
                 loading: 'waiting...',
                 success: <b>Deposit Ended</b>,
                 error: <b>Deposit Failed</b>,
             })
+            btn.classList.remove("button--loading");
+            btn.classList.remove("disabled")
             getBalance(dispatch);
         } else {
             toast.error('Fill the Amound field.')
@@ -32,7 +37,9 @@ const DepositCard = () => {
             <div className="deposit-card-content">
                 <div className="input-form">
                     <input placeholder='Amount in ETH' className='card-input-field' name="amount" onChange={handleChange} required />
-                    <div className="submit-button" onClick={handleSubmit}>Deposit</div>
+                    <button className="deposit-submit-button" onClick={handleSubmit}>
+                        <div className='button-text'>Deposit</div>
+                    </button>
                 </div>
             </div>
             <div className="img-box">

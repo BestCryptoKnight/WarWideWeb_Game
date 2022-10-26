@@ -7,11 +7,11 @@ const History = (props) => {
     let transactions = '';
     if (account) {
         transactions = account.history;
-        if (props.filter === 'deposit') {
-            transactions = account.history.filter((item) => item.category === 'deposit');
+        if (props.filter === 'Deposit') {
+            transactions = account.history.filter((item) => item.category === 'Deposit');
         }
-        else if (props.filter === 'withdraw') {
-            transactions = account.history.filter((item) => item.category === 'withdraw');
+        else if (props.filter === 'Withdraw') {
+            transactions = account.history.filter((item) => item.category === 'Withdraw');
 
         }
         else

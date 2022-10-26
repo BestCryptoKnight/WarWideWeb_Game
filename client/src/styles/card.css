@@ -86,7 +86,7 @@
     justify-content: center;
 }
 
-.submit-button {
+.deposit-submit-button {
     background: linear-gradient(0deg, #ff9c19 40%, #ffdd2d 110%);
     padding: 10px 10px;
     font-size: 14px;
@@ -99,15 +99,62 @@
     text-transform: uppercase;
 }
 
-.submit-button:hover {
-    
-}
-
-.submit-button:active {
+.deposit-submit-button:active {
     box-shadow: 7px 6px 28px 1px rgba(0, 0, 0, 0.24);
-    transform: translateY(5px);
+    transform: translateY(4px);
 }
 
+.withdraw-submit-button {
+    background: linear-gradient(0deg, #ff9c19 40%, #ffdd2d 110%);
+    padding: 10px 10px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    outline: none;
+    border-radius: 10px;
+    border: 0;
+    color: white;
+    text-transform: uppercase;
+}
+
+.withdraw-submit-button:active {
+    box-shadow: 7px 6px 28px 1px rgba(0, 0, 0, 0.24);
+    transform: translateY(4px);
+}
+
+.button--loading .button-text {
+    visibility: hidden;
+    opacity: 0;
+}
+
+.button--loading::after {
+    content: "";
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    top: 0;
+    left: 0;
+    right: 100px;
+    bottom: -50px;
+    margin: auto;
+    border: 4px solid transparent;
+    border-top-color: #ffffff;
+    border-radius: 50%;
+    animation: button-loading-spinner 1s ease infinite;
+}
+
+@keyframes button-loading-spinner {
+    from {
+        transform: rotate(0turn);
+    }
+
+    to {
+        transform: rotate(1turn);
+    }
+}
+.disabled {
+    pointer-events: none;
+}
 @media (max-width: 1399px) and (min-width: 700px) {
     .card-info {
         width: 250px;

@@ -20,7 +20,6 @@ export function AuthProvider({ children }) {
         .post("api/auth/register", formData)
         .then(({ data: { data: accountData, token: accessToken } }) => {
           setAccount(accountData);
-          console.log('register token: ', accessToken)
           setToken(accessToken);
           setIsLoggedIn(true);
           resolve(true);
@@ -33,12 +32,10 @@ export function AuthProvider({ children }) {
 
   const login = (formData = {}) =>
     new Promise((resolve, reject) => {
-      console.log("login: ", formData);
       axios
         .post('api/auth/login', formData)
         .then(({ data: { data: accountData, token: accessToken } }) => {
           setAccount(accountData);
-          console.log('login token: ', accessToken);
           setToken(accessToken);
           setIsLoggedIn(true);
           resolve(true);

@@ -11,7 +11,7 @@ const DepositBoard = () => {
                     <Profile />
                 </div>
                 <div className='page-info'>
-                    <History filter='deposit' />
+                    <History filter='Deposit' />
                 </div>
             </div>
         </div>
