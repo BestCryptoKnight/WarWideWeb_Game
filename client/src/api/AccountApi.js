@@ -3,7 +3,7 @@ import { HEADER } from "../constants";
 
 const changePassword = async (formData) => {
     try {
-        await axios.post('/api/account/changePassword', formData, HEADER);
+        await axios.post('/api/account/changePassword', formData, HEADER());
     } catch (error) {
         return (error)
     }
@@ -11,7 +11,7 @@ const changePassword = async (formData) => {
 
 const changeAccount = async (formData) => {
     try {
-        await axios.post('/api/account/changeAccount', formData, HEADER);
+        await axios.post('/api/account/changeAccount', formData, HEADER());
     } catch (error) {
         return (error);
     }

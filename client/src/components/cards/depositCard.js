@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import '../../styles/card.css';
 import toast from 'react-hot-toast';
 import { deposit } from '../../api/UserApi';
-import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { getBalance } from '../../api/balanceApi';
 
 const DepositCard = () => {
+    const dispatch = useDispatch();
     const [amount, setAmount] = useState(0);
-    const navigate = useNavigate();
+
     const handleChange = (e) => {
         const { value } = e.target;
-        console.log(value);
         setAmount(value);
     }
 
@@ -20,7 +21,7 @@ const DepositCard = () => {
                 success: <b>Deposit Ended</b>,
                 error: <b>Deposit Failed</b>,
             })
-            navigate('/dashboard');
+            getBalance(dispatch);
         } else {
             toast.error('Fill the Amound field.')
         }

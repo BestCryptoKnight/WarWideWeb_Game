@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import '../../styles/card.css';
-import { useAuth } from '../../contexts/AuthContext';
 import { withdraw } from '../../api/UserApi';
+import { getBalance } from '../../api/balanceApi';
 import { toast } from 'react-hot-toast';
 
 const WithdrawCard = () => {
-    const { account } = useAuth();
+    const dispatch = useDispatch();
+    const balance = useSelector(state => state.getBalance);
     const [amount, setAmount] = useState(0);
-    const navigate = useNavigate();
 
     const handleChange = (e) => {
         const { value } = e.target;
@@ -18,8 +18,7 @@ const WithdrawCard = () => {
 
     const handleClick = async () => {
         console.log('amount:', amount);
-        console.log('balance: ', account.balance)
-        if (amount > account.balance || amount === 0)
+        if (amount > balance || amount === 0)
             toast.error('Insufficient Amount');
         else {
             await toast.promise(withdraw(amount), {
@@ -27,7 +26,7 @@ const WithdrawCard = () => {
                 success: <b>Withdraw Ended</b>,
                 error: <b>Withdraw Failed</b>,
             })
-            navigate('/dashboard/main');
+            getBalance(dispatch);
         }
     }
 

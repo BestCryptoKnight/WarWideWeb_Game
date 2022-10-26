@@ -6,7 +6,7 @@ const balanceController = require("../controllers/balance");
 
 router.get("/", balanceController.balance_index);
 router.get('/getavailability', balanceController.getAvailability);
-router.get("/:name", balanceController.balance_details);
+router.get("/getBalance", [authorizeBearerToken], balanceController.balance_details);
 router.post('/withdraw', [authorizeBearerToken], balanceController.withdraw);
 router.post('/deposit', [authorizeBearerToken], balanceController.deposit);
 router.post('/payGameFee', balanceController.payGameFee);

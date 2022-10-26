@@ -39,11 +39,12 @@ const balance_index = async (req, res) => {
 // Show a particular Balance Detail by name
 const balance_details = (req, res) => {
     try {
-        User.findOne({ name: req.params.name }, function (err, balance) {
-            if (!balance) {
+        User.findOne({ name: req.auth.name }, function (err, user) {
+            console.log('balance: ', user.balance)
+            if (!user) {
                 res.status(404).send("No result found");
             } else {
-                res.json(balance);
+                res.json(user.balance);
             }
         });
     } catch (error) {
