@@ -18,7 +18,7 @@ import {
   SET_WINNER,
   SOCKET_ON,
 } from "../../store/action/constants";
-import { loadData } from "../../api/RoomApi";
+import { loadData, leaveRoom } from "../../api/RoomApi";
 import defaultProduct from "../../assets/img/picDemo.png";
 import GameEnd from "./gameEndDialogue";
 import Modal from 'react-modal'

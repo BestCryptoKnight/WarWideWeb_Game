@@ -35,7 +35,7 @@ let io = http.listen(PORT, () => {
 
 const server = require("socket.io")(http, {
   cors: {
-    origin: "http://192.168.116.216:3000",
+    origin: "http://192.168.116.219:3000",
     origin: "http://localhost:3000",
   },
 });
@@ -49,9 +49,11 @@ server.on("connection", (socket) => {
   //for a new user joining the room
   socket.on("joinRoom", ({ username, room }) => {
     //* create user
+    console.log(socket.id, "-----socket")
     const p_user = join_User(socket.id, username, room);
     socket.join(p_user.room);
     let allUsers = broadcastToRoomUsers(p_user.room);
+    console.log(allUsers, "------allusers");
     server.sockets.in(allUsers[0].room).emit("message", { users: allUsers });
   });
 

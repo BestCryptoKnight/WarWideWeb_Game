@@ -5,19 +5,22 @@ const Balance = require("../models/Balance");
 function join_User(id, username, room) {
   const p_userNew = { id, username, room };
   let isRoom =
-    c_users.findIndex((p_user) => p_user.roomname === room) == -1
+    c_users.findIndex((p_user) => p_user.room === room) == -1
       ? false
       : true;
   let isUser =
-    c_users.findIndex((p_user) => p_user.username === room) == -1
+    c_users.findIndex((p_user) => p_user.username === username) == -1
       ? false
       : true;
+   
   isRoom
     ? isUser
-      ? (c_users(c_users.findIndex((p_user) => (p_user.id = id))).id = id)
+      ? (c_users[c_users.findIndex((p_user) => (p_user.username === username))].id = id)
       : c_users.push(p_userNew)
     : c_users.push(p_userNew);
-  return c_users.find((p_user) => p_user === p_userNew);
+
+  console.log(c_users, "-------c_users");
+  return c_users.find((p_user) => p_user.username === p_userNew.username);
 }
 
 function broadcastToRoomUsers(room) {
