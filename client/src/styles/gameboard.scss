@@ -1,9 +1,10 @@
 @import "../globals";
 
-@mixin scrollbars($size,
+@mixin scrollbars(
+  $size,
   $foreground-color,
-  $background-color: mix($foreground-color, white, 50%)) {
-
+  $background-color: mix($foreground-color, white, 50%)
+) {
   //stylesheet for the display in Google Chrome
   &::-webkit-scrollbar {
     height: $size;
@@ -26,6 +27,7 @@
     scrollbar-face-color: $foreground-color;
   }
 }
+
 
 .gameboard-laptop {
   background-image: url("../assets/img/background.jpg");
@@ -51,7 +53,21 @@
   margin-right: auto;
   margin-top: 12vh;
   min-height: 600px;
-  transition: all 0.5s ease-out;
+  animation: fadeInAnimation ease 0.7s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+
+  @keyframes fadeInAnimation {
+    0% {
+      opacity: 0;
+      margin-top: 400px;
+      width: 15%;
+    }
+    100% {
+      opacity: 1;
+      margin-top: 12vh;
+    }
+  }
 }
 
 .game-mainboard-anim {
@@ -66,7 +82,22 @@
   margin-right: auto;
   /* margin-top: 5vh; */
   height: 100%;
-  transition: all 0.5s ease-out;
+
+  animation: fadeInAnimation ease 1s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+
+  @keyframes fadeInAnimation {
+    0% {
+      opacity: 0;
+      margin-top: 400px;
+      width: 15%;
+    }
+    100% {
+      opacity: 1;
+      margin-top: 12vh;
+    }
+  }
 }
 
 .game-mainboard-mobile-anim {

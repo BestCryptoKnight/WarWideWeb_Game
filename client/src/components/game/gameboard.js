@@ -6,22 +6,19 @@ import "../../styles/modal.css";
 import { useMediaQuery } from "react-responsive";
 import { makeStyles } from "@material-ui/core/styles";
 import Counter from "./counter";
-import { leaveRoom } from '../../api/RoomApi'
+import { leaveRoom } from "../../api/RoomApi";
 import Chat from "./chat";
 import { animationFunc } from "../../functions/animations";
 import Spinner from "./spinner";
 import io from "socket.io-client";
 import { BACKEND_URL } from "../../constants";
 import toast from "react-hot-toast";
-import {
-  GAME_START,
-  SET_WINNER,
-} from "../../store/action/constants";
+import { GAME_START, SET_WINNER } from "../../store/action/constants";
 import defaultProduct from "../../assets/img/picDemo.png";
-import GameEnd from "./modals/gameEndDialogue";
+import GameEnd from "./modals/gameEndDialog";
 import StartButton from "./buttons/start";
 import { getBalance } from "../../api/balanceApi";
-import AddFund from "./buttons/addFund"
+import AddFund from "./buttons/addFund";
 
 const useStyles = makeStyles({
   root: {
@@ -76,7 +73,7 @@ const GameBoard = () => {
   const [otheruser, setOtheruser] = useState(user2 === "" ? user2 : user1);
   const [userValue, setUserValue] = useState("");
   const [price, setPrice] = useState(0);
-  const [description, setDescription] = useState('Description Here');
+  const [description, setDescription] = useState("Description Here");
   const [isFilled, setIsFilled] = useState(false);
   const [winner, setWinner] = useState({});
   const [myStyle, setMyStyle] = useState({
@@ -86,12 +83,6 @@ const GameBoard = () => {
   const isStart = useSelector((state) => state.gameStart);
 
   const dispatch = useDispatch();
-
-  const boardAnimation = () => {
-    isLaptopOrMobile
-      ? animationFunc("gameboard", "game-mainboard")
-      : animationFunc("gameboard", "game-mainboard-mobile");
-  };
 
   const handleCHange = (e) => {
     setUserValue(e.target.value);
@@ -123,9 +114,8 @@ const GameBoard = () => {
         setMyStyle({ backgroundImage: `url(${data.url})` });
         setPrice(data.price);
         setDescription(data.description);
-      }
-      else {
-        console.log('No Data.')
+      } else {
+        console.log("No Data.");
       }
     });
     socket.on("winner", (data) => {
@@ -149,7 +139,6 @@ const GameBoard = () => {
     socket.removeListener("discon");
   };
   useEffect(() => {
-    boardAnimation();
     socketMonitor();
     getBalance(dispatch);
 
@@ -159,20 +148,16 @@ const GameBoard = () => {
     };
   }, []);
 
-  useEffect(() => {
-
-  }, [isOpen])
   return (
     <>
+     
       <div
         className={isLaptopOrMobile ? "gameboard-laptop" : "gameboard-mobile"}
       >
         <div
           id="gameboard"
           className={
-            isLaptopOrMobile
-              ? "game-mainboard-anim"
-              : "game-mainboard-mobile-anim"
+            isLaptopOrMobile ? "game-mainboard" : "game-mainboard-mobile"
           }
         >
           <div
@@ -196,7 +181,12 @@ const GameBoard = () => {
                 <div className="vs-bid-label">
                   <div className="vs-bid-value">
                     <i className="fa fa-usd icon"></i>
-                    <input type="number" className="vs-input" step={0.1} onChange={handleCHange} />
+                    <input
+                      type="number"
+                      className="vs-input"
+                      step={0.1}
+                      onChange={handleCHange}
+                    />
                   </div>
                   <div className="room-price">{amount}ETH</div>
                 </div>
@@ -230,7 +220,13 @@ const GameBoard = () => {
                   <div></div>
                 )}
               </div>
-              <StartButton name={username} amount={amount} socket={socket} room={roomname} isFilled={isFilled} />
+              <StartButton
+                name={username}
+                amount={amount}
+                socket={socket}
+                room={roomname}
+                isFilled={isFilled}
+              />
             </div>
             <div className="changeroom-addfund">
               <div

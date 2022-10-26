@@ -1,7 +1,7 @@
 require("dotenv").config(); // Secures variables
 const app = require("./utils/app"); // Backend App (server)
 const mongo = require("./utils/mongo"); // MongoDB (database)
-const { gameEnd } = require('./controllers/balance');
+const { gameEnd } = require("./controllers/balance");
 
 const {
   get_Current_User,
@@ -51,101 +51,113 @@ server.on("connection", (socket) => {
   //for a new user joining the room
   socket.on("joinRoom", ({ username, room }) => {
     //* create user
-    console.log(socket.id, "-----socket");
-    const p_user = join_User(socket.id, username, room);
-    socket.join(p_user.room);
-    let allUsers = broadcastToRoomUsers(p_user.room);
-    console.log(allUsers, "------allusers");
-    server.sockets.in(allUsers[0].room).emit("message", { users: allUsers });
+    try {
+      console.log(socket.id, "-----socket");
+      const p_user = join_User(socket.id, username, room);
+      socket.join(p_user.room);
+      let allUsers = broadcastToRoomUsers(p_user.room);
+      console.log(allUsers, "------allusers");
+      server.sockets.in(allUsers[0].room).emit("message", { users: allUsers });
+    } catch (error) {
+      console.log(error);
+    }
   });
 
   //user sending message
   socket.on("chat", (text) => {
     //gets the room user and the message sent
-    const p_user = get_Current_User(socket.id);
-    let allUsers = broadcastToRoomUsers(p_user.room);
+    try {
+      const p_user = get_Current_User(socket.id);
+      let allUsers = broadcastToRoomUsers(p_user.room);
 
-    socket.to(allUsers[0].room).emit("chat", {
-      username: p_user.username,
-      text: text,
-    });
+      socket.to(allUsers[0].room).emit("chat", {
+        username: p_user.username,
+        text: text,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   });
 
   //when the user exits the room
   socket.on("discon", () => {
-    //the user is deleted from array of users and a left room message displayed
-    const p_user = user_Disconnect(socket.id);
+    try {
+      //the user is deleted from array of users and a left room message displayed
+      const p_user = user_Disconnect(socket.id);
 
-    if (p_user) {
-      socket.to(p_user.room).emit("discon", {
-        username: p_user.username,
-      });
+      if (p_user) {
+        socket.to(p_user.room).emit("discon", {
+          username: p_user.username,
+        });
+        validArray = [];
+      }
+    } catch (error) {
+      console.log(error);
     }
-    // const p_user = get_Current_User(socket.id);
-    // const username = p_user.username;
-    // const isDelete = user_Disconnect(room);
-    // isDelete == -1 ? server.sockets.in(room).emit("discon",{
-    //   username: username,
-    // }) : console.log("disconnect success");
-    // if (p_user) {
-    //   io.to(p_user.room).emit("message", {
-    //     userId: p_user.id,
-    //     username: p_user.username,
-    //     text: `${p_user.username} has left the room`,
-    //   });
-    // }
   });
   socket.on("start", async ({ username, room }) => {
     // const p_user = join_User(socket.id, username, room);
-    const p_user = get_Current_User(socket.id);
-    let allUsers = broadcastToRoomUsers(p_user.room);
-    if (validArray.findIndex((user) => user.id == p_user.id) == -1) {
-      validArray.push(p_user);
-      if (validArray.length === 2) {
-        const data = await loadData();
-        if (data != {}) {
-          console.log(data);
-          server.sockets.in(allUsers[0].room).emit("start", data);
+    try {
+      const p_user = get_Current_User(socket.id);
+      let allUsers = broadcastToRoomUsers(p_user.room);
+      if (validArray.findIndex((user) => user.id == p_user.id) == -1) {
+        validArray.push(p_user);
+        if (validArray.length === 2) {
+          const data = await loadData();
+          if (data != {}) {
+            console.log(data);
+            server.sockets.in(allUsers[0].room).emit("start", data);
+            validArray = [];
+          }
+          server.sockets.in(allUsers[0].room).emit("start");
           validArray = [];
+        } else {
+          socket.to(allUsers[0].room).emit("startReq", { username });
         }
-        server.sockets.in(allUsers[0].room).emit("start");
-        validArray = [];
-      } else {
-        socket.to(allUsers[0].room).emit("startReq", { username });
       }
+      console.log(validArray);
+    } catch (error) {
+      console.log(error);
     }
-    console.log(validArray);
   });
 
-
   socket.on("setwinner", async ({ username, bidValue, price, amount }) => {
-    const realprice = price;
-    let winner = {};
-    let loser = {};
-    const p_user = get_Current_User(socket.id);
-    let allUsers = broadcastToRoomUsers(p_user.room);
+    try {
+      const realprice = price;
+      let winner = {};
+      let loser = {};
+      let isSame = false;
+      let success = false;
+      const p_user = get_Current_User(socket.id);
+      let allUsers = broadcastToRoomUsers(p_user.room);
 
-    let userInfo = { user: username, value: bidValue };
+      let userInfo = { user: username, value: bidValue };
 
-    if (bidValueArray.findIndex((user) => user.id === p_user.id) == -1) {
-      bidValueArray.push(userInfo);
-    }
-    if (bidValueArray.length == 2) {
-      winner = setWinner(bidValueArray, realprice);
-      loser = winner === bidValueArray[0] ? bidValueArray[1] : bidValueArray[0];
-
-      const success = await gameEnd(winner.username, loser.username, amount);
-      if (success) {
-        server.sockets
-          .in(allUsers[0].room)
-          .emit("winner", { winner, loser, realprice });
+      if (bidValueArray.findIndex((user) => user.id === p_user.id) == -1) {
+        bidValueArray.push(userInfo);
       }
-      else {
-        server.sockets
-          .in(allUsers[0].room)
-          .emit("winner", "Server Error.");
+      if (bidValueArray.length == 2) {
+        winner = setWinner(bidValueArray, realprice);
+        loser =
+          winner === bidValueArray[0] ? bidValueArray[1] : bidValueArray[0];
+        isSame = winner.value === loser.value ? true : false;
+        // success = await gameEnd(winner.username, loser.username, amount);
+        // let success = await gameEnd(winner.username, loser.username, amount);
+        isSame
+          ? (success = true)
+          : (success = await gameEnd(winner.user, loser.user, amount));
+        console.log(success);
+        if (success) {
+          server.sockets
+            .in(allUsers[0].room)
+            .emit("winner", { winner, loser, realprice });
+        } else {
+          server.sockets.in(allUsers[0].room).emit("error", "Server Error.");
+        }
+        bidValueArray = [];
       }
-      bidValueArray = [];
+    } catch (error) {
+      console.log(error);
     }
   });
 });
