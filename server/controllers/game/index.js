@@ -17,7 +17,7 @@ function randomIntFromInterval(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min)
 }
 
-const loadData = async (req, res) => {
+async function loadData() {
     const randomNumber = randomIntFromInterval(1, 10);
     console.log('random: ', randomNumber);
     const item = await Image.findOne({ ID: randomNumber });
@@ -27,7 +27,7 @@ const loadData = async (req, res) => {
         description: item.Description,
         price: item.Price
     }
-    res.json(data);
+    return data;
 }
 
 const joinRoom = async (req, res) => {

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useLocation } from "react-router";
 import "../../styles/gameboard.scss";
-import "../../styles/modal.css"
+import "../../styles/modal.css";
 import { useMediaQuery } from "react-responsive";
 import { makeStyles } from "@material-ui/core/styles";
 import Counter from "./counter";
@@ -21,7 +21,7 @@ import {
 import { loadData, leaveRoom } from "../../api/RoomApi";
 import defaultProduct from "../../assets/img/picDemo.png";
 import GameEnd from "./gameEndDialogue";
-import Modal from 'react-modal'
+import Modal from "react-modal";
 
 const useStyles = makeStyles({
   root: {
@@ -56,7 +56,7 @@ const useStyles = makeStyles({
 });
 
 const socket = io.connect(BACKEND_URL);
-Modal.setAppElement(document.getElementById('root'))
+Modal.setAppElement(document.getElementById("root"));
 
 const GameBoard = () => {
   let isLaptopOrMobile = useMediaQuery({
@@ -77,7 +77,7 @@ const GameBoard = () => {
   const [otheruser, setOtheruser] = useState(user2 === "" ? user2 : user1);
   const [startGame, setStartGame] = useState(false);
   const [userValue, setUserValue] = useState("");
-  const [price, setPrice] = useState(100);
+  const [price, setPrice] = useState(0);
   const [isFilled, setIsFilled] = useState(false);
   const [winner, setWinner] = useState({});
   const [myStyle, setMyStyle] = useState({
@@ -89,19 +89,19 @@ const GameBoard = () => {
 
   const dispatch = useDispatch();
 
-  const PictureFetch = async () => {
-    try {
-      console.log("I am calling");
-      const res = await loadData();
-      console.log("Image url: ", `url(${res.data.url})`);
-      setPrice(res.data.price);
-      setMyStyle({ backgroundImage: `url(${res.data.url})` });
-      console.log('myStyle: ', myStyle);
-    } catch (error) {
-      toast.error(error)
-    }
+  // const PictureFetch = async () => {
+  //   try {
+  //     console.log("I am calling");
+  //     const res = await loadData();
+  //     console.log("Image url: ", `url(${res.data.url})`);
+  //     setPrice(res.data.price);
+  //     setMyStyle({ backgroundImage: `url(${res.data.url})` });
+  //     console.log('myStyle: ', myStyle);
+  //   } catch (error) {
+  //     toast.error(error)
+  //   }
 
-  };
+  // };
 
   const boardAnimation = () => {
     isLaptopOrMobile
@@ -150,8 +150,11 @@ const GameBoard = () => {
       const reqUser = data.username;
       toast.success(reqUser + " is waiting for you now.");
     });
-    socket.on("start", () => {
+    socket.on("start", (data) => {
       dispatch({ type: GAME_START, payload: true });
+      console.log(data);
+      setMyStyle({ backgroundImage: `url(${data.url})` });
+      setPrice(data.price);
       setStartGame(true);
     });
     socket.on("winner", (data) => {
@@ -177,7 +180,7 @@ const GameBoard = () => {
   useEffect(() => {
     boardAnimation();
     socketMonitor();
-    PictureFetch();
+    // PictureFetch();
 
     return () => {
       socketDisconnect();
@@ -185,10 +188,10 @@ const GameBoard = () => {
     };
   }, []);
 
-  useEffect(() => {
-    if (isStart)
-      PictureFetch();
-  }, [isStart])
+  // useEffect(() => {
+  //   if (isStart)
+  //     PictureFetch();
+  // }, [isStart])
   return (
     <>
       <div
@@ -223,7 +226,12 @@ const GameBoard = () => {
                 <div className="vs-bid-label">
                   <div className="vs-bid-value">
                     <i className="fa fa-usd icon"></i>
-                    <input type="number" className="vs-input" step={0.1} onChange={handleCHange}/>
+                    <input
+                      type="number"
+                      className="vs-input"
+                      step={0.1}
+                      onChange={handleCHange}
+                    />
                   </div>
                   <div className="room-price">{Amount}ETH</div>
                 </div>
@@ -236,11 +244,7 @@ const GameBoard = () => {
                   ) : (
                     <>
                       <Spinner />
-                      <div
-                        className="waiting"
-                      >
-                        waiting..{" "}
-                      </div>
+                      <div className="waiting">waiting.. </div>
                     </>
                   )}
                 </div>
@@ -268,8 +272,15 @@ const GameBoard = () => {
               ></div>
             </div>
             <div className="changeroom-addfund">
-              <div className="changeroom" onClick={() => navigate('/dashboard')}>CHANGE ROOM</div>
-              <div className="changeroom" onClick={() => { }}>ADD FUNDS</div>
+              <div
+                className="changeroom"
+                onClick={() => navigate("/dashboard")}
+              >
+                CHANGE ROOM
+              </div>
+              <div className="changeroom" onClick={() => {}}>
+                ADD FUNDS
+              </div>
             </div>
             <div className="chat-board">
               <Chat
