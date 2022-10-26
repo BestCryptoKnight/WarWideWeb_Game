@@ -6,10 +6,10 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
-import { SET_WINNER } from "../../store/action/constants";
+import { SET_WINNER } from "../../../store/action/constants";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
-import "../../styles/modal.css";
+import "../../../styles/modal.css";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -57,14 +57,14 @@ export default function AlertDialogSlide(datas) {
         {/* <DialogTitle className="end-dialogue"> */}
         {/* {username == winner ? "Congratulations! You win" : "You Lost"} */}
         {/* </DialogTitle> */}
-        <div className= {isWinner? "modal-header-content-winner" : "modal-header-content-loser"}>
+        <div className={isWinner ? "modal-header-content-winner" : "modal-header-content-loser"}>
           <div className="modal-header-text">
-            {username == winner ? "Congratulations! You win" : " You Lost"}
+            {username === winner ? "Congratulations! You win" : " You Lost"}
           </div>
         </div>
         <DialogContent>
           {/* <DialogContentText id="alert-dialog-slide-description"> */}
-            {/* {username == winner
+          {/* {username == winner
               ? "Real Price: " +
                 price  +
                 "." +
@@ -85,11 +85,11 @@ export default function AlertDialogSlide(datas) {
                 winnerValue } */}
           {/* </DialogContentText> */}
           <div className="dialog-content">
-            <div className="dialog-logo"/>
+            <div className="dialog-logo" />
             <div className="dialog-content-text">
               <div className="dialog-label">price : {" " + price} </div>
-              <div className="dialog-label">Your set value :  {isWinner? winnerValue : loserValue}  </div>
-              <div className="dialog-label"> {isWinner? loser + " set value: "+ loserValue : winner + " set value: " + winnerValue} </div>
+              <div className="dialog-label">Your set value :  {isWinner ? winnerValue : loserValue}  </div>
+              <div className="dialog-label"> {isWinner ? loser + " set value: " + loserValue : winner + " set value: " + winnerValue} </div>
             </div>
           </div>
         </DialogContent>

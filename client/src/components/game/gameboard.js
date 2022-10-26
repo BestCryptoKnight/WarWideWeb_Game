@@ -18,9 +18,10 @@ import {
   SET_WINNER,
 } from "../../store/action/constants";
 import defaultProduct from "../../assets/img/picDemo.png";
-import GameEnd from "./gameEndDialogue";
-import StartButton from "./start";
+import GameEnd from "./modals/gameEndDialogue";
+import StartButton from "./buttons/start";
 import { getBalance } from "../../api/balanceApi";
+import AddFund from "./buttons/addFund"
 
 const useStyles = makeStyles({
   root: {
@@ -69,6 +70,7 @@ const GameBoard = () => {
   const user2 = location.state.user2;
   const amount = location.state.amount;
 
+  const [isOpen, setIsOpen] = useState(false);
   const [joinReq, setJoinReq] = useState(false);
   const [username, setUserName] = useState(user2 === "" ? user1 : user2);
   const [otheruser, setOtheruser] = useState(user2 === "" ? user2 : user1);
@@ -82,7 +84,6 @@ const GameBoard = () => {
   });
 
   const isStart = useSelector((state) => state.gameStart);
-  const isSetWinner = useSelector((state) => state.setWinner);
 
   const dispatch = useDispatch();
 
@@ -118,12 +119,12 @@ const GameBoard = () => {
     socket.on("start", (data) => {
       dispatch({ type: GAME_START, payload: true });
       console.log(data);
-      if(data){
+      if (data) {
         setMyStyle({ backgroundImage: `url(${data.url})` });
         setPrice(data.price);
         setDescription(data.description);
       }
-      else{
+      else {
         console.log('No Data.')
       }
     });
@@ -158,6 +159,9 @@ const GameBoard = () => {
     };
   }, []);
 
+  useEffect(() => {
+
+  }, [isOpen])
   return (
     <>
       <div
@@ -220,6 +224,7 @@ const GameBoard = () => {
                     username={username}
                     gameValue={userValue}
                     price={price}
+                    amount={amount}
                   />
                 ) : (
                   <div></div>
@@ -234,9 +239,7 @@ const GameBoard = () => {
               >
                 CHANGE ROOM
               </div>
-              <div className="changeroom" onClick={() => { }}>
-                ADD FUNDS
-              </div>
+              <AddFund />
             </div>
             <div className="chat-board">
               <Chat

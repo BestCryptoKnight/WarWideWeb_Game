@@ -1,6 +1,8 @@
 require("dotenv").config(); // Secures variables
 const app = require("./utils/app"); // Backend App (server)
 const mongo = require("./utils/mongo"); // MongoDB (database)
+const { gameEnd } = require('./controllers/balance');
+
 const {
   get_Current_User,
   user_Disconnect,
@@ -22,7 +24,6 @@ app.use((req, res, next) => {
 const { PORT } = require("./constants");
 const { BASECLIENTURL } = require("./constants");
 const { valid } = require("joi");
-const { validate } = require("./models/Balance");
 mongo.connect();
 
 app.use("/api", Routes);
@@ -45,7 +46,7 @@ let validArray = [];
 let bidValueArray = [];
 
 //initializing the socket io connection
-server.on("connection",  (socket) => {
+server.on("connection", (socket) => {
   console.log("connected");
   //for a new user joining the room
   socket.on("joinRoom", ({ username, room }) => {
@@ -104,7 +105,7 @@ server.on("connection",  (socket) => {
         const data = await loadData();
         if (data != {}) {
           console.log(data);
-          server.sockets.in(allUsers[0].room).emit("start",data);
+          server.sockets.in(allUsers[0].room).emit("start", data);
           validArray = [];
         }
         server.sockets.in(allUsers[0].room).emit("start");
@@ -116,7 +117,8 @@ server.on("connection",  (socket) => {
     console.log(validArray);
   });
 
-  socket.on("setwinner", ({ username, bidValue, price }) => {
+
+  socket.on("setwinner", async ({ username, bidValue, price, amount }) => {
     const realprice = price;
     let winner = {};
     let loser = {};
@@ -131,9 +133,18 @@ server.on("connection",  (socket) => {
     if (bidValueArray.length == 2) {
       winner = setWinner(bidValueArray, realprice);
       loser = winner === bidValueArray[0] ? bidValueArray[1] : bidValueArray[0];
-      server.sockets
-        .in(allUsers[0].room)
-        .emit("winner", { winner, loser, realprice });
+
+      const success = await gameEnd(winner.username, loser.username, amount);
+      if (success) {
+        server.sockets
+          .in(allUsers[0].room)
+          .emit("winner", { winner, loser, realprice });
+      }
+      else {
+        server.sockets
+          .in(allUsers[0].room)
+          .emit("winner", "Server Error.");
+      }
       bidValueArray = [];
     }
   });
