@@ -1,5 +1,5 @@
 const ORIGIN = '*'
-const BASECLIENTURL = "http://192.168.116.219"
+const BASECLIENTURL = "http://localhost"
 const PORT = process.env.PORT || 8080
 const ETHERPRICE = 1500;
 const PRICE1 = -1

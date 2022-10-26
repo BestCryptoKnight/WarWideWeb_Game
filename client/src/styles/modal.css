@@ -18,6 +18,12 @@
   height: 70px;
   background-color: #33b5e5;
 }
+
+.modal-header-content-draw{
+    width: 500px;
+  height: 70px;
+  background-color: #FFC000;
+}
 .modal-header-content-loser {
     width: 500px;
     height: 70px;
