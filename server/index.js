@@ -97,10 +97,10 @@ server.on("connection", (socket) => {
     let allUsers = broadcastToRoomUsers(p_user.room);
     if (validArray.findIndex((user) => user.id == p_user.id) == -1) {
       validArray.push(p_user);
-      if(validArray.length === 2){
+      if (validArray.length === 2) {
         server.sockets.in(allUsers[0].room).emit("start");
         validArray = [];
-      }else{
+      } else {
         socket.to(allUsers[0].room).emit("startReq", { username });
       }
     }
@@ -123,7 +123,7 @@ server.on("connection", (socket) => {
     if (bidValueArray.length == 2) {
       winner = setWinner(bidValueArray, realprice);
       loser = winner === bidValueArray[0] ? bidValueArray[1] : bidValueArray[0];
-      server.sockets.in(allUsers[0].room).emit("winner", { winner, loser , realprice});
+      server.sockets.in(allUsers[0].room).emit("winner", { winner, loser, realprice });
       bidValueArray = [];
     }
   });

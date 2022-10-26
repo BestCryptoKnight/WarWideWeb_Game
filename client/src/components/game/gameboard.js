@@ -6,12 +6,11 @@ import "../../styles/modal.css"
 import { useMediaQuery } from "react-responsive";
 import { makeStyles } from "@material-ui/core/styles";
 import Counter from "./counter";
-import { TextField } from "@mui/material";
 import Chat from "./chat";
 import { animationFunc } from "../../functions/animations";
 import Spinner from "./spinner";
 import io from "socket.io-client";
-import { BACKEND_URL } from "../../constants";
+import { BACKEND_URL, FEE } from "../../constants";
 import toast from "react-hot-toast";
 import {
   GAME_START,
@@ -22,6 +21,7 @@ import { loadData, leaveRoom } from "../../api/RoomApi";
 import defaultProduct from "../../assets/img/picDemo.png";
 import GameEnd from "./gameEndDialogue";
 import Modal from 'react-modal'
+import StartButton from "./start";
 
 const useStyles = makeStyles({
   root: {
@@ -69,7 +69,7 @@ const GameBoard = () => {
   const roomname = location.state.url;
   const user1 = location.state.user1;
   const user2 = location.state.user2;
-  const Amount = location.state.amount;
+  const amount = location.state.amount;
 
   const [joinReq, setJoinReq] = useState(false);
   const [username, setUserName] = useState(user2 === "" ? user1 : user2);
@@ -107,24 +107,6 @@ const GameBoard = () => {
     isLaptopOrMobile
       ? animationFunc("gameboard", "game-mainboard")
       : animationFunc("gameboard", "game-mainboard-mobile");
-  };
-
-  const userValidate = () => {
-    return true;
-  };
-
-  const sendStartReq = () => {
-    socket.emit("start", { username: username, room: roomname });
-  };
-
-  const handleMouseDown = (e) => {
-    animationFunc("placeBid", "place-guess-btn-anim");
-  };
-
-  const handleMouseUp = (e) => {
-    animationFunc("placeBid", "place-guess-btn");
-    let isValid = userValidate();
-    isValid ? sendStartReq() : toast.error("Not enough deposit");
   };
 
   const handleCHange = (e) => {
@@ -167,7 +149,7 @@ const GameBoard = () => {
 
   const socketDisconnect = async () => {
     await socket.emit("discon");
-    isFilled ? console.log("ss") : leaveRoom(user1, Amount);
+    isFilled ? console.log("ss") : leaveRoom(user1, amount);
     socket.removeListener("message");
     socket.removeListener("startReq");
     socket.removeListener("start");
@@ -189,6 +171,7 @@ const GameBoard = () => {
     if (isStart)
       PictureFetch();
   }, [isStart])
+
   return (
     <>
       <div
@@ -225,7 +208,7 @@ const GameBoard = () => {
                     <i className="fa fa-usd icon"></i>
                     <input type="number" className="vs-input" step={0.1} onChange={handleCHange} />
                   </div>
-                  <div className="room-price">{Amount}ETH</div>
+                  <div className="room-price">{amount}ETH</div>
                 </div>
                 <div className="vs-second">
                   {isFilled ? (
@@ -260,12 +243,7 @@ const GameBoard = () => {
                   <div></div>
                 )}
               </div>
-              <div
-                id="placeBid"
-                className="place-guess-btn"
-                onMouseDown={handleMouseDown}
-                onMouseUp={handleMouseUp}
-              ></div>
+              <StartButton name={username} amount={amount} socket={socket} room={roomname} isFilled={isFilled}/>
             </div>
             <div className="changeroom-addfund">
               <div className="changeroom" onClick={() => navigate('/dashboard')}>CHANGE ROOM</div>
