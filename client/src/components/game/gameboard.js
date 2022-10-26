@@ -282,6 +282,7 @@ const GameBoard = () => {
           </div>
         </div>
       </div>
+
       {winner === {} ? (
         <div />
       ) : (

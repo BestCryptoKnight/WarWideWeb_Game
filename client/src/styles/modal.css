@@ -1,14 +1,56 @@
 .Modal {
-    margin: auto;
-    margin-top: 300px;
-    width: 300px;
-    height: 250px;
-    border: 1px solid #824c6b;
-    background-color: #712450;
+  margin: auto;
+  margin-top: 300px;
+  width: 300px;
+  height: 250px;
+  border: 1px solid #824c6b;
+  background-color: #712450;
 }
 
 .Overlay {
-    position: inherit;
-    background-color: red;
-    opacity: 0.5;
+  position: inherit;
+  background-color: red;
+  opacity: 0.5;
+}
+
+.modal-header-content-winner {
+  width: 500px;
+  height: 70px;
+  background-color: #33b5e5;
+}
+.modal-header-content-loser {
+    width: 500px;
+    height: 70px;
+    background-color: #FF3547;
+}
+.modal-header-text {
+  font-size: 23px;
+  color: white;
+  margin-left: 30px;
+  margin-top: 18px;
+}
+.dialog-content{
+    height: 200px;
+    display: flex;
+}
+
+.dialog-logo{
+    width: 180px;
+    height: 180px;
+    background-image: url("../assets/img/prize.png");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+.dialog-content-text{
+    margin-top: 20px;
+    margin-left: 20px;
+    padding-top: 10px;
+    width: 250px;
+    height: 150px;
+    color:#8AA8C4;
+    font-size: 25px;
+}   
+.dialog-label{
+  margin-left: auto;
+  margin-right: auto;  
 }

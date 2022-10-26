@@ -9,7 +9,7 @@ import Slide from "@mui/material/Slide";
 import { SET_WINNER } from "../../store/action/constants";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
-
+import "../../styles/modal.css";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -20,10 +20,11 @@ export default function AlertDialogSlide(datas) {
   const dispatch = useDispatch();
   let username = datas.username;
   let winner = "";
-  let winnerValue = "";
+  let winnerValue = 30;
   let loser = "";
-  let loserValue = "";
-  let price = "";
+  let loserValue = 30;
+  let price = 30;
+  let isWinner = false;
   // let winner = (datas.data.winner.user === undefined) ? "winner" : datas.data.winner.user;
   if (datas.data.winner != undefined) {
     winner = datas.data.winner.user;
@@ -31,17 +32,16 @@ export default function AlertDialogSlide(datas) {
     loser = datas.data.loser.user;
     loserValue = datas.data.loser.value;
     price = datas.data.realprice;
+    isWinner = winner == username ? true : false;
   }
 
-  
   const handleClose = () => {
     dispatch({ type: SET_WINNER, payload: false });
   };
 
   useEffect(() => {
     return () => {
-    dispatch({ type: SET_WINNER, payload: false });
-
+      dispatch({ type: SET_WINNER, payload: false });
     };
   }, []);
 
@@ -54,12 +54,17 @@ export default function AlertDialogSlide(datas) {
         onClose={handleClose}
         aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle style={{color :"black"}}>
-          {username == winner ? "Congratulations! You win" : "You Lost"}
-        </DialogTitle>
+        {/* <DialogTitle className="end-dialogue"> */}
+        {/* {username == winner ? "Congratulations! You win" : "You Lost"} */}
+        {/* </DialogTitle> */}
+        <div className= {isWinner? "modal-header-content-winner" : "modal-header-content-loser"}>
+          <div className="modal-header-text">
+            {username == winner ? "Congratulations! You win" : " You Lost"}
+          </div>
+        </div>
         <DialogContent>
-          <DialogContentText id="alert-dialog-slide-description">
-            {username == winner
+          {/* <DialogContentText id="alert-dialog-slide-description"> */}
+            {/* {username == winner
               ? "Real Price: " +
                 price  +
                 "." +
@@ -77,8 +82,16 @@ export default function AlertDialogSlide(datas) {
                 " " +
                 winner +
                 " value: " +
-                winnerValue }
-          </DialogContentText>
+                winnerValue } */}
+          {/* </DialogContentText> */}
+          <div className="dialog-content">
+            <div className="dialog-logo"/>
+            <div className="dialog-content-text">
+              <div className="dialog-label">price : {" " + price} </div>
+              <div className="dialog-label">Your set value :  {isWinner? winnerValue : loserValue}  </div>
+              <div className="dialog-label"> {isWinner? loser + " set value: "+ loserValue : winner + " set value: " + winnerValue} </div>
+            </div>
+          </div>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>OK</Button>
