@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from 'react-redux';
 import "../../styles/header.css";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
@@ -6,6 +7,7 @@ import { useAuth } from "../../contexts/AuthContext";
 export default function Header() {
   const navigate = useNavigate();
   const { isLoggedIn, logout } = useAuth();
+  const balance = useSelector((state) => state.getBalance);
 
   const handleClick = (item) => {
     switch (item) {
@@ -25,7 +27,6 @@ export default function Header() {
     logout();
     navigate('/');
     triggerMobile();
-
   }
 
   const handleLogInClick = () => {
@@ -99,6 +100,12 @@ export default function Header() {
         <div className="header-bottom">
           <div className="header-bottom-area align-items-center">
             <div className="logo-img"></div>
+            {
+              isLoggedIn ? <div className='balance-group'>
+                <label>Balance &nbsp; </label>
+                <div className='balance'> {balance}ETH</div>
+              </div> : null}
+
             <ul className="menu">
               <li>
                 {string}

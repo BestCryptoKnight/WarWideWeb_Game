@@ -37,6 +37,13 @@
     cursor: pointer;
 }
 
+.balance-group {
+    margin-top: 50px;
+    color: #fff;
+    display: flex;
+    font-size: 19px;
+}
+
 a {
     text-decoration: none !important;
 }

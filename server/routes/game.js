@@ -5,6 +5,6 @@ const router = express.Router()
 
 router.get('/', gameController.loadData);
 router.post('/joinRoom', authorizeBearerToken, gameController.joinRoom);
-router.post('/leaveRoom', authorizeBearerToken, gameController.leaveRoom);
+router.post('/leaveRoom', gameController.leaveRoom);
 
 module.exports = router

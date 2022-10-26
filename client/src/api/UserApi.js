@@ -4,7 +4,7 @@ import { HEADER, GAME_ADDRESS } from '../constants';
 import toast from "react-hot-toast";
 
 const getBalance = async (name) => {
-    const result = await axios.get(`/api/balance/${name}`, HEADER);
+    const result = await axios.get(`/api/balance/${name}`, HEADER());
     return result.data.balance;
 }
 
@@ -43,7 +43,7 @@ const deposit = async (amount) => {
             const data = {
                 amount: amount,
             }
-            const res = await axios.post('/api/balance/deposit', data, HEADER);
+            const res = await axios.post('/api/balance/deposit', data, HEADER());
         }
     }
     catch (error) {
@@ -54,7 +54,7 @@ const deposit = async (amount) => {
 
 const withdraw = async (amount) => {
     try {
-        await axios.post('/api/balance/withdraw', { amount: amount }, HEADER);
+        await axios.post('/api/balance/withdraw', { amount: amount }, HEADER());
     } catch (error) {
         console.log(error);
     }

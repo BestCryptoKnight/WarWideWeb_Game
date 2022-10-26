@@ -167,7 +167,7 @@ const GameBoard = () => {
 
   const socketDisconnect = async () => {
     await socket.emit("discon");
-    isFilled ? console.log("ss") : leaveRoom(Amount);
+    isFilled ? console.log("ss") : leaveRoom(user1, Amount);
     socket.removeListener("message");
     socket.removeListener("startReq");
     socket.removeListener("start");

@@ -25,7 +25,7 @@ const authorizeBearerToken = async (request, response, next) => {
       next()
     }
   } catch (error) {
-    console.error(error)
+    console.error('Error occured here: ',error);
     return response.status(401).json({
       message: 'Unauthorized - invalid token',
     })
