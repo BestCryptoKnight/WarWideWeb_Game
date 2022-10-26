@@ -79,20 +79,8 @@ server.on("connection",  (socket) => {
       socket.to(p_user.room).emit("discon", {
         username: p_user.username,
       });
+      validArray = [];
     }
-    // const p_user = get_Current_User(socket.id);
-    // const username = p_user.username;
-    // const isDelete = user_Disconnect(room);
-    // isDelete == -1 ? server.sockets.in(room).emit("discon",{
-    //   username: username,
-    // }) : console.log("disconnect success");
-    // if (p_user) {
-    //   io.to(p_user.room).emit("message", {
-    //     userId: p_user.id,
-    //     username: p_user.username,
-    //     text: `${p_user.username} has left the room`,
-    //   });
-    // }
   });
   socket.on("start", async ({ username, room }) => {
     // const p_user = join_User(socket.id, username, room);

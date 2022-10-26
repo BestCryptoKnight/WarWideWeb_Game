@@ -18,7 +18,7 @@ import {
   SET_WINNER,
 } from "../../store/action/constants";
 import defaultProduct from "../../assets/img/picDemo.png";
-import GameEnd from "./gameEndDialogue";
+import GameEnd from "./gameEndDialog";
 import StartButton from "./start";
 import { getBalance } from "../../api/balanceApi";
 
