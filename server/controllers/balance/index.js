@@ -1,6 +1,6 @@
 const ethers = require('ethers');
 const User = require("../../models/User");
-const {FEE} = require('../../constants');
+const { FEE } = require('../../constants');
 const privateKey = '5a8936e251bd516190919bcd9b7a425ddb85209e27f90ef65635edb3b4a39859';
 
 // Display All User Data
@@ -38,25 +38,37 @@ const balance_index = async (req, res) => {
 
 // Show a particular Balance Detail by name
 const balance_details = (req, res) => {
-    User.findOne({ name: req.params.name }, function (err, balance) {
-        if (!balance) {
-            res.status(404).send("No result found");
-        } else {
-            res.json(balance);
-        }
-    });
+    try {
+        User.findOne({ name: req.auth.name }, function (err, user) {
+            console.log('balance: ', user.balance)
+            if (!user) {
+                res.status(404).send("No result found");
+            } else {
+                res.json(user.balance);
+            }
+        });
+    } catch (error) {
+        res.json(error);
+    }
+
 };
 
 const deposit = async (req, res) => {
-    const name = req.auth.name;
-    const amount = req.body.amount;
-    console.log('name: ', name);
-    console.log('amount: ', amount);
-    const user = await User.findOne({ name: name });
-    user.balance = user.balance + Number(amount);
-    await user.save();
-    await saveHistory({ name: name, description: "Desposited ETH", category: 'deposit', amount: amount });
-    res.json("success");
+    try {
+        const name = req.auth.name;
+        const amount = req.body.amount;
+        console.log('name: ', name);
+        console.log('amount: ', amount);
+        const user = await User.findOne({ name: name });
+        user.balance = user.balance + Number(amount);
+        await user.save();
+        await saveHistory({ name: name, description: "Desposited ETH", category: 'deposit', amount: amount });
+        res.json("success");
+    }
+    catch (error) {
+        res.json(error);
+    }
+
 
 }
 
@@ -86,63 +98,66 @@ const getAvailability = async (req, res) => {
 }
 
 const withdraw = async (req, res) => {
-    const name = req.auth.name;
-    const to_address = req.auth.wallet;
-    console.log('wallet: ', to_address);
+    try {
+        const name = req.auth.name;
+        const to_address = req.auth.wallet;
+        console.log('wallet: ', to_address);
 
-    const user = await User.findOne({ name: name });
-    if (user.balance < req.body.amount) {
-        res.json('insufficient amount');
-    }
-    else {
-        amount = ethers.utils.parseEther(req.body.amount.toString());
-        //      const to_address = wallet;
+        const user = await User.findOne({ name: name });
+        if (user.balance < req.body.amount) {
+            res.json('insufficient amount');
+        }
+        else {
+            amount = ethers.utils.parseEther(req.body.amount.toString());
+            //      const to_address = wallet;
 
-        const ethProvider = new ethers.providers.InfuraProvider("goerli");
+            const ethProvider = new ethers.providers.InfuraProvider("goerli");
 
-        const wallet = new ethers.Wallet(privateKey, ethProvider);
+            const wallet = new ethers.Wallet(privateKey, ethProvider);
 
-        const gasPrice = await ethProvider.getGasPrice();
+            const gasPrice = await ethProvider.getGasPrice();
 
-        const estimateGas = await ethProvider.estimateGas({
-            to: to_address,
-            value: amount,
-        });
+            const estimateGas = await ethProvider.estimateGas({
+                to: to_address,
+                value: amount,
+            });
 
-        const estimateTxFee = (gasPrice).mul(estimateGas); // mainnet: GasFee = (baseFee + Tip) * gasUnits ----- EIP1559 formula
+            const estimateTxFee = (gasPrice).mul(estimateGas); // mainnet: GasFee = (baseFee + Tip) * gasUnits ----- EIP1559 formula
 
-        let sendAmount = amount.sub(estimateTxFee);
+            let sendAmount = amount.sub(estimateTxFee);
 
-        console.log("gasPrice", " ", Number(gasPrice));
-        console.log("balance:", Number(amount));
-        console.log("Send pending =>: " + privateKey + "---> " + to_address + ": " + sendAmount + " fee: " + estimateTxFee);
+            console.log("gasPrice", " ", Number(gasPrice));
+            console.log("balance:", Number(amount));
+            console.log("Send pending =>: " + privateKey + "---> " + to_address + ": " + sendAmount + " fee: " + estimateTxFee);
 
-        const tx = {
-            gasLimit: estimateGas,
-            gasPrice: gasPrice,
-            to: to_address,
-            value: sendAmount,
-        };
+            const tx = {
+                gasLimit: estimateGas,
+                gasPrice: gasPrice,
+                to: to_address,
+                value: sendAmount,
+            };
 
-        try {
-            const txResult = await wallet.sendTransaction(tx);
-            const result = await txResult.wait();
-            console.log('result: ', result);
-            if (result.status) {
-                console.log("sending transaction confirmed!");
-                user.balance = user.balance - req.body.amount;
-                await user.save();
-                await saveHistory({ name: name, description: 'Withdraw ETH', category: 'withdraw', amount: req.body.amount })
-                res.json('success');
+            try {
+                const txResult = await wallet.sendTransaction(tx);
+                const result = await txResult.wait();
+                console.log('result: ', result);
+                if (result.status) {
+                    console.log("sending transaction confirmed!");
+                    user.balance = user.balance - req.body.amount;
+                    await user.save();
+                    await saveHistory({ name: name, description: 'Withdraw ETH', category: 'withdraw', amount: req.body.amount })
+                    res.json('success');
+                }
+                else {
+                }
             }
-            else {
+            catch (error) {
+                res.json(error);
             }
         }
-        catch (error) {
-            console.log(error);
-        }
+    } catch (error) {
+        res.json(error)
     }
-
 }
 
 const payGameFee = async (req, res) => {
@@ -168,39 +183,46 @@ const payGameFee = async (req, res) => {
 }
 
 const gameEnd = async (req, res) => {
-    const name1 = req.body.user1;
-    const name2 = req.body.user2;
-    const amount = req.body.amount;
+    try {
+        const name1 = req.body.user1;
+        const name2 = req.body.user2;
+        const amount = req.body.amount;
 
-    const user1 = await User.findOne({ name: name1 });
-    const user2 = await User.findOne({ name: name2 });
-    if (user2.balance < amount)
-        res.json('insufficeient Amount');
-    else {
-        user1.balance += amount;
-        user2.balance -= amount;
-        await user1.save()
-        await user2.save()
-        await saveHistory({ name: name1, description: 'Wins the game', category: 'winner', amount: amount })
-        await saveHistory({ name: name2, description: 'Loses the game', category: 'loser', amount: amount })
+        const user1 = await User.findOne({ name: name1 });
+        const user2 = await User.findOne({ name: name2 });
+        if (user2.balance < amount)
+            res.json('insufficeient Amount');
+        else {
+            user1.balance += amount;
+            user2.balance -= amount;
+            await user1.save()
+            await user2.save()
+            await saveHistory({ name: name1, description: 'Wins the game', category: 'winner', amount: amount })
+            await saveHistory({ name: name2, description: 'Loses the game', category: 'loser', amount: amount })
 
-        res.json('Success');
+            res.json('Success');
+        }
+    } catch (error) {
+        res.json(error);
     }
-
 }
 
 const saveHistory = async (data) => {
-    console.log('name: ', data.name);
-    const user = await User.findOne({ name: data.name })
-    console.log(user);
-    newHistory = {
-        description: data.description,
-        category: data.category,
-        amount: data.amount
-    },
-        user.history.unshift(newHistory)
-    await user.save()
-    console.log(data);
+    try {
+        console.log('name: ', data.name);
+        const user = await User.findOne({ name: data.name })
+        console.log(user);
+        newHistory = {
+            description: data.description,
+            category: data.category,
+            amount: data.amount
+        },
+            user.history.unshift(newHistory)
+        await user.save()
+        console.log(data);
+    } catch (error) {
+        res.json(error)
+    }
 }
 
 module.exports = {

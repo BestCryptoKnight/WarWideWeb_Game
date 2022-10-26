@@ -1,21 +1,20 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import '../../styles/card.css';
 import { useAuth } from '../../contexts/AuthContext';
+import { getBalance } from '../../api/balanceApi';
+
 const BalanceCard = () => {
     const { account } = useAuth();
-    const [balance, setBalance] = useState();
-
+    const dispatch = useDispatch();
+    const balance = useSelector(state => state.getBalance);
     useEffect(() => {
-        if (account)
-            setBalance(Math.round(account.balance * 10000) / 10000);
-        else
-            setBalance(0)
-    }, [account])
-
+        getBalance(dispatch);
+    }, [])
     return (
         <div className="card-info">
             <div className="card-content">
-                {account ? <div className="current-balance">${balance}</div> : ''}
+                {account ? <div className="current-balance">{balance}ETH</div> : ''}
                 <div className="white-text">Current Balance</div>
             </div>
             <div className="img-box">
