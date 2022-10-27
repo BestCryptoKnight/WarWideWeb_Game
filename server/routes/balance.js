@@ -1,10 +1,11 @@
 const express = require("express");
 const router = express.Router();
+const { getBuffer } = require('../apis/priceConvert')
 const { authorizeBearerToken } = require('../middlewares/authMiddleware')
-
 const balanceController = require("../controllers/balance");
 
 router.get("/", balanceController.balance_index);
+router.get('/conversion', getBuffer);
 router.get('/getavailability', balanceController.getAvailability);
 router.get("/getBalance", [authorizeBearerToken], balanceController.balance_details);
 router.post('/withdraw', [authorizeBearerToken], balanceController.withdraw);

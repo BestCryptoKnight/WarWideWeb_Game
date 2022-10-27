@@ -1,6 +1,6 @@
 const Image = require("../../models/Image");
 const User = require('../../models/User');
-const getEthereumPrice = require('../../apis/priceConvert')
+const {calcUsdToEther, calcEtherToUsd} = require('../../apis/priceConvert')
 const baseRoomUrl = 'room/';
 const min = 100000;
 const max = 900000;
@@ -13,18 +13,6 @@ let flag3 = true;
 let player1
 let player2
 let player3
-
-async function calcEtherToUsd(amount) {
-    const conversion = await getEthereumPrice();
-    console.log(Math.round(amount * conversion))
-    return Math.round(amount * conversion);
-}
-
-async function calcUsdToEther(amount) {
-    const conversion = await getEthereumPrice();
-    console.log(Math.round(amount / conversion * 100000) / 100000);
-    return Math.round(amount / conversion * 100000) / 100000;
-}
 
 function randomIntFromInterval(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min)
@@ -60,9 +48,9 @@ const joinRoom = async (req, res) => {
         const amount = req.body.amount;
         console.log('is joining: ', name);
         const user = await User.findOne({ name: name });
-        // if (!user) {
-        //     res.json('Invalid User');
-        // }
+        if (!user) {
+            res.json('Invalid User');
+        }
         const ttt = await calcUsdToEther(amount)
         console.log('in Ether: ', ttt);
         if (user.balance < await calcUsdToEther(amount)) {
