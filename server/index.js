@@ -68,9 +68,11 @@ server.on("connection", (socket) => {
     //gets the room user and the message sent
     try {
       const p_user = get_Current_User(socket.id);
-      let allUsers
-      if (p_user)
-        allUsers = broadcastToRoomUsers(p_user.room);
+      if (p_user.room == undefined) {
+        p_user = join_User(socket.id, username, room);
+      }
+      let allUsers;
+      if (p_user) allUsers = broadcastToRoomUsers(p_user.room);
 
       socket.to(allUsers[0].room).emit("chat", {
         username: p_user.username,
@@ -122,7 +124,18 @@ server.on("connection", (socket) => {
       console.log(error);
     }
   });
+  socket.on("writing", () => {
+    try {
+      const p_user = get_Current_User(socket.id);
+      
+      let allUsers;
+      if (p_user) allUsers = broadcastToRoomUsers(p_user.room);
 
+      socket.to(allUsers[0].room).emit("writing");
+    } catch (error) {
+      console.log(error);
+    }
+  })
   socket.on("setwinner", async ({ username, bidValue, price, amount }) => {
     try {
       const realprice = price;
