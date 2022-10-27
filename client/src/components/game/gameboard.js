@@ -67,7 +67,6 @@ const GameBoard = () => {
   const user2 = location.state.user2;
   const amount = location.state.amount;
 
-  const [isOpen, setIsOpen] = useState(false);
   const [joinReq, setJoinReq] = useState(false);
   const [username, setUserName] = useState(user2 === "" ? user1 : user2);
   const [otheruser, setOtheruser] = useState(user2 === "" ? user2 : user1);

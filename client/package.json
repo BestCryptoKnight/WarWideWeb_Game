@@ -28,6 +28,7 @@
     "react-responsive": "^9.0.0",
     "react-router-dom": "^6.4.2",
     "react-scripts": "^4.0.3",
+    "react-spinners": "^0.13.6",
     "react-toastify": "8.0.0",
     "redux": "^4.2.0",
     "redux-thunk": "^2.4.1",
