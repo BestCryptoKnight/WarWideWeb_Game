@@ -1,6 +1,6 @@
 const CoinGecko = require('coingecko-api');
 const CoinGeckoClient = new CoinGecko();
-const {ETHERPRICE} = require('../constants')
+let buffer = 1500;
 
 async function getEthereumPrice() {
     try {
@@ -8,12 +8,19 @@ async function getEthereumPrice() {
             ids: 'ethereum',
             vs_currencies: 'usd',
         });
-        if(data)
+        if (data.data.ethereum) {
+            buffer = data.data.ethereum.usd;
             return data.data.ethereum.usd;
+        }
+        else
+        return buffer;
     }
     catch (error) {
         console.log('error: ', error);
-        return ETHERPRICE
+        if (buffer)
+            return 1500
+        else
+            return buffer
     }
 }
 

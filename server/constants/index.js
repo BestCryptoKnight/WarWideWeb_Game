@@ -1,11 +1,11 @@
 const ORIGIN = '*'
-const BASECLIENTURL = "http://localhost"
+const BASECLIENTURL = "http://192.168.116.216"
 const PORT = process.env.PORT || 8080
 const ETHERPRICE = 1500;
-const PRICE1 = -1
-const PRICE2 = 0.02
-const PRICE3 = 0.03
-const FEE = 0.01
+const PRICE1 = 1
+const PRICE2 = 2
+const PRICE3 = 3
+const FEE = 3
 
 // for "atlas" edit MONGO_URI in -> .env file || for "community server" edit <MyDatabase>
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/MyDatabase'

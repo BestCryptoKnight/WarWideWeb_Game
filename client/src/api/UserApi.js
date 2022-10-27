@@ -53,7 +53,9 @@ const deposit = async (amount) => {
 
 const withdraw = async (amount) => {
     try {
-        await axios.post('/api/balance/withdraw', { amount: amount }, HEADER());
+        console.log('axios amount: ', amount);
+        const res = await axios.post('/api/balance/withdraw', { amount: amount }, HEADER());
+        console.log('response: ', res);
     } catch (error) {
         console.log(error);
     }

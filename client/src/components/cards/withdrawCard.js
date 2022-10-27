@@ -23,6 +23,7 @@ const WithdrawCard = () => {
             const btn = document.querySelector(".withdraw-submit-button")
             btn.classList.add("button--loading");
             btn.classList.add("disabled");
+            console.log('----------')
             await toast.promise(withdraw(amount), {
                 loading: 'waiting...',
                 success: <b>Withdraw Ended</b>,

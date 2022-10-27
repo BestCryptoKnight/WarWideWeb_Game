@@ -118,7 +118,8 @@ const GameBoard = () => {
         console.log("No Data.");
       }
     });
-    socket.on("winner", (data) => {
+    socket.on("winner", async(data) => {
+      await getBalance(dispatch);
       dispatch({ type: SET_WINNER, payload: true });
       setWinner(data);
     });
@@ -198,7 +199,7 @@ const GameBoard = () => {
                       onChange={handleCHange}
                     />
                   </div>
-                  <div className="room-price">{amount}ETH</div>
+                  <div className="room-price">{amount}$</div>
                 </div>
                 <div className="vs-second">
                   {isFilled ? (
