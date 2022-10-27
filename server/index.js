@@ -123,11 +123,10 @@ server.on("connection", (socket) => {
     } catch (error) {
       console.log(error);
     }
-  });
-  socket.on("writing", () => {
+  }); socket.on("writing", () => {
     try {
       const p_user = get_Current_User(socket.id);
-      
+
       let allUsers;
       if (p_user) allUsers = broadcastToRoomUsers(p_user.room);
 
