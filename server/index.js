@@ -38,7 +38,7 @@ let io = http.listen(PORT, () => {
 
 const server = require("socket.io")(http, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: "http://192.168.116.216:3000",
   },
 });
 
@@ -68,7 +68,9 @@ server.on("connection", (socket) => {
     //gets the room user and the message sent
     try {
       const p_user = get_Current_User(socket.id);
-      let allUsers = broadcastToRoomUsers(p_user.room);
+      let allUsers
+      if (p_user)
+        allUsers = broadcastToRoomUsers(p_user.room);
 
       socket.to(allUsers[0].room).emit("chat", {
         username: p_user.username,

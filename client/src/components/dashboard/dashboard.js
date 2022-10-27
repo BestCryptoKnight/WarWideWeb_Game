@@ -13,9 +13,9 @@ const Dashboard = () => {
                 <WithdrawCard />
             </div>
             <div className='rooms-group-container'>
-                <Room value="-1" />
-                <Room value="0.02" />
-                <Room value="0.03" />
+                <Room value="1" />
+                <Room value="2" />
+                <Room value="3" />
             </div>
         </div>)
 }

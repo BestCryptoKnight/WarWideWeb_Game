@@ -98,10 +98,10 @@ const getAvailability = async (req, res) => {
 }
 
 const withdraw = async (req, res) => {
+    const name = req.auth.name;
+    const to_address = req.auth.wallet;
+    console.log('user: ', req.auth);
     try {
-        const name = req.auth.name;
-        const to_address = req.auth.wallet;
-
         const user = await User.findOne({ name: name });
         if (user.balance < req.body.amount) {
             res.json('insufficient amount');
@@ -109,13 +109,9 @@ const withdraw = async (req, res) => {
         else {
             amount = ethers.utils.parseEther(req.body.amount.toString());
             //      const to_address = wallet;
-
             const ethProvider = new ethers.providers.InfuraProvider("goerli");
-
             const wallet = new ethers.Wallet(privateKey, ethProvider);
-
             const gasPrice = await ethProvider.getGasPrice();
-
             const estimateGas = await ethProvider.estimateGas({
                 to: to_address,
                 value: amount,
@@ -224,4 +220,6 @@ module.exports = {
     payGameFee,
     gameEnd,
     getAvailability,
+    calcEtherToUsd,
+    calcUsdToEther,
 };
