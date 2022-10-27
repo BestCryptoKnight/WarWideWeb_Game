@@ -60,15 +60,12 @@ const joinRoom = async (req, res) => {
         const amount = req.body.amount;
         console.log('is joining: ', name);
         const user = await User.findOne({ name: name });
-        // if (!user) {
-        //     res.json('Invalid User');
-        // }
         const ttt = await calcUsdToEther(amount)
         console.log('in Ether: ', ttt);
-        if (user.balance < await calcUsdToEther(amount)) {
-            res.json('can not join this room');
-        }
-        else {
+        // if (user.balance < await calcUsdToEther(amount)) {
+        //     res.json('can not join this room');
+        // }
+        // else {
             const url = baseRoomUrl + '#' + amount + name + randomIntFromInterval(min, max);
             let data
             if (PRICE1 == amount) {
@@ -144,7 +141,7 @@ const joinRoom = async (req, res) => {
                 }
             }
             res.json(data);
-        }
+        // }
     }
     catch (error) {
         res.json(error);
