@@ -15,7 +15,7 @@ const History = (props) => {
 
         }
         else
-            transactions = account.history;
+            transactions = account.history.filter((item) => item.category === 'Withdraw' || item.category === 'Deposit');
     }
     else
         transactions = ''
@@ -26,7 +26,7 @@ const History = (props) => {
                     <tr>
                         <th>Transaction Type</th>
                         <th>Date</th>
-                        <th>Amount</th>
+                        <th>Amount(ETH)</th>
                     </tr>
                 </thead>
                 {transactions ?

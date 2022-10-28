@@ -1,14 +1,13 @@
 
 import React, { createContext, useContext, useState, useEffect } from "react";
+import { toast } from "react-hot-toast";
 import axios from "../utils/axios";
 const AuthContext = createContext();
 
-// export the consumer
 export function useAuth() {
   return useContext(AuthContext);
 }
 
-// export the provider (handle all the logic here)
 export function AuthProvider({ children }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [account, setAccount] = useState(null);
@@ -71,8 +70,37 @@ export function AuthProvider({ children }) {
     }
   };
 
-  // This side effect keeps local storage updated with recent token value,
-  // making sure it can be re-used upon refresh or re-open browser
+  const changePassword = async (formData) => {
+    try {
+      await axios.post('/api/auth/changePassword', formData, {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      });
+      return 'success';
+    } catch (error) {
+      return (error)
+    }
+  }
+
+  const changeAccount = async (formData) => {
+    try {
+      const response = await axios.post('/api/auth/changeAccount', formData, {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      });
+      console.log('response: ', response)
+      console.log('accountData: ', response.data.data);
+      console.log('accessToken: ', response.data.token);
+      setAccount(response.data.data);
+      setToken(response.data.token);
+      setIsLoggedIn(true);
+      return response.data.message;
+    } catch (error) {
+      return (error);
+    }
+  }
   useEffect(() => {
     if (token) {
       localStorage.setItem("token", token);
@@ -81,9 +109,6 @@ export function AuthProvider({ children }) {
     }
   }, [token]);
 
-  // This side effect runs only if we have a token, but no account or logged-in boolean.
-  // This "if" statement is "true" only when refreshed, or re-opened the browser,
-  // if true, it will then ask the backend for the account information (and will get them if the token hasn't expired)
   useEffect(() => {
     if (!isLoggedIn && !account && token)
       getAccount();
@@ -98,6 +123,8 @@ export function AuthProvider({ children }) {
         register,
         login,
         logout,
+        changeAccount,
+        changePassword,
       }}
     >
       {children}

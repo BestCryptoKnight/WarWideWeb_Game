@@ -52,14 +52,17 @@ const joinRoom = async (req, res) => {
             res.json('Invalid User');
         }
         const ttt = await calcUsdToEther(amount)
-        console.log('in Ether: ', ttt);
-        if (user.balance < await calcUsdToEther(amount)) {
+        if (user.balance < ttt) {
             res.json('can not join this room');
         }
         else {
             const url = baseRoomUrl + '#' + amount + name + randomIntFromInterval(min, max);
-            let data
+            console.log('url: ', url)
+            let data;
             if (PRICE1 == amount) {
+                console.log('price1: ', PRICE1);
+                console.log('amount: ', amount);
+                console.log('flag1: ', flag1)
                 if (flag1 == true) {
                     player1 = name;
                     rooms1 = url;
@@ -71,6 +74,7 @@ const joinRoom = async (req, res) => {
                         url: rooms1,
                         isFull: false
                     }
+                    res.json(data);
                 }
                 else {
                     flag1 = true;
@@ -81,6 +85,7 @@ const joinRoom = async (req, res) => {
                         url: rooms1,
                         isFull: true
                     }
+                    res.json(data);
                 }
             }
             if (PRICE2 == amount) {
@@ -95,6 +100,7 @@ const joinRoom = async (req, res) => {
                         url: rooms2,
                         isFull: false
                     }
+                    res.json(data);
                 }
                 else {
                     flag2 = true
@@ -105,6 +111,7 @@ const joinRoom = async (req, res) => {
                         url: rooms2,
                         isFull: true
                     }
+                    res.json(data);
                 }
             }
             if (PRICE3 == amount) {
@@ -119,6 +126,7 @@ const joinRoom = async (req, res) => {
                         url: rooms3,
                         isFull: false
                     }
+                    res.json(data);
                 }
                 else {
                     flag3 = true
@@ -129,10 +137,10 @@ const joinRoom = async (req, res) => {
                         url: rooms3,
                         isFull: true
                     }
+                    res.json(data);
                 }
             }
         }
-        res.json(data);
     }
     catch (error) {
         res.status(400).json(error);

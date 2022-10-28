@@ -11,4 +11,8 @@ router.post('/register', authController.register)
 
 router.post('/login', authController.login)
 
+router.post('/changeAccount', [authorizeBearerToken], authController.changeAccount)
+
+router.post('/changePassword', [authorizeBearerToken], authController.changePassword)
+
 module.exports = router
