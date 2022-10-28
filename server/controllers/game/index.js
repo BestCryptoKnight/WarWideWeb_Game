@@ -1,6 +1,6 @@
 const Image = require("../../models/Image");
 const User = require('../../models/User');
-const {calcUsdToEther, calcEtherToUsd} = require('../../apis/priceConvert')
+const { calcUsdToEther, calcEtherToUsd } = require('../../apis/priceConvert')
 const baseRoomUrl = 'room/';
 const min = 100000;
 const max = 900000;
@@ -20,7 +20,7 @@ function randomIntFromInterval(min, max) {
 
 async function loadData() {
     try {
-        const randomNumber = randomIntFromInterval(1, 10);
+        const randomNumber = randomIntFromInterval(1, 99);
         console.log('random: ', randomNumber);
         const item = await Image.findOne({ ID: randomNumber });
         const data = {
@@ -32,7 +32,7 @@ async function loadData() {
     }
     catch (error) {
         console.log(error);
-        const item = await Image.findOne({ ID: 0 });
+        const item = await Image.findOne({ ID: 1 });
         const data = {
             url: item.Url,
             description: item.Description,
@@ -53,10 +53,10 @@ const joinRoom = async (req, res) => {
         }
         const ttt = await calcUsdToEther(amount)
         console.log('in Ether: ', ttt);
-         if (user.balance < await calcUsdToEther(amount)) {
-             res.json('can not join this room');
-         }
-         else {
+        if (user.balance < await calcUsdToEther(amount)) {
+            res.json('can not join this room');
+        }
+        else {
             const url = baseRoomUrl + '#' + amount + name + randomIntFromInterval(min, max);
             let data
             if (PRICE1 == amount) {
@@ -131,11 +131,11 @@ const joinRoom = async (req, res) => {
                     }
                 }
             }
-            res.json(data);
-        // }
+        }
+        res.json(data);
     }
     catch (error) {
-        res.json(error);
+        res.status(400).json(error);
     }
 }
 

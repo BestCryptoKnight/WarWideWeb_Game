@@ -21,26 +21,26 @@ const StartButton = ({ name, amount, socket, room, isFilled }) => {
 
     const handleClick = async () => {
         const isPayFee = await getAvailability(name);
-        // if (!isPayFee) {
-        //     if (balance >= FEE) {
-        //         await payFee(name)
-        //         toast.success('You paid FEE. You could enjoy next 24 hours')
-        //         await getBalance(dispatch);
-        //         if (balance >= amount)
-        //             socket.emit("start", { username: name, room: room });
-        //         else
-        //             toast.error("You have not enough deposit.")
-        //     }
-        //     else {
-        //         toast.error("You have not enough deposit. Click Add Funds Button below Play Guess if you continue to play.")
-        //     }
-        // }
-        // else {
-        //     if (balance >= amount)
+        if (!isPayFee) {
+            if (balance >= FEE) {
+                await payFee(name)
+                toast.success('You paid FEE. You could enjoy next 24 hours')
+                await getBalance(dispatch);
+                if (balance >= amount)
+                    socket.emit("start", { username: name, room: room });
+                else
+                    toast.error("You have not enough deposit.")
+            }
+            else {
+                toast.error("You have not enough deposit. Click Add Funds Button below Play Guess if you continue to play.")
+            }
+        }
+        else {
+            if (balance >= amount)
                 socket.emit("start", { username: name, room: room });
-            // else
-                // toast.error("You have not enough deposit.")
-        // }
+            else
+                toast.error("You have not enough deposit.")
+        }
     }
 
     const handleMouseDown = (e) => {

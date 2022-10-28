@@ -7,14 +7,13 @@ const privateKey = '5a8936e251bd516190919bcd9b7a425ddb85209e27f90ef65635edb3b4a3
 // Display All User Data
 const balance_index = async (req, res) => {
     try {
-        let query = await User.find();
         const page = parseInt(req.query.page) || 1;
         const pageSize = parseInt(req.query.limit) || 4;
         const skip = (page - 1) * pageSize;
         const total = await User.countDocuments();
 
         const pages = Math.ceil(total / pageSize);
-        query = query.skip(skip).limit(pageSize);
+        query = await User.find().skip(skip).limit(pageSize);
 
         if (page > pages) {
             return res.status(404).json({
@@ -22,9 +21,7 @@ const balance_index = async (req, res) => {
                 message: "No page found",
             });
         }
-
         const result = await query;
-
         res.status(200).send(result);
     } catch (error) {
         console.log(error);

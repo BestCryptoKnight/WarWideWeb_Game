@@ -1,7 +1,7 @@
 // api url (where your server is hosted at)
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8080'
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://192.168.116.216:8080'
 const GAME_ADDRESS = '0x02AAC4407e220Ef6B9289521BC85676aC61Dbc77';
-const FEE = 0.03;
+const FEE = 3;
 
 const HEADER = () => (
   {
@@ -10,9 +10,9 @@ const HEADER = () => (
     }
   })
 
-const PRICE1 = -1
-const PRICE2 = 0.02
-const PRICE3 = 0.03
+const PRICE1 = 0.5
+const PRICE2 = 1
+const PRICE3 = 3
 
 export {
   BACKEND_URL,
