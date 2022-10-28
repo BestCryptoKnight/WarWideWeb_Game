@@ -8,7 +8,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import Counter from "./counter";
 import { leaveRoom } from "../../api/RoomApi";
 import Chat from "./chat";
-import { animationFunc } from "../../functions/animations";
+import { profileNameSpilit } from "../../functions/nameSplit";
+
 import Spinner from "./spinner";
 import io from "socket.io-client";
 import { BACKEND_URL } from "../../constants";
@@ -80,7 +81,9 @@ const GameBoard = () => {
   });
 
   const isStart = useSelector((state) => state.gameStart);
-
+  let displayName = profileNameSpilit(username);
+  
+  
   const dispatch = useDispatch();
 
   const handleCHange = (e) => {
@@ -186,7 +189,7 @@ const GameBoard = () => {
               <div className="vs-main">
                 <div className="vs-first">
                   <div className="vs-first-logo" />
-                  <div className="userName">{username}</div>
+                  <div className="userName">{displayName}</div>
                 </div>
                 <div className="vs-bid-label">
                   <div className="vs-bid-value">
