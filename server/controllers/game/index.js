@@ -15,183 +15,186 @@ let player2;
 let player3;
 
 function randomIntFromInterval(min, max) {
-  return Math.floor(Math.random() * (max - min + 1) + min);
+    return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
 async function loadData() {
-  try {
-    const randomNumber = randomIntFromInterval(1, 99);
-    console.log("random: ", randomNumber);
-    const item = await Image.findOne({ ID: randomNumber });
-    const data = {
-      url: item.Url,
-      description: item.Description,
-      price: item.Price,
-    };
-    return data;
-  } catch (error) {
-    console.log(error);
-    const item = await Image.findOne({ ID: 1 });
-    const data = {
-      url: item.Url,
-      description: item.Description,
-      price: item.Price,
-    };
-    return data;
-  }
+    try {
+        const randomNumber = randomIntFromInterval(1, 99);
+        console.log("random: ", randomNumber);
+        const item = await Image.findOne({ ID: randomNumber });
+        const data = {
+            url: item.Url,
+            description: item.Description,
+            price: item.Price,
+        };
+        return data;
+    } catch (error) {
+        console.log(error);
+        const item = await Image.findOne({ ID: 1 });
+        const data = {
+            url: item.Url,
+            description: item.Description,
+            price: item.Price,
+        };
+        return data;
+    }
 }
 
 const joinRoom = async (req, res) => {
-  try {
-    const name = req.auth.name;
-    const amount = req.body.amount;
-    console.log("is joining: ", name);
-    const user = await User.findOne({ name: name });
-    if (!user) {
-      res.json("Invalid User");
-    }
-    const ttt = await calcUsdToEther(amount);
-    console.log("in Ether: ", ttt);
-    if (user.balance < (await calcUsdToEther(amount))) {
-      res.json("can not join this room");
-    } else {
-      const url =
-        baseRoomUrl + "#" + amount + name + randomIntFromInterval(min, max);
-      let data;
-      if (PRICE1 == amount) {
-        if (flag1 == true) {
-          player1 = name;
-          rooms1 = url;
-          flag1 = false;
-          data = {
-            user1: name,
-            user2: "",
-            amount: amount,
-            url: rooms1,
-            isFull: false,
-          };
+    try {
+        const name = req.auth.name;
+        const amount = req.body.amount;
+        console.log("is joining: ", name);
+        const user = await User.findOne({ name: name });
+        if (!user) {
+            res.json("Invalid User");
+        }
+        const ttt = await calcUsdToEther(amount);
+        console.log("in Ether: ", ttt);
+        if (user.balance < (await calcUsdToEther(amount))) {
+            res.json("can not join this room");
         } else {
-          flag1 = true;
-          data = {
-            user1: player1,
-            user2: name,
-            amount: amount,
-            url: rooms1,
-            isFull: true,
-          };
-        }
-
-        const ttt = await calcUsdToEther(amount)
-        if (user.balance < ttt) {
-            res.json('can not join this room');
-        }
-        else {
-            const url = baseRoomUrl + '#' + amount + name + randomIntFromInterval(min, max);
-            console.log('url: ', url)
+            const url =
+                baseRoomUrl + "#" + amount + name + randomIntFromInterval(min, max);
             let data;
             if (PRICE1 == amount) {
-                console.log('price1: ', PRICE1);
-                console.log('amount: ', amount);
-                console.log('flag1: ', flag1)
                 if (flag1 == true) {
                     player1 = name;
                     rooms1 = url;
-                    flag1 = false
+                    flag1 = false;
                     data = {
                         user1: name,
-                        user2: '',
+                        user2: "",
                         amount: amount,
                         url: rooms1,
-                        isFull: false
-                    }
-                    res.json(data);
-                }
-                else {
+                        isFull: false,
+                    };
+                } else {
                     flag1 = true;
                     data = {
                         user1: player1,
                         user2: name,
                         amount: amount,
                         url: rooms1,
-                        isFull: true
-                    }
-                    res.json(data);
+                        isFull: true,
+                    };
                 }
-            }
-            if (PRICE2 == amount) {
-                if (flag2 == true) {
-                    rooms2 = url;
-                    player2 = name;
-                    flag2 = false
-                    data = {
-                        user1: name,
-                        user2: '',
-                        amount: amount,
-                        url: rooms2,
-                        isFull: false
-                    }
-                    res.json(data);
+
+                const ttt = await calcUsdToEther(amount)
+                if (user.balance < ttt) {
+                    res.json('can not join this room');
                 }
                 else {
-                    flag2 = true
-                    data = {
-                        user1: player2,
-                        user2: name,
-                        amount: amount,
-                        url: rooms2,
-                        isFull: true
+                    const url = baseRoomUrl + '#' + amount + name + randomIntFromInterval(min, max);
+                    console.log('url: ', url)
+                    let data;
+                    if (PRICE1 == amount) {
+                        console.log('price1: ', PRICE1);
+                        console.log('amount: ', amount);
+                        console.log('flag1: ', flag1)
+                        if (flag1 == true) {
+                            player1 = name;
+                            rooms1 = url;
+                            flag1 = false
+                            data = {
+                                user1: name,
+                                user2: '',
+                                amount: amount,
+                                url: rooms1,
+                                isFull: false
+                            }
+                            res.json(data);
+                        }
+                        else {
+                            flag1 = true;
+                            data = {
+                                user1: player1,
+                                user2: name,
+                                amount: amount,
+                                url: rooms1,
+                                isFull: true
+                            }
+                            res.json(data);
+                        }
                     }
-                    res.json(data);
-                }
-            }
-            if (PRICE3 == amount) {
-                if (flag3 == true) {
-                    rooms3 = url
-                    player3 = name
-                    flag3 = false
-                    data = {
-                        user1: player3,
-                        user2: '',
-                        amount: amount,
-                        url: rooms3,
-                        isFull: false
+                    if (PRICE2 == amount) {
+                        if (flag2 == true) {
+                            rooms2 = url;
+                            player2 = name;
+                            flag2 = false
+                            data = {
+                                user1: name,
+                                user2: '',
+                                amount: amount,
+                                url: rooms2,
+                                isFull: false
+                            }
+                            res.json(data);
+                        }
+                        else {
+                            flag2 = true
+                            data = {
+                                user1: player2,
+                                user2: name,
+                                amount: amount,
+                                url: rooms2,
+                                isFull: true
+                            }
+                            res.json(data);
+                        }
                     }
-                    res.json(data);
-                }
-                else {
-                    flag3 = true
-                    data = {
-                        user1: player3,
-                        user2: name,
-                        amount: amount,
-                        url: rooms3,
-                        isFull: true
+                    if (PRICE3 == amount) {
+                        if (flag3 == true) {
+                            rooms3 = url
+                            player3 = name
+                            flag3 = false
+                            data = {
+                                user1: player3,
+                                user2: '',
+                                amount: amount,
+                                url: rooms3,
+                                isFull: false
+                            }
+                            res.json(data);
+                        }
+                        else {
+                            flag3 = true
+                            data = {
+                                user1: player3,
+                                user2: name,
+                                amount: amount,
+                                url: rooms3,
+                                isFull: true
+                            }
+                            res.json(data);
+                        }
                     }
-                    res.json(data);
                 }
             }
         }
-  } catch (error) {
-    res.status(400).json(error);
-  }
+    }
+    catch (error) {
+        res.status(400).json(error);
+    }
 };
 
 const leaveRoom = async (req, res) => {
-  const name = req.body.name;
-  const amount = req.body.amount;
-  console.log("leaving room: ", name);
-  if (amount == PRICE1) {
-    if (flag1 == false && player1 == name) flag1 = true;
-  } else if (amount == PRICE2) {
-    if (flag2 == false && player2 == name) flag2 = true;
-  } else {
-    if (flag3 == false && player3 == name) flag3 = true;
-  }
-  res.json("success");
+    const name = req.body.name;
+    const amount = req.body.amount;
+    console.log("leaving room: ", name);
+    if (amount == PRICE1) {
+        if (flag1 == false && player1 == name) flag1 = true;
+    } else if (amount == PRICE2) {
+        if (flag2 == false && player2 == name) flag2 = true;
+    } else {
+        if (flag3 == false && player3 == name) flag3 = true;
+    }
+    res.json("success");
 };
 
 module.exports = {
-  loadData,
-  joinRoom,
-  leaveRoom,
+    loadData,
+    joinRoom,
+    leaveRoom,
 };
