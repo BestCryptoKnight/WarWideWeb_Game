@@ -14,7 +14,7 @@ const BalanceCard = () => {
     return (
         <div className="card-info">
             <div className="card-content">
-                {account ? <div className="current-balance">{balance}$</div> : ''}
+                {account ? <div className="current-balance">${balance}</div> : ''}
                 <div className="white-text">Current Balance</div>
             </div>
             <div className="img-box">

@@ -201,7 +201,7 @@ const GameBoard = () => {
                       onChange={handleCHange}
                     />
                   </div>
-                  <div className="room-price">{amount}$</div>
+                  <div className="room-price">${amount}</div>
                 </div>
                 <div className="vs-second">
                   {isFilled ? (
