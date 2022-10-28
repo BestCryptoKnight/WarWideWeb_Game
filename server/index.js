@@ -36,12 +36,12 @@ let io = http.listen(PORT, () => {
   console.log(`✅ Server is listening on port: ${PORT}`);
 });
 
-const server = require("socket.io")(http, 
+const server = require("socket.io")(http,
   {
-  cors: {
-    origin: "http://localhost:3000",
-  },
-});
+    cors: {
+      origin: "http://localhost:3000",
+    },
+  });
 
 let validArray = [];
 let bidValueArray = [];
