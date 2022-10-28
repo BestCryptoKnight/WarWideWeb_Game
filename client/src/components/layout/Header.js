@@ -103,7 +103,7 @@ export default function Header() {
             {
               isLoggedIn ? <div className='balance-group'>
                 <label>Balance &nbsp; </label>
-                <div className='balance'> {balance}$</div>
+                <div className='balance'> ${balance}</div>
               </div> : null}
 
             <ul className="menu">
