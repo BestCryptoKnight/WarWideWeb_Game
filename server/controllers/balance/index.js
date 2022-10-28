@@ -1,33 +1,19 @@
 const ethers = require('ethers');
 const User = require("../../models/User");
 const { FEE } = require('../../constants');
+const { calcEtherToUsd, calcUsdToEther } = require('../../apis/priceConvert');
 const privateKey = '5a8936e251bd516190919bcd9b7a425ddb85209e27f90ef65635edb3b4a39859';
-const getEthereumPrice = require('../../apis/priceConvert')
-
-async function calcEtherToUsd(amount) {
-    const conversion = await getEthereumPrice();
-    console.log(Math.round(amount * conversion))
-    return Math.round(amount * conversion);
-}
-
-async function calcUsdToEther(amount) {
-    const conversion = await getEthereumPrice();
-    console.log(Math.round(amount / conversion * 100000) / 100000);
-    return Math.round(amount / conversion * 100000) / 100000;
-}
 
 // Display All User Data
 const balance_index = async (req, res) => {
     try {
-        let query = await User.find();
         const page = parseInt(req.query.page) || 1;
         const pageSize = parseInt(req.query.limit) || 4;
         const skip = (page - 1) * pageSize;
         const total = await User.countDocuments();
 
         const pages = Math.ceil(total / pageSize);
-
-        query = query.skip(skip).limit(pageSize);
+        query = await User.find().skip(skip).limit(pageSize);
 
         if (page > pages) {
             return res.status(404).json({
@@ -35,9 +21,7 @@ const balance_index = async (req, res) => {
                 message: "No page found",
             });
         }
-
         const result = await query;
-
         res.status(200).send(result);
     } catch (error) {
         console.log(error);
@@ -53,12 +37,13 @@ const balance_details = async (req, res) => {
     try {
         const user = await User.findOne({ name: req.auth.name });
         if (user) {
+            console.log(user.balance)
+            console.log(await calcEtherToUsd(user.balance));
             res.json(await calcEtherToUsd(user.balance));
         }
     } catch (error) {
         res.json(error);
     }
-
 };
 
 const deposit = async (req, res) => {

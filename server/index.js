@@ -36,7 +36,8 @@ let io = http.listen(PORT, () => {
   console.log(`✅ Server is listening on port: ${PORT}`);
 });
 
-const server = require("socket.io")(http, {
+const server = require("socket.io")(http, 
+  {
   cors: {
     origin: "http://localhost:3000",
   },
@@ -99,6 +100,18 @@ server.on("connection", (socket) => {
       console.log(error);
     }
   });
+  socket.on("writing", () => {
+    try {
+      const p_user = get_Current_User(socket.id);
+
+      let allUsers;
+      if (p_user) allUsers = broadcastToRoomUsers(p_user.room);
+
+      socket.to(allUsers[0].room).emit("writing");
+    } catch (error) {
+      console.log(error);
+    }
+  })
   socket.on("start", async ({ username, room }) => {
     // const p_user = join_User(socket.id, username, room);
     try {
@@ -124,18 +137,7 @@ server.on("connection", (socket) => {
       console.log(error);
     }
   });
-  socket.on("writing", () => {
-    try {
-      const p_user = get_Current_User(socket.id);
-      
-      let allUsers;
-      if (p_user) allUsers = broadcastToRoomUsers(p_user.room);
 
-      socket.to(allUsers[0].room).emit("writing");
-    } catch (error) {
-      console.log(error);
-    }
-  })
   socket.on("setwinner", async ({ username, bidValue, price, amount }) => {
     try {
       const realprice = price;

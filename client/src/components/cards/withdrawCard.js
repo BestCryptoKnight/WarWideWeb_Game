@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import '../../styles/card.css';
 import { withdraw } from '../../api/UserApi';
-import { getBalance } from '../../api/balanceApi';
+import { getBalance, getExchangeRate } from '../../api/balanceApi';
 import { toast } from 'react-hot-toast';
 
 const WithdrawCard = () => {
@@ -20,11 +20,12 @@ const WithdrawCard = () => {
         if (amount > balance || amount === 0)
             toast.error('Insufficient Amount');
         else {
+            const rate = await getExchangeRate();
             const btn = document.querySelector(".withdraw-submit-button")
             btn.classList.add("button--loading");
             btn.classList.add("disabled");
             console.log('----------')
-            await toast.promise(withdraw(amount), {
+            await toast.promise(withdraw(amount/rate), {
                 loading: 'waiting...',
                 success: <b>Withdraw Ended</b>,
                 error: <b>Withdraw Failed</b>,
@@ -39,7 +40,7 @@ const WithdrawCard = () => {
         <div className="card-info">
             <div className="deposit-card-content">
                 <div className="input-form">
-                    <input placeholder='Amount in ETH' className='card-input-field' onChange={handleChange} required />
+                    <input placeholder='Amount in USD' className='card-input-field' onChange={handleChange} required />
                     <button className="withdraw-submit-button" onClick={handleClick}>
                         <div className='button-text'>Withdraw</div>
                     </button>

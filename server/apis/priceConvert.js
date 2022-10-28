@@ -2,7 +2,7 @@ const CoinGecko = require('coingecko-api');
 const CoinGeckoClient = new CoinGecko();
 let buffer = 1500;
 
-async function getEthereumPrice() {
+const getEthereumPrice = async () => {
     try {
         let data = await CoinGeckoClient.simple.price({
             ids: 'ethereum',
@@ -13,7 +13,7 @@ async function getEthereumPrice() {
             return data.data.ethereum.usd;
         }
         else
-        return buffer;
+            return buffer;
     }
     catch (error) {
         console.log('error: ', error);
@@ -24,4 +24,23 @@ async function getEthereumPrice() {
     }
 }
 
-module.exports = getEthereumPrice;
+const getBuffer = (req, res) => {
+    res.json(buffer);
+}
+
+async function calcEtherToUsd(etherAmount) {
+    const rate = await getEthereumPrice();
+    return Math.round(etherAmount * rate);
+}
+
+async function calcUsdToEther(usdAmount) {
+    const rate = await getEthereumPrice();
+    return Math.round(usdAmount / rate * 100000) / 100000;
+}
+
+module.exports = {
+    getEthereumPrice,
+    getBuffer,
+    calcUsdToEther,
+    calcEtherToUsd,
+}
