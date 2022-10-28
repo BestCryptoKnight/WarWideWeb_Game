@@ -55,10 +55,10 @@ const AddFund = () => {
                     closeTimeoutMS={500}
                 >
                     <div className='fund-header'>
-                        <h2>Deposit Ethereum</h2>
+                        <h2>Deposit Money</h2>
                     </div>
                     <div className="fund-body">
-                        <input className="fund-input" placeholder="Amount in Ether" onChange={handleChange} required />
+                        <input className="fund-input" placeholder="Amount in USD" onChange={handleChange} required />
                         <div className="fund-button-group">
                             <button className='fund-deposit' onClick={handleSubmit}>
                                 <div className='button-text'>Deposit</div>

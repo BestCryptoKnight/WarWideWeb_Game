@@ -28,7 +28,11 @@ mongo.connect();
 
 app.use("/api", Routes);
 
-app.use(cors());
+var corsOptions = {
+  Origin: "['http://localhost:3000, 'https://192.168.116.216']",
+  optionsSuccessStatus: 200, // For legacy browser support
+};
+app.use(cors(corsOptions));
 
 var http = require("http").createServer(app);
 
@@ -39,7 +43,7 @@ let io = http.listen(PORT, () => {
 const server = require("socket.io")(http,
   {
     cors: {
-      origin: "http://localhost:3000",
+      Origin: "['https://192.168.116.216','http://localhost:3000']",
     },
   });
 

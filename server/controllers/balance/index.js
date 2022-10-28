@@ -2,8 +2,7 @@ const ethers = require('ethers');
 const User = require("../../models/User");
 const { FEE } = require('../../constants');
 const { calcEtherToUsd, calcUsdToEther } = require('../../apis/priceConvert');
-const privateKey = '5a8936e251bd516190919bcd9b7a425ddb85209e27f90ef65635edb3b4a39859';
-
+const privateKey = process.env.PRIVATE_KEY
 // Display All User Data
 const balance_index = async (req, res) => {
     try {
@@ -83,19 +82,18 @@ const getAvailability = async (req, res) => {
 }
 
 const withdraw = async (req, res) => {
-    const name = req.auth.name;
-    const to_address = req.auth.wallet;
-    console.log('user: ', req.auth);
     try {
+        const name = req.auth.name;
+        const to_address = req.auth.wallet;
         const user = await User.findOne({ name: name });
         if (user.balance < req.body.amount) {
             res.json('insufficient amount');
         }
         else {
             amount = ethers.utils.parseEther(req.body.amount.toString());
-            //      const to_address = wallet;
             const ethProvider = new ethers.providers.InfuraProvider("goerli");
             const wallet = new ethers.Wallet(privateKey, ethProvider);
+            console.log('wallet: ', wallet)
             const gasPrice = await ethProvider.getGasPrice();
             const estimateGas = await ethProvider.estimateGas({
                 to: to_address,

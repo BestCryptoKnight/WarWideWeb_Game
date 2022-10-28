@@ -2,6 +2,7 @@ import axios from "../utils/axios";
 import { ethers } from 'ethers';
 import { HEADER, GAME_ADDRESS } from '../constants';
 import toast from "react-hot-toast";
+import { getExchangeRate } from "./balanceApi";
 
 const getBalance = async (name) => {
     const result = await axios.get(`/api/balance/${name}`, HEADER());
@@ -16,7 +17,9 @@ const getMetamaskBalance = async (_address) => {
     return balanceInEther;
 }
 
-const deposit = async (amount) => {
+const deposit = async (amount_) => {
+    const rate = await getExchangeRate();
+    const amount = amount_ / rate;
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
     const gasPrice = await provider.getGasPrice();
