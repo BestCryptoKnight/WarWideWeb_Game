@@ -3315,14 +3315,14 @@ div[class*="col"]:last-child .how-item::before {
 
 .faq-item__content {
   /* display: none; */
-  height: auto;
-  font-size: 20px;
+  height: 150px;
   transition: all 0.3s ease-out;
 }
 
 .faq-item__content-display {
   /* display: none; */
   height: 0px;
+  opacity: 0;
   transition: all 0.3s ease-out;
 }
 

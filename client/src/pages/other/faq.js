@@ -10,12 +10,12 @@ const Faq = () => {
           <div className="faq-wrapper row">
             <div className="col-lg-6">
               {faq1.map((item, index) => {
-                return <FaqItem title={item.Q} content={item.A} />;
+                return <FaqItem title={item.Q} content={item.A} id={index} key={index} />;
               })}
             </div>
             <div className="col-lg-6">
               {faq2.map((item, index) => {
-                return <FaqItem title={item.Q} content={item.A} />;
+                return <FaqItem title={item.Q} content={item.A} id={`${index+6}`} key={index}/>;
               })}
             </div>
           </div>
