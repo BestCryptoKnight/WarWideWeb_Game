@@ -2,9 +2,9 @@ const ORIGIN = '*'
 const BASECLIENTURL = "http://localhost"
 const PORT = process.env.PORT || 8080
 const ETHERPRICE = 1500;
-const PRICE1 = 1
-const PRICE2 = 2
-const PRICE3 = 3
+const PRICE1 = 0.50
+const PRICE2 = 1.00
+const PRICE3 = 3.00
 const FEE = 3
 
 // for "atlas" edit MONGO_URI in -> .env file || for "community server" edit <MyDatabase>

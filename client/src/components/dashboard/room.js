@@ -16,26 +16,26 @@ const Room = (props) => {
 
   const handleClick = async () => {
     const isPayFee = await getAvailability(account.name);
-    // if (!isPayFee) {
-    //   if (balance >= FEE) {
-    //     await payFee(account.name)
-    //     toast.success('You paid FEE. You could enjoy next 24 hours')
-    //     await getBalance(dispatch);
-    //     if (balance >= props.value)
-    //       enterRoom()
-    //     else
-    //       toast.error("You have not enough deposit.")
-    //   }
-    //   else {
-    //     toast.error("You have not enough deposit.")
-    //   }
-    // }
-    // else {
-    //   if (balance >= props.value)
-    //     enterRoom();
-    //   else
-    //     toast.error("You have not enough deposit.")
-    // }
+    if (!isPayFee) {
+      if (balance >= FEE) {
+        await payFee(account.name)
+        toast.success('You paid FEE. You could enjoy next 24 hours')
+        await getBalance(dispatch);
+        if (balance >= props.value)
+          enterRoom()
+        else
+          toast.error("You have not enough deposit.")
+      }
+      else {
+        toast.error("You have not enough deposit.")
+      }
+    }
+    else {
+      if (balance >= props.value)
+        enterRoom();
+      else
+        toast.error("You have not enough deposit.")
+    }
     enterRoom();
   };
 

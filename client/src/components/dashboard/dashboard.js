@@ -3,7 +3,7 @@ import Room from './room';
 import BalanceCard from '../cards/balanceCard';
 import DepositCard from '../cards/depositCard';
 import WithdrawCard from '../cards/withdrawCard';
-
+import { PRICE1, PRICE2, PRICE3 } from '../../constants';
 const Dashboard = () => {
     return (
         <div>
@@ -13,9 +13,9 @@ const Dashboard = () => {
                 <WithdrawCard />
             </div>
             <div className='rooms-group-container'>
-                <Room value="1" />
-                <Room value="2" />
-                <Room value="3" />
+                <Room value={PRICE1} />
+                <Room value={PRICE2} />
+                <Room value={PRICE3} />
             </div>
         </div>)
 }
