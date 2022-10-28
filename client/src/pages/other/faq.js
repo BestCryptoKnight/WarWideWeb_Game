@@ -1,4 +1,5 @@
 import React from 'react';
+import FaqItem from '../../components/faqItem';
 import '../../styles/faq.css'
 
 const Faq = () => {
@@ -9,6 +10,7 @@ const Faq = () => {
                 <div className="container">
                     <div className="faq-wrapper row justify-content-between">
                         <div className="col-lg-6">
+                            <FaqItem title='tttttttttttt' content='ggggggggggggggg' id='1' />
                             <div className="faq-item">
                                 <div className="faq-item__title">
                                     <h5 className="title">01. How do I create Casine Account ?</h5>
