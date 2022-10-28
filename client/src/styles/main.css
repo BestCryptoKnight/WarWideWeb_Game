@@ -3306,9 +3306,20 @@ div[class*='col']:last-child .how-item::before {
 }
 
 .faq-item__content {
-    display: none;
-    padding-bottom: 10px;
+    /* display: none; */
+    transition: all 0.5s ease-out;
 }
+
+
+
+.faq-item__content-display {
+    /* display: none; */
+    opacity: 1;
+    padding-bottom: 10px;
+    height: auto;
+    transition: all 0.5s ease-out;
+}
+
 
 div[class*='col']:nth-child(even)>.faq-item {
     padding-left: 25px;
