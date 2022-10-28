@@ -27,7 +27,7 @@ const Security = () => {
                         success: <b>Successfully Changed!</b>,
                         error: <b>Could not perform.</b>,
                     })
-                navigate('/game');
+                navigate('/dashboard');
             }
         } catch (error) {
             toast.error(error);

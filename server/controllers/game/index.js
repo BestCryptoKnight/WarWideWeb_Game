@@ -80,55 +80,97 @@ const joinRoom = async (req, res) => {
             isFull: true,
           };
         }
-      }
-      if (PRICE2 == amount) {
-        if (flag2 == true) {
-          rooms2 = url;
-          player2 = name;
-          flag2 = false;
-          data = {
-            user1: name,
-            user2: "",
-            amount: amount,
-            url: rooms2,
-            isFull: false,
-          };
-        } else {
-          flag2 = true;
-          data = {
-            user1: player2,
-            user2: name,
-            amount: amount,
-            url: rooms2,
-            isFull: true,
-          };
+
+        const ttt = await calcUsdToEther(amount)
+        if (user.balance < ttt) {
+            res.json('can not join this room');
         }
-      }
-      if (PRICE3 == amount) {
-        if (flag3 == true) {
-          rooms3 = url;
-          player3 = name;
-          flag3 = false;
-          data = {
-            user1: player3,
-            user2: "",
-            amount: amount,
-            url: rooms3,
-            isFull: false,
-          };
-        } else {
-          flag3 = true;
-          data = {
-            user1: player3,
-            user2: name,
-            amount: amount,
-            url: rooms3,
-            isFull: true,
-          };
+        else {
+            const url = baseRoomUrl + '#' + amount + name + randomIntFromInterval(min, max);
+            console.log('url: ', url)
+            let data;
+            if (PRICE1 == amount) {
+                console.log('price1: ', PRICE1);
+                console.log('amount: ', amount);
+                console.log('flag1: ', flag1)
+                if (flag1 == true) {
+                    player1 = name;
+                    rooms1 = url;
+                    flag1 = false
+                    data = {
+                        user1: name,
+                        user2: '',
+                        amount: amount,
+                        url: rooms1,
+                        isFull: false
+                    }
+                    res.json(data);
+                }
+                else {
+                    flag1 = true;
+                    data = {
+                        user1: player1,
+                        user2: name,
+                        amount: amount,
+                        url: rooms1,
+                        isFull: true
+                    }
+                    res.json(data);
+                }
+            }
+            if (PRICE2 == amount) {
+                if (flag2 == true) {
+                    rooms2 = url;
+                    player2 = name;
+                    flag2 = false
+                    data = {
+                        user1: name,
+                        user2: '',
+                        amount: amount,
+                        url: rooms2,
+                        isFull: false
+                    }
+                    res.json(data);
+                }
+                else {
+                    flag2 = true
+                    data = {
+                        user1: player2,
+                        user2: name,
+                        amount: amount,
+                        url: rooms2,
+                        isFull: true
+                    }
+                    res.json(data);
+                }
+            }
+            if (PRICE3 == amount) {
+                if (flag3 == true) {
+                    rooms3 = url
+                    player3 = name
+                    flag3 = false
+                    data = {
+                        user1: player3,
+                        user2: '',
+                        amount: amount,
+                        url: rooms3,
+                        isFull: false
+                    }
+                    res.json(data);
+                }
+                else {
+                    flag3 = true
+                    data = {
+                        user1: player3,
+                        user2: name,
+                        amount: amount,
+                        url: rooms3,
+                        isFull: true
+                    }
+                    res.json(data);
+                }
+            }
         }
-      }
-    }
-    res.json(data);
   } catch (error) {
     res.status(400).json(error);
   }

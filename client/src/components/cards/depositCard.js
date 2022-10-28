@@ -3,7 +3,7 @@ import '../../styles/card.css';
 import toast from 'react-hot-toast';
 import { deposit } from '../../api/UserApi';
 import { useDispatch } from 'react-redux';
-import { getBalance, getExchangeRate } from '../../api/balanceApi';
+import { getBalance } from '../../api/balanceApi';
 
 const DepositCard = () => {
   const dispatch = useDispatch();
@@ -16,12 +16,10 @@ const DepositCard = () => {
 
   const handleSubmit = async () => {
     if (amount > 0) {
-      const rate = await getExchangeRate();
-      console.log('rate: ', rate)
       const btn = document.querySelector(".deposit-submit-button")
       btn.classList.add("button--loading");
       btn.classList.add('disabled')
-      await toast.promise(deposit(amount / rate), {
+      await toast.promise(deposit(amount), {
         loading: 'waiting...',
         success: <b>Deposit Ended</b>,
         error: <b>Deposit Failed</b>,

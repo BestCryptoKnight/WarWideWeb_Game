@@ -25,11 +25,17 @@ const changeAccount = async (req, res) => {
     try {
         const { name, wallet } = req.auth;
         console.log('newName: ', req.body.newName);
-        const user = await User.findOne({ name: name });
-        user.name = req.body.newName;
-        await user.save();
-        console.log('success')
-        res.json('success');
+        const checkName = await User.findOne({ name: req.body.newName })
+        if (checkName)
+            res.status(400).json('The name is already chosen. Please choose another name.');
+        else {
+            const user = await User.findOne({ name: name });
+            user.name = req.body.newName;
+            await user.save();
+            console.log('success')
+            res.json('success');
+        }
+
     }
     catch (error) {
         console.log(error);

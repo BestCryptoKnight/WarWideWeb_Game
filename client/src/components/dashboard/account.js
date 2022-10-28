@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import '../../styles/account.css';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
-import { changeAccount } from '../../api/AccountApi';
+import { useAuth } from '../../contexts/AuthContext';
 
 const Account = () => {
     const [formData, setFormData] = useState({});
     const navigate = useNavigate();
+    const { changeAccount } = useAuth();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -18,13 +19,13 @@ const Account = () => {
             if (!formData.newName || !formData.password)
                 toast.error('fill the all blanks!')
             else {
-                await toast.promise(changeAccount(formData),
-                    {
-                        loading: 'Saving...',
-                        success: <b>Successfully Changed!</b>,
-                        error: <b>Could not perform.</b>,
-                    })
-                navigate('/game');
+                const response = await changeAccount(formData);
+                if (response === 'success') {
+                    navigate('/dashboard');
+                    toast.success('Successfully changed.');
+                }
+                else
+                    toast.error('Name is Duplicated. Choose another name.')
             }
         } catch (error) {
             toast.error(error);

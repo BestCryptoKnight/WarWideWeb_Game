@@ -14,12 +14,13 @@ const Room = (props) => {
   const balance = useSelector(state => state.getBalance);
   const { account } = useAuth();
 
-  const handleClick = async () => {
+  const handleClick = async (e) => {
+    e.preventDefault();
     const isPayFee = await getAvailability(account.name);
     if (!isPayFee) {
       if (balance >= FEE) {
         await payFee(account.name)
-        toast.success('You paid FEE. You could enjoy next 24 hours')
+          toast.success('You paid FEE. You could enjoy next 24 hours')
         await getBalance(dispatch);
         if (balance >= props.value)
           enterRoom()
@@ -36,7 +37,6 @@ const Room = (props) => {
       else
         toast.error("You have not enough deposit.")
     }
-    enterRoom();
   };
 
   const enterRoom = async () => {
