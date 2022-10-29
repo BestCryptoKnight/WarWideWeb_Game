@@ -2,6 +2,8 @@
 import React, { useState } from "react";
 import "../../styles/contact.css";
 import { sendEmail } from "../../api/EmailApi";
+import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 const Contact = () => {
     const [firstName, setFirstName] = useState("");
@@ -9,9 +11,12 @@ const Contact = () => {
     const [email, setEmail] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
     const [text, setText] = useState("");
+    const navigate = useNavigate();
 
     const handleClick = () => {
         sendEmail(firstName + lastName, email, phoneNumber, text);
+        toast.success('Successfully sent');
+        navigate('/dashboard');
     };
     const firstNamehandleChange = (e) => {
         console.log(e.target.value)
