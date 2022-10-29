@@ -22,8 +22,6 @@ const cors = require("cors");
 // });
 
 const { PORT } = require("./constants");
-const { BASECLIENTURL } = require("./constants");
-const { valid } = require("joi");
 mongo.connect();
 
 app.use("/api", Routes);
