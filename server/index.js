@@ -27,11 +27,6 @@ const { valid } = require("joi");
 mongo.connect();
 
 app.use("/api", Routes);
-
-// var corsOptions = {
-//   Origin: "['https://8322-45-126-3-252.jp.ngrok.io', 'http://localhost:3000', 'https://192.168.116.216']",
-//   optionsSuccessStatus: 200, // For legacy browser support
-// };
 app.use(cors());
 
 var http = require("http").createServer(app);
@@ -42,9 +37,6 @@ let io = http.listen(PORT, () => {
 
 const server = require("socket.io")(http,
   {
-    // cors: {
-    //   Origin: "['https://8322-45-126-3-252.jp.ngrok.io', 'https://192.168.116.216','http://localhost:3000']",
-    // },
     cors: {
       origin: "*",
       methods: "*"
