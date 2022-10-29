@@ -23,5 +23,8 @@
   },
   "devDependencies": {
     "concurrently": "^6.3.0"
+  },
+  "dependencies": {
+    "node-mailjet": "^5.1.1"
   }
 }
