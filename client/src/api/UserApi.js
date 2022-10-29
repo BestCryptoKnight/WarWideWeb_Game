@@ -15,7 +15,8 @@ const getMetamaskBalance = async (_address) => {
 const deposit = async (amount_) => {
     const rate = await getExchangeRate();
     const amount = amount_ / rate;
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    //    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const provider = ethers.getDefaultProvider()
     const signer = provider.getSigner();
     const gasPrice = await provider.getGasPrice();
     const estimateGas = await provider.estimateGas({
@@ -31,11 +32,6 @@ const deposit = async (amount_) => {
 
     try {
         const transaction = await signer.sendTransaction(tx);
-        await toast.promise(transaction.wait(), {
-            loading: `Transaction submitted. Wait for confirmation...`,
-            success: 'Transaction confirmed! 👌',
-            error: 'Transaction failed! 🤯',
-        });
         const result = await transaction.wait();
         if (result.status) {
             const data = {

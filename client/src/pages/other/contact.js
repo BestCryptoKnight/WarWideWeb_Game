@@ -12,10 +12,10 @@ const Contact = () => {
                                 <h3 className="title mb-3 mb-lg-4">Contact Information</h3>
                                 <ul className="contact-info-list m-0">
                                     <li><a href="mailto:warwideweb@gmail.com"></a> <i className="fas fa-map-marker-alt"></i> <span>12/A Kingfisher Road <br /> Medino Washington, NY 10012, USA</span></li>
-                                    <li><a href="tel:238754"> <i className="fa fa-phone"></i> <span>+47 8519-9415 1515</span></a></li>
+                                    <li><a href="tel:238754"> <i className="fa fa-phone"></i> <span>+47 8519 9415</span></a></li>
                                     <li><a href="tel:238754"> <i className="fa fa-phone"></i> <span>+1 949 390 9747</span></a></li>
-                                    <li><a href="mailto:demo@gmail.com"> <i className="fa fa-envelope"></i> <span>warwideweb@gmail.com</span></a></li>
-                                    <li><a href="mailto:demo@gmail.com"> <i className="fa fa-envelope"></i> <span>happyhades123@gmail.com</span></a></li>
+                                    <li><a href="mailto:warwideweb@gmail.com"> <i className="fa fa-envelope"></i> <span>warwideweb@gmail.com</span></a></li>
+                                    <li><a href="mailto:happyhades123@gmail.com"> <i className="fa fa-envelope"></i> <span>happyhades123@gmail.com</span></a></li>
                                 </ul>
                                 <ul className="social-links mt-4">
                                     <li><a href="#0"><i className="fa fa-phone"></i></a></li>
@@ -56,7 +56,7 @@ const Contact = () => {
                                     <div className="col-md-12">
                                         <div className="form-group">
                                             <label className="form-label">Your Message <span className="text--danger">*</span></label>
-                                            <textarea id="msg" className="form-control form--control"></textarea>
+                                            <textarea id="msg" className="form-control form--control msg"></textarea>
                                         </div>
                                     </div>
                                     <div className="col">
