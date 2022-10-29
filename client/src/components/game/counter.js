@@ -24,7 +24,7 @@ const Counter = (props) => {
     const tmp = async () => {
       //countdown = --countdown <= 0 ? 10 : countdown;
       await timer;
-      if (countdown > 1) setCount(countdown - 1);
+      if (countdown >= 1) setCount(countdown - 1);
       else {
         setCount(10);
         socket.emit("setwinner", { username: username, bidValue: bidValue, price: price, amount: amount })

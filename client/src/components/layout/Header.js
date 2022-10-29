@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from 'react-redux';
 import "../../styles/header.css";
 import { useNavigate } from "react-router-dom";
@@ -103,7 +103,7 @@ export default function Header() {
             {
               isLoggedIn ? <div className='balance-group'>
                 <label>Balance &nbsp; </label>
-                <div className='balance'> {balance}$</div>
+                <div className='balance'> ${balance}</div>
               </div> : null}
 
             <ul className="menu">

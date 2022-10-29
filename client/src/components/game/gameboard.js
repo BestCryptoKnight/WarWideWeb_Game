@@ -20,6 +20,7 @@ import GameEnd from "./modals/gameEndDialog";
 import StartButton from "./buttons/start";
 import { getBalance } from "../../api/balanceApi";
 import AddFund from "./buttons/addFund";
+import { useAuth } from "../../contexts/AuthContext";
 
 const useStyles = makeStyles({
   root: {
@@ -61,6 +62,14 @@ const GameBoard = () => {
   });
 
   const navigate = useNavigate();
+  const { isLoggedIn } = useAuth();
+
+  useEffect(() => {
+    console.log('isLoggedIn: ', isLoggedIn);
+    if (!isLoggedIn)
+      navigate('/signin')
+  }, [isLoggedIn])
+
   const classes = useStyles();
   const location = useLocation();
   const roomname = location.state.url;
@@ -82,8 +91,8 @@ const GameBoard = () => {
 
   const isStart = useSelector((state) => state.gameStart);
   let displayName = profileNameSpilit(username);
-  
-  
+  let otherName = profileNameSpilit(otheruser);
+
   const dispatch = useDispatch();
 
   const handleCHange = (e) => {
@@ -120,7 +129,7 @@ const GameBoard = () => {
         console.log("No Data.");
       }
     });
-    socket.on("winner", async(data) => {
+    socket.on("winner", async (data) => {
       await getBalance(dispatch);
       dispatch({ type: SET_WINNER, payload: true });
       setWinner(data);
@@ -201,13 +210,13 @@ const GameBoard = () => {
                       onChange={handleCHange}
                     />
                   </div>
-                  <div className="room-price">{amount}$</div>
+                  <div className="room-price">${amount}</div>
                 </div>
                 <div className="vs-second">
                   {isFilled ? (
                     <>
                       <div className="vs-second-logo" />
-                      <div className="userName">{otheruser}</div>
+                      <div className="userName">{otherName}</div>
                     </>
                   ) : (
                     <>

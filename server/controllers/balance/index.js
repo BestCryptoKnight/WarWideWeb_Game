@@ -3,6 +3,7 @@ const User = require("../../models/User");
 const { FEE } = require('../../constants');
 const { calcEtherToUsd, calcUsdToEther } = require('../../apis/priceConvert');
 const privateKey = process.env.PRIVATE_KEY
+const adminName = process.env.ADMIN_NAME
 // Display All User Data
 const balance_index = async (req, res) => {
     try {
@@ -33,7 +34,9 @@ const balance_index = async (req, res) => {
 
 // Show a particular Balance Detail by name
 const balance_details = async (req, res) => {
+    console.log('here')
     try {
+        console.log('here')
         const user = await User.findOne({ name: req.auth.name });
         if (user) {
             console.log(user.balance)
@@ -142,12 +145,19 @@ const payGameFee = async (req, res) => {
     try {
         const name = req.body.name
         const user = await User.findOne({ name: name });
-        console.log('balance: ', user.balance);
-        if (user.balance <= await calcUsdToEther(FEE))
+        
+        const feeInEther = await calcUsdToEther(FEE)
+        if (user.balance <= feeInEther)
             res.json("Not enough Balance")
-        user.balance = user.balance - await calcUsdToEther(FEE);
+        user.balance = user.balance - feeInEther;
         user.pay_date = new Date()
+        user.count +=1;
         await user.save();
+
+        admin = await User.findOne({name: adminName});
+        admin.balance += feeInEther;
+        await admin.save();
+
         await saveHistory({ name: name, description: 'pay FEE', category: 'Fee', amount: await calcUsdToEther(FEE) })
         res.json('success');
     }

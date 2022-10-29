@@ -26,6 +26,11 @@ const UserSchema = new mongoose.Schema(
             type: Date,
             required: false,
         },
+        count: {
+            type: Number,
+            required: false,
+            default: 0,
+        },
         history: [{
             timestamp: {
                 type: Date,
