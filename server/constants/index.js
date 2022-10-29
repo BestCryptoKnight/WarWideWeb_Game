@@ -6,7 +6,6 @@ const PRICE1 = 0.50
 const PRICE2 = 1.00
 const PRICE3 = 3.00
 const FEE = 3
-
 // for "atlas" edit MONGO_URI in -> .env file || for "community server" edit <MyDatabase>
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/MyDatabase'
 const MONGO_OPTIONS = {}

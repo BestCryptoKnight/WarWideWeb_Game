@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../styles/profile.css'
 import { useAuth } from '../../contexts/AuthContext';
-
+import { profileNameSpilit } from '../../functions/nameSplit';
 const Profile = (props) => {
     const { account, logout } = useAuth();
     const navigate = useNavigate();
@@ -24,7 +24,7 @@ const Profile = (props) => {
     }
     let string = '';
     if (account)
-        string = account.name
+        string = profileNameSpilit(account.name)
     else
         string = 'No Name'
     return (
