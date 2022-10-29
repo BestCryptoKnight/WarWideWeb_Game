@@ -13,24 +13,22 @@ const getMetamaskBalance = async (_address) => {
 }
 
 const deposit = async (amount_) => {
-    const rate = await getExchangeRate();
-    const amount = amount_ / rate;
-    //    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const provider = ethers.getDefaultProvider()
-    const signer = provider.getSigner();
-    const gasPrice = await provider.getGasPrice();
-    const estimateGas = await provider.estimateGas({
-        to: GAME_ADDRESS,
-        value: ethers.utils.parseEther(amount.toString()),
-    });
-    const tx = {
-        gasLimit: estimateGas,
-        gasPrice: gasPrice,
-        to: GAME_ADDRESS,
-        value: ethers.utils.parseEther(amount.toString()),
-    };
-
     try {
+        const rate = await getExchangeRate();
+        const amount = amount_ / rate;
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const signer = provider.getSigner();
+        const gasPrice = await provider.getGasPrice();
+        const estimateGas = await provider.estimateGas({
+            to: GAME_ADDRESS,
+            value: ethers.utils.parseEther(amount.toString()),
+        });
+        const tx = {
+            gasLimit: estimateGas,
+            gasPrice: gasPrice,
+            to: GAME_ADDRESS,
+            value: ethers.utils.parseEther(amount.toString()),
+        };
         const transaction = await signer.sendTransaction(tx);
         const result = await transaction.wait();
         if (result.status) {
