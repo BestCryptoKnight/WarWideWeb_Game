@@ -52,7 +52,6 @@ const register = async (request, response) => {
 }
 
 const login = async (request, response) => {
-    console.log('body: ', request.body);
     const { name, password, wallet } = request.body
     if (name == undefined || password == undefined || wallet == undefined) {
         response.status(400).json({

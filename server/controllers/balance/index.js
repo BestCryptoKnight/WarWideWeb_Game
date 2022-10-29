@@ -34,7 +34,9 @@ const balance_index = async (req, res) => {
 
 // Show a particular Balance Detail by name
 const balance_details = async (req, res) => {
+    console.log('here')
     try {
+        console.log('here')
         const user = await User.findOne({ name: req.auth.name });
         if (user) {
             console.log(user.balance)

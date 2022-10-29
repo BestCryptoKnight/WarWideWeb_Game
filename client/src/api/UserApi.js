@@ -4,11 +4,6 @@ import { HEADER, GAME_ADDRESS } from '../constants';
 import toast from "react-hot-toast";
 import { getExchangeRate } from "./balanceApi";
 
-const getBalance = async (name) => {
-    const result = await axios.get(`/api/balance/${name}`, HEADER());
-    return result.data.balance;
-}
-
 const getMetamaskBalance = async (_address) => {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     //   const accounts = await provider.send("eth_requestAccounts", []);
@@ -64,4 +59,4 @@ const withdraw = async (amount) => {
     }
 }
 
-export { getMetamaskBalance, deposit, withdraw, getBalance }
+export { getMetamaskBalance, deposit, withdraw }
