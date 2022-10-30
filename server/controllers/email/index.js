@@ -10,16 +10,17 @@ const mailjet = require("node-mailjet").apiConnect(
   EMAIL_SECRET_KEY
 );
 const sendEmail = async (req, res) => {
-  const content = req.body.content;
-  const Subject = req.body.Subject;
-  const SenderName = req.body.SenderName;
-  const SenderEmail = req.body.sendEmail;
-  const TargetEmail = req.body.TargetEmail;
+  const content = req.body.message;
+  const Subject = req.body.subject;
+  const SenderName = req.body.name;
+  const SenderEmail = req.body.email;
+  const TargetEmail = req.body.targetEmail;
   
   try {
+
     const send = mailjet.post("send", { version: "v3.1" });
     const Recipients = TargetEmail;
-    send.request({
+    const result = await send.request({
       FromEmail: SenderEmail,
       FromName: SenderName,
       Subject: Subject,
@@ -27,7 +28,7 @@ const sendEmail = async (req, res) => {
       Recipients,
       
     });
-    // res.json("succes");
+    res.status(200);
 
   } catch (error) {
     res.status(500).json({

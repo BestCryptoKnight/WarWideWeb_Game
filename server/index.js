@@ -16,11 +16,6 @@ const { loadData } = require("./controllers/game/index");
 const Routes = require("./routes/index");
 const cors = require("cors");
 
-// app.use((req, res, next) => {
-//   res.setHeader("Access-Control-Allow-Origin", "*");
-//   next();
-// });
-
 const { PORT } = require("./constants");
 mongo.connect();
 
