@@ -15,7 +15,6 @@ const sendEmail = async (
       message: text
     //   TargetEmail: TargetEmail,
     });
-    return data.data;
   } catch (error) {
     return 1000;
   }

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "../../styles/contact.css";
 import { sendEmail } from "../../api/EmailApi";
+import toast from "react-hot-toast";
 
 const Contact = () => {
   const [firstName, setFirstName] = useState("");
@@ -9,11 +10,28 @@ const Contact = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [text, setText] = useState("");
 
-  const handleClick = () => {
-    sendEmail(firstName+lastName, email, phoneNumber, text);
+  const handleClickSendMSG = () => {
+    console.log(
+      firstName == "" &&
+        lastName == "" &&
+        email == "" &&
+        phoneNumber == "" &&
+        text == ""
+    );
+    // if (
+    //   firstName == "" ||
+    //   lastName == "" ||
+    //   email == "" ||
+    //   phoneNumber == "" ||
+    //   text == ""
+    // ) {
+    //   toast.error("Fill the blank");
+    // } else {
+    //   sendEmail(firstName + lastName, email, phoneNumber, text);
+    // }
   };
   const firstNamehandleChange = (e) => {
-    console.log(e.target.value)
+    console.log(e.target.value);
     setFirstName(e.target.value);
   };
   const lastNamehandleChange = (e) => {
@@ -104,9 +122,7 @@ const Contact = () => {
                 <div className="row gy-3">
                   <div className="col-md-6">
                     <div className="form-group">
-                      <label
-                        className="form-label"
-                      >
+                      <label className="form-label">
                         First Name <span className="text--danger">*</span>
                       </label>
                       <input
@@ -114,15 +130,12 @@ const Contact = () => {
                         type="text"
                         className="form-control form--control"
                         onChange={firstNamehandleChange}
-
                       />
                     </div>
                   </div>
                   <div className="col-md-6">
                     <div className="form-group">
-                      <label
-                        className="form-label"
-                      >
+                      <label className="form-label">
                         Last Name <span className="text--danger">*</span>
                       </label>
                       <input
@@ -130,15 +143,12 @@ const Contact = () => {
                         type="text"
                         className="form-control form--control"
                         onChange={lastNamehandleChange}
-
                       />
                     </div>
                   </div>
                   <div className="col-md-6">
                     <div className="form-group">
-                      <label
-                        className="form-label"
-                      >
+                      <label className="form-label">
                         Email Address <span className="text--danger">*</span>
                       </label>
                       <input
@@ -146,15 +156,12 @@ const Contact = () => {
                         type="text"
                         className="form-control form--control"
                         onChange={emailhandleChange}
-
                       />
                     </div>
                   </div>
                   <div className="col-md-6">
                     <div className="form-group">
-                      <label
-                        className="form-label"
-                      >
+                      <label className="form-label">
                         Phone Number <span className="text--danger">*</span>
                       </label>
                       <input
@@ -162,16 +169,12 @@ const Contact = () => {
                         type="text"
                         className="form-control form--control"
                         onChange={phoneNumberhandleChange}
-
                       />
                     </div>
                   </div>
                   <div className="col-md-12">
                     <div className="form-group">
-                      <label
-                        className="form-label"
-                        onChange={texthandleChange}
-                      >
+                      <label className="form-label" onChange={texthandleChange}>
                         Your Message <span className="text--danger">*</span>
                       </label>
                       <textarea
@@ -181,7 +184,7 @@ const Contact = () => {
                     </div>
                   </div>
                   <div className="col">
-                    <button className="cmn--btn active" onClick={handleClick}>
+                    <button className="cmn--btn active " >
                       Send Message
                     </button>
                   </div>
