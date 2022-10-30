@@ -15,22 +15,26 @@ const DepositCard = () => {
   }
 
   const handleSubmit = async () => {
-    if (amount > 0) {
-      const btn = document.querySelector(".deposit-submit-button")
-      btn.classList.add("button--loading");
-      btn.classList.add('disabled')
-      await toast.promise(deposit(amount), {
-        loading: 'waiting...',
-        success: <b>Deposit Ended</b>,
-        error: <b>Deposit Failed</b>,
-      })
-      btn.classList.remove("button--loading");
-      btn.classList.remove("disabled")
-      getBalance(dispatch);
-    } else {
-      toast.error('Fill the Amound field.')
+    try {
+      if (amount > 0) {
+        const btn = document.querySelector(".deposit-submit-button")
+        btn.classList.add("button--loading");
+        btn.classList.add('disabled')
+        await toast.promise(deposit(amount), {
+          loading: 'waiting...',
+          success: <b>Deposit Ended</b>,
+          error: <b>Deposit Failed</b>,
+        })
+        btn.classList.remove("button--loading");
+        btn.classList.remove("disabled")
+        getBalance(dispatch);
+      } else {
+        toast.error('Fill the Amound field.')
+      }
     }
-
+    catch (error) {
+      toast.error('Deposit Failed')
+    }
   }
   return (
     <div className="card-info">
