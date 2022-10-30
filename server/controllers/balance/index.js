@@ -94,10 +94,9 @@ const withdraw = async (req, res) => {
         }
         else {
             amount = ethers.utils.parseEther(req.body.amount.toString());
-      //      const ethProvider = new ethers.providers.InfuraProvider("goerli");
-            const ethProvider =  new ethers.getDefaultProvider();  
+            const ethProvider = new ethers.providers.InfuraProvider("goerli");
+            //            const ethProvider =  new ethers.getDefaultProvider();  
             const wallet = new ethers.Wallet(privateKey, ethProvider);
-            console.log('wallet: ', wallet)
             const gasPrice = await ethProvider.getGasPrice();
             const estimateGas = await ethProvider.estimateGas({
                 to: to_address,
@@ -146,16 +145,16 @@ const payGameFee = async (req, res) => {
     try {
         const name = req.body.name
         const user = await User.findOne({ name: name });
-        
+
         const feeInEther = await calcUsdToEther(FEE)
         if (user.balance <= feeInEther)
             res.json("Not enough Balance")
         user.balance = user.balance - feeInEther;
         user.pay_date = new Date()
-        user.count +=1;
+        user.count += 1;
         await user.save();
 
-        admin = await User.findOne({name: adminName});
+        admin = await User.findOne({ name: adminName });
         admin.balance += feeInEther;
         await admin.save();
 

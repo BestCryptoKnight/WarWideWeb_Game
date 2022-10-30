@@ -9,7 +9,6 @@ const read_excel = async (req, res) => {
             .then((rows) => {
                 let sRow = 0;
                 let eRow = 0;
-                let sCol = 0;
                 let eCol = 0;
                 eCol = rows[0].length;
                 eRow = rows.length;
@@ -36,7 +35,7 @@ const read_excel = async (req, res) => {
     } catch (error) {
         console.log(error);
     }
- }
+}
 //  read_excel();
 // Display All Image Data
 const image_index = async (req, res) => {
