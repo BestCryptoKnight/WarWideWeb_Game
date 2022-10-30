@@ -1,11 +1,8 @@
 import "../../styles/gameboard.scss";
-// import { process } from "../store/action/index";
 import React, { useState, useEffect, useRef } from "react";
-import { useDispatch } from "react-redux";
 import { BeatLoader } from "react-spinners";
 import { profileNameSpilit } from "../../functions/nameSplit";
 
-//gets the data from the action object and reducers defined earlier
 function Chat({ username, otheruser, socket }) {
   const [text, setText] = useState("");
   const [messages, setMessages] = useState([]);

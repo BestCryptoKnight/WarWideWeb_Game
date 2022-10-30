@@ -41,7 +41,6 @@ const Room = (props) => {
 
   const enterRoom = async () => {
     const data = await joinRoom(props.value);
-    console.log(data);
     navigate(`${data.url}`, { state: { ...data } });
   }
 

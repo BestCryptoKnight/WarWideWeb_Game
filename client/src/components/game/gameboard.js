@@ -4,7 +4,6 @@ import { useNavigate, useLocation } from "react-router";
 import "../../styles/gameboard.scss";
 import "../../styles/modal.css";
 import { useMediaQuery } from "react-responsive";
-import { makeStyles } from "@material-ui/core/styles";
 import Counter from "./counter";
 import { leaveRoom } from "../../api/RoomApi";
 import Chat from "./chat";
@@ -22,38 +21,6 @@ import { getBalance } from "../../api/balanceApi";
 import AddFund from "./buttons/addFund";
 import { useAuth } from "../../contexts/AuthContext";
 
-const useStyles = makeStyles({
-  root: {
-    "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
-      borderColor: "#824c6b",
-    },
-    "&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
-      borderColor: "white",
-    },
-    "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
-      borderColor: "#824c6b",
-    },
-    "& .MuiOutlinedInput-input": {
-      color: "white",
-    },
-    "&:hover .MuiOutlinedInput-input": {
-      color: "white",
-    },
-    "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-input": {
-      color: "white",
-    },
-    "& .MuiInputLabel-outlined": {
-      color: "#824c6b",
-    },
-    "&:hover .MuiInputLabel-outlined": {
-      color: "white",
-    },
-    "& .MuiInputLabel-outlined.Mui-focused": {
-      color: "white",
-    },
-  },
-});
-
 const socket = io.connect(BACKEND_URL);
 
 const GameBoard = () => {
@@ -65,12 +32,10 @@ const GameBoard = () => {
   const { isLoggedIn } = useAuth();
 
   useEffect(() => {
-    console.log('isLoggedIn: ', isLoggedIn);
     if (!isLoggedIn)
       navigate('/signin')
   }, [isLoggedIn])
 
-  const classes = useStyles();
   const location = useLocation();
   const roomname = location.state.url;
   const user1 = location.state.user1;
@@ -157,6 +122,7 @@ const GameBoard = () => {
       case 116: // 'F5'
         event.returnValue = false;
         break;
+      default: return 0;
     }
   }
   useEffect(() => {
