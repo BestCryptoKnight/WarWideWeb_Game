@@ -44,7 +44,7 @@ const DepositCard = () => {
       </div>
       <div className="img-box">
         <div className="card-info-img">
-          <i className='fas fa-wallet'></i>
+          <div className='deposit-img' />
         </div>
       </div>
     </div>

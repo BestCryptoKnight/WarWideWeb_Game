@@ -48,7 +48,7 @@ const WithdrawCard = () => {
             </div>
             <div className="img-box">
                 <div className="card-info-img">
-                    <i className='fas fa-money'></i>
+                    <div className='withdraw-img' />
                 </div>
             </div>
         </div>
