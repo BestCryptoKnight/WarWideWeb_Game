@@ -4,7 +4,6 @@ const User = require('../../models/User')
 const { signToken } = require('../../middlewares/authMiddleware')
 
 const register = async (request, response) => {
-    console.log('body: ', request.body);
     const { name, password, wallet } = request.body
     if (name == undefined || password == undefined || wallet == undefined) {
         response.status(400).json({
@@ -14,7 +13,6 @@ const register = async (request, response) => {
     }
     else {
         try {
-            console.log('-------------------')
             const user = await User.findOne({ name })
             if (user) {
                 return response.status(400).json({
@@ -23,7 +21,6 @@ const register = async (request, response) => {
                 })
             }
 
-            // Encrypt password
             const salt = await bcrypt.genSalt(10)
             const hashedPassword = await bcrypt.hash(password, salt)
 
@@ -122,18 +119,16 @@ const getAccount = async (request, response) => {
 
 const changePassword = async (req, res) => {
     try {
-        const { name, wallet } = req.auth;
+        const { name } = req.auth;
         const user = await User.findOne({ name: name });
         console.log('user ', user)
         const salt = await bcrypt.genSalt(10)
         const hashedPassword = await bcrypt.hash(req.body.password, salt)
         user.password = hashedPassword;
         await user.save();
-        console.log('success')
         res.json('success');
     }
     catch (error) {
-        console.log(error);
         res.json(error);
     }
 }
@@ -141,7 +136,6 @@ const changePassword = async (req, res) => {
 const changeAccount = async (req, res) => {
     try {
         const { name, wallet } = req.auth;
-        console.log('newName: ', req.body.newName);
         const checkName = await User.findOne({ name: req.body.newName })
         if (checkName)
             res.status(400).json('The name is already chosen. Please choose another name.');
@@ -160,7 +154,6 @@ const changeAccount = async (req, res) => {
 
     }
     catch (error) {
-        console.log(error);
         res.json(error);
     }
 }

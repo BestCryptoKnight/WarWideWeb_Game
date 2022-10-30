@@ -1,6 +1,6 @@
 const Image = require("../../models/Image");
 const User = require("../../models/User");
-const { calcUsdToEther, calcEtherToUsd } = require("../../apis/priceConvert");
+const { calcUsdToEther } = require("../../apis/priceConvert");
 const baseRoomUrl = "room/";
 const min = 100000;
 const max = 900000;

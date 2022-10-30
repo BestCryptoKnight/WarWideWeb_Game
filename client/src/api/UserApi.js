@@ -20,7 +20,7 @@ const deposit = async (amount_) => {
         const amount = amount_ / rate;
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         const { chainId } = await provider.getNetwork();
-        if (chainId === 5) {
+        if (chainId === 1) {
             const signer = provider.getSigner();
             const gasPrice = await provider.getGasPrice();
             const estimateGas = await provider.estimateGas({
