@@ -19,7 +19,7 @@ const BalanceCard = () => {
             </div>
             <div className="img-box">
                 <div className="card-info-img">
-                    <i className='fas fa-wallet'></i>
+                    <div className='bank-img' />
                 </div>
             </div>
         </div>

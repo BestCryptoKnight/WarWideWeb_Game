@@ -20,7 +20,7 @@ const Room = (props) => {
     if (!isPayFee) {
       if (balance >= FEE) {
         await payFee(account.name)
-          toast.success('You paid FEE. You could enjoy next 24 hours')
+        toast.success('You paid FEE. You could enjoy next 24 hours')
         await getBalance(dispatch);
         if (balance >= props.value)
           enterRoom()
@@ -49,7 +49,7 @@ const Room = (props) => {
     <div className="room">
       <div className="room-container">
         <div className="image-box">
-          <div className="room-image" />
+          <div className={props.roomImg} />
         </div>
         <div className="invest-text">Invest Amount</div>
         <div className="text-price">${props.value}</div>

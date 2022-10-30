@@ -37,6 +37,14 @@
     cursor: pointer;
 }
 
+.logo-section {
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    align-items: center;
+    text-align: center;
+}
+
 .balance-group {
     margin-top: 50px;
     color: #fff;

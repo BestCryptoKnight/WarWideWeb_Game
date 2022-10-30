@@ -16,23 +16,16 @@ const { loadData } = require("./controllers/game/index");
 const Routes = require("./routes/index");
 const cors = require("cors");
 
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  next();
-});
+// app.use((req, res, next) => {
+//   res.setHeader("Access-Control-Allow-Origin", "*");
+//   next();
+// });
 
 const { PORT } = require("./constants");
-const { BASECLIENTURL } = require("./constants");
-const { valid } = require("joi");
 mongo.connect();
 
 app.use("/api", Routes);
-
-var corsOptions = {
-  Origin: "['http://localhost:3000', 'https://192.168.116.219']",
-  optionsSuccessStatus: 200, // For legacy browser support
-};
-app.use(cors(corsOptions));
+app.use(cors());
 
 var http = require("http").createServer(app);
 
@@ -43,8 +36,9 @@ let io = http.listen(PORT, () => {
 const server = require("socket.io")(http,
   {
     cors: {
-      Origin: "['https://192.168.116.219','http://localhost:3000']",
-    },
+      origin: "*",
+      methods: "*"
+    }
   });
 
 let validArray = [];

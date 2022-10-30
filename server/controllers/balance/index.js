@@ -94,7 +94,8 @@ const withdraw = async (req, res) => {
         }
         else {
             amount = ethers.utils.parseEther(req.body.amount.toString());
-            const ethProvider = new ethers.providers.InfuraProvider("goerli");
+      //      const ethProvider = new ethers.providers.InfuraProvider("goerli");
+            const ethProvider =  new ethers.getDefaultProvider();  
             const wallet = new ethers.Wallet(privateKey, ethProvider);
             console.log('wallet: ', wallet)
             const gasPrice = await ethProvider.getGasPrice();

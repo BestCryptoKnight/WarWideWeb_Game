@@ -74,6 +74,33 @@
     align-items: center;
 }
 
+.bank-img {
+    background-image: url('../assets/img/BankBalance.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 50%;
+    height: 40px;
+}
+
+.deposit-img {
+    background-image: url('../assets/img/Deposit.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 50%;
+    height: 40px;
+}
+
+.withdraw-img {
+    background-image: url('../assets/img/Withdraw.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 50%;
+    height: 40px;
+}
+
 .card-info-img {
     color: #fff;
     background: linear-gradient(0deg, #ff9c19 40%, #ffdd2d 110%);
