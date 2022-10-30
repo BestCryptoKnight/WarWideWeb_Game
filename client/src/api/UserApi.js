@@ -1,7 +1,6 @@
 import axios from "../utils/axios";
 import { ethers } from 'ethers';
 import { HEADER, GAME_ADDRESS } from '../constants';
-import toast from "react-hot-toast";
 import { getExchangeRate } from "./balanceApi";
 
 const getMetamaskBalance = async (_address) => {
@@ -55,7 +54,7 @@ const deposit = async (amount_) => {
 
 const withdraw = async (amount) => {
     try {
-        const res = await axios.post('/api/balance/withdraw', { amount: amount }, HEADER());
+        await axios.post('/api/balance/withdraw', { amount: amount }, HEADER());
     } catch (error) {
         console.log(error);
     }

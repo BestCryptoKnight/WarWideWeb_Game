@@ -46,11 +46,9 @@ server.on("connection", (socket) => {
   socket.on("joinRoom", ({ username, room }) => {
     //* create user
     try {
-      console.log(socket.id, "-----socket");
       const p_user = join_User(socket.id, username, room);
       socket.join(p_user.room);
       let allUsers = broadcastToRoomUsers(p_user.room);
-      console.log(allUsers, "------allusers");
       server.sockets.in(allUsers[0].room).emit("message", { users: allUsers });
     } catch (error) {
       console.log(error);
@@ -115,7 +113,6 @@ server.on("connection", (socket) => {
         if (validArray.length === 2) {
           const data = await loadData();
           if (data != {}) {
-            console.log(data);
             server.sockets.in(allUsers[0].room).emit("start", data);
             validArray = [];
           }
@@ -156,7 +153,6 @@ server.on("connection", (socket) => {
         isSame
           ? (success = true)
           : (success = await gameEnd(winner.user, loser.user, amount));
-        console.log(success);
         if (success) {
           server.sockets
             .in(allUsers[0].room)
