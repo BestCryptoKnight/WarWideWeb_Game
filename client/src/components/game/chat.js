@@ -11,9 +11,7 @@ function Chat({ username, otheruser, socket }) {
   const [messages, setMessages] = useState([]);
   const [newMsg, setNewMsg] = useState(null);
   const [isWriting, setIsWriting] = useState(false);
-  const [countdown, setCount] = useState(1);
 
-  const dispatch = useDispatch();
   const [isCreator, setIsCreator] = useState(otheruser === "" ? true : false);
   const pushNewMessage = (newMsg) => {
     messages.push(newMsg);
@@ -75,6 +73,11 @@ function Chat({ username, otheruser, socket }) {
   useEffect(() => {
     isCreator ? createdInform() : joinedInform();
     socketMonitor();
+    return () => {
+      setMessages([]);
+      setText("");
+      setNewMsg("")
+    };
   }, []);
 
   const sendData = () => {
