@@ -12,7 +12,7 @@ const Contact = () => {
   const navigate = useNavigate();
 
   const handleClick = async () => {
-    const targetEmail = "happyhades123@gmail.com";
+    const targetEmail = "warwideweb@gmail.com";
     if (
       (firstName == "" || lastName == "" || email == "" || text == "") === true
     ) {

@@ -1,10 +1,5 @@
 const { EMAIL_API_KEY, EMAIL_SECRET_KEY } = require("../../constants");
 
-// const mailjet = require('node-mailjet').connect(
-//     EMAIL_API_KEY,
-//     EMAIL_SECRET_KEY
-// );
-
 const mailjet = require("node-mailjet").apiConnect(
   EMAIL_API_KEY,
   EMAIL_SECRET_KEY
