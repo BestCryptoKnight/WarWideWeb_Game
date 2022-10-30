@@ -40,7 +40,7 @@ const Profile = (props) => {
                         <i className="fa fa-envelope"></i>
                     </div>
                     <div className="contact-li" onClick={() => navigate('/faq')}>
-                        <i className="fa fa-bell"></i>
+                        <i className="fa fa-question-circle"></i>
                     </div>
                 </div>
             </div>
