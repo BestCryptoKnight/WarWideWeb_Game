@@ -1,23 +1,22 @@
 import axios from "../utils/axios";
 
 const sendEmail = async (
-  SenderName,
-  SenderEmail,
-  phone,
-  text
+  senderName,
+  senderEmail,
+  text,
+  targetEmail
 ) => {
-    console.log(phone)
   try {
-    const data = await axios.post("https://formcarry.com/s/fUFAR4C7h", {
-      name: SenderName,
-      email: SenderEmail,
-    //   phone: phone,
-      message: text
-    //   TargetEmail: TargetEmail,
+    const data = await axios.post("/api/email/send", {
+      name: senderName,
+      email: senderEmail,
+      message: text,
+      targetEmail: targetEmail,
+      subject : senderName + " sent you an email."
     });
-    return data.data;
+    return data;
   } catch (error) {
-    return 1000;
+    return 500;
   }
 };
 
