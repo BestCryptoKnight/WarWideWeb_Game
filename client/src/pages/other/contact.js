@@ -42,63 +42,20 @@ const Contact = () => {
                         <div className="col-lg-5">
                             <div className="contact-info-wrapper">
                                 <h3 className="title mb-3 mb-lg-4">Contact Information</h3>
+                                <p style={{ fontSize: '18px' }}>If you have any issues, suggestions, or need help please feel free to drop us a message and we will be happy to get back to you.</p>
                                 <ul className="contact-info-list m-0">
                                     <li>
-                                        <a href="mailto:warwideweb@gmail.com"></a>{" "}
-                                        <i className="fas fa-map-marker-alt"></i>{" "}
-                                        <span>
-                                            12/A Kingfisher Road <br /> Medino Washington, NY 10012,
-                                            USA
-                                        </span>
-                                    </li>
-                                    <li>
-                                        <a href="tel:238754">
-                                            {" "}
-                                            <i className="fa fa-phone"></i>{" "}
-                                            <span>+47 8519-9415 1515</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="tel:238754">
-                                            {" "}
-                                            <i className="fa fa-phone"></i>{" "}
-                                            <span>+1 949 390 9747</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="mailto:demo@gmail.com">
+                                        <a href="mailto:warwideweb@gmail.com">
                                             {" "}
                                             <i className="fa fa-envelope"></i>{" "}
                                             <span>warwideweb@gmail.com</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="mailto:demo@gmail.com">
+                                        <a href="mailto:happyhades123@gmail.com">
                                             {" "}
                                             <i className="fa fa-envelope"></i>{" "}
                                             <span>happyhades123@gmail.com</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                                <ul className="social-links mt-4">
-                                    <li>
-                                        <a href="#0">
-                                            <i className="fa fa-phone"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#0">
-                                            <i className="fa fa-envelope"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#0">
-                                            <i className="fa fa-map-marker-alt"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#0">
-                                            <i className="fas fa-file"></i>
                                         </a>
                                     </li>
                                 </ul>
@@ -152,22 +109,6 @@ const Contact = () => {
                                                 type="text"
                                                 className="form-control form--control"
                                                 onChange={emailhandleChange}
-
-                                            />
-                                        </div>
-                                    </div>
-                                    <div className="col-md-6">
-                                        <div className="form-group">
-                                            <label
-                                                className="form-label"
-                                            >
-                                                Phone Number <span className="text--danger">*</span>
-                                            </label>
-                                            <input
-                                                id="phone"
-                                                type="text"
-                                                className="form-control form--control"
-                                                onChange={phoneNumberhandleChange}
 
                                             />
                                         </div>

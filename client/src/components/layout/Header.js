@@ -99,13 +99,14 @@ export default function Header() {
       <div className="header-container">
         <div className="header-bottom">
           <div className="header-bottom-area align-items-center">
-            <div className="logo-img"></div>
-            {
-              isLoggedIn ? <div className='balance-group'>
-                <label>Balance &nbsp; </label>
-                <div className='balance'> ${balance}</div>
-              </div> : null}
-
+            <div className="logo-section">
+              <div className="logo-img"></div>
+              {
+                isLoggedIn ? <div className='balance-group'>
+                  <label>Balance &nbsp; </label>
+                  <div className='balance'> ${balance}</div>
+                </div> : null}
+            </div>
             <ul className="menu">
               <li>
                 {string}

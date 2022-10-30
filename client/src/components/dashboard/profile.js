@@ -36,14 +36,11 @@ const Profile = (props) => {
                 <div className="welcome">Welcome</div>
                 <div className="name">{string}</div>
                 <div className="contact-group">
-                    <div className="contact-li">
+                    <div className="contact-li" onClick={() => navigate('/contact')}>
                         <i className="fa fa-envelope"></i>
                     </div>
-                    <div className="contact-li">
-                        <i className="fa fa-edit"></i>
-                    </div>
-                    <div className="contact-li">
-                        <i className="fa fa-bell"></i>
+                    <div className="contact-li" onClick={() => navigate('/faq')}>
+                        <i className="fa fa-question-circle"></i>
                     </div>
                 </div>
             </div>

@@ -13,7 +13,7 @@
     background-image: url('../assets/img/homepage.png');
     background-position: center;
     background-repeat: no-repeat;
-    background-size: 60% 80%;
+    background-size: 80% 80%;
     padding-top: 80vh;
 }
 
@@ -29,13 +29,13 @@
     background-image: url('../assets/img/rules.png');
     background-size: 100% 100%;
     background-repeat: no-repeat;
-    width: 200px;
-    height: 70px;
+    width: 250px;
+    height: 50px;
     cursor: pointer;
 }
 
 .rules:active {
-    box-shadow: 7px 6px 28px 1px rgba(0, 0, 0, 0.24);
+    box-shadow: 7px 6px 28px 1px rgba(231, 255, 19, 0.24);
     transform: translateY(5px);
     /* Moving button 4px to y-axis */
 }
@@ -44,8 +44,8 @@
     background-image: url('../assets/img/play_now.png');
     background-size: 100% 100%;
     background-repeat: no-repeat;
-    width: 250px;
-    height: 150px;
+    width: 320px;
+    height: 170px;
     cursor: pointer;
 }
 
@@ -59,8 +59,8 @@
     background-image: url('../assets/img/how_to_play.png');
     background-size: 100% 100%;
     background-repeat: no-repeat;
-    width: 200px;
-    height: 70px;
+    width: 300px;
+    height: 60px;
     cursor: pointer;
 }
 
@@ -85,6 +85,7 @@
 @media (max-width:900px) {
     .homepage-container {
         background-image: url('../assets/img/mobile.png');
+        background-size: 100% 80%;
         padding-top: 65vh;
     }
 
