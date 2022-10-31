@@ -32,9 +32,15 @@ const GameBoard = () => {
   const { isLoggedIn } = useAuth();
 
   useEffect(() => {
-    if (!isLoggedIn)
+    if (!isLoggedIn) {
       navigate('/signin')
-  }, [isLoggedIn])
+    }
+    return () => {
+      setJoinReq(false);
+      setIsFilled(false);
+      setWinner({});
+    }
+  }, [isLoggedIn, navigate])
 
   const location = useLocation();
   const roomname = location.state.url;
@@ -43,7 +49,7 @@ const GameBoard = () => {
   const amount = location.state.amount;
 
   const [joinReq, setJoinReq] = useState(false);
-  const [username, setUserName] = useState(user2 === "" ? user1 : user2);
+  const username = user2 === "" ? user1 : user2;
   const [otheruser, setOtheruser] = useState(user2 === "" ? user2 : user1);
   const [userValue, setUserValue] = useState("");
   const [price, setPrice] = useState(0);
@@ -85,13 +91,12 @@ const GameBoard = () => {
     });
     socket.on("start", (data) => {
       dispatch({ type: GAME_START, payload: true });
-      console.log(data);
       if (data) {
         setMyStyle({ backgroundImage: `url(${data.url})` });
         setPrice(data.price);
         setDescription(data.description);
       } else {
-        console.log("No Data.");
+
       }
     });
     socket.on("winner", async (data) => {
@@ -100,7 +105,6 @@ const GameBoard = () => {
       setWinner(data);
     });
     socket.on("discon", (data) => {
-      console.log("disconnected");
       toast.error(data.username + " left the room");
       navigate("/dashboard");
     });

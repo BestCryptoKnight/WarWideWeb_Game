@@ -16,22 +16,25 @@ const WithdrawCard = () => {
     }
 
     const handleClick = async () => {
-        console.log('amount:', amount);
         if (amount > balance || amount === 0)
             toast.error('Insufficient Amount');
         else {
-            const rate = await getExchangeRate();
-            const btn = document.querySelector(".withdraw-submit-button")
-            btn.classList.add("button--loading");
-            btn.classList.add("disabled");
-            await toast.promise(withdraw(amount/rate), {
-                loading: 'waiting...',
-                success: <b>Withdraw Ended</b>,
-                error: <b>Withdraw Failed</b>,
-            })
-            btn.classList.remove("button--loading");
-            btn.classList.remove("disabled")
-            getBalance(dispatch);
+            try {
+                const rate = await getExchangeRate();
+                const btn = document.querySelector(".withdraw-submit-button")
+                btn.classList.add("button--loading");
+                btn.classList.add("disabled");
+                await toast.promise(withdraw(amount / rate), {
+                    loading: 'waiting...',
+                    success: <b>Withdraw Ended</b>,
+                    error: <b>Withdraw Failed</b>,
+                })
+                btn.classList.remove("button--loading");
+                btn.classList.remove("disabled")
+                getBalance(dispatch);
+            } catch (error) {
+                toast.error(error);
+            }
         }
     }
 

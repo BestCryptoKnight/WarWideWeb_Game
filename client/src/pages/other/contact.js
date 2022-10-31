@@ -26,7 +26,6 @@ const Contact = () => {
                     text,
                     targetEmail
                 ).then((res) => {
-                    console.log(res);
                     res === 200
                         ? toast.success("Successfully sent")
                         : toast.error("Message failed");

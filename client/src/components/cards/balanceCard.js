@@ -10,7 +10,7 @@ const BalanceCard = () => {
     const balance = useSelector(state => state.getBalance);
     useEffect(() => {
         getBalance(dispatch);
-    }, [])
+    }, [dispatch])
     return (
         <div className="card-info">
             <div className="card-content">

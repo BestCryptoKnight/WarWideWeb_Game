@@ -1,6 +1,6 @@
 const Image = require("../../models/Image");
 const User = require("../../models/User");
-const { calcUsdToEther, calcEtherToUsd } = require("../../apis/priceConvert");
+const { calcUsdToEther } = require("../../apis/priceConvert");
 const baseRoomUrl = "room/";
 const min = 100000;
 const max = 900000;
@@ -54,12 +54,8 @@ const joinRoom = async (req, res) => {
         }
         else {
             const url = baseRoomUrl + '#' + amount + name + randomIntFromInterval(min, max);
-            console.log('url: ', url)
             let data;
             if (PRICE1 == amount) {
-                console.log('price1: ', PRICE1);
-                console.log('amount: ', amount);
-                console.log('flag1: ', flag1)
                 if (flag1 == true) {
                     player1 = name;
                     rooms1 = url;
