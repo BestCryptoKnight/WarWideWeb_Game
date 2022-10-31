@@ -9,7 +9,6 @@ const signToken = (payload = {}, expiresIn = '12h') => {
 const authorizeBearerToken = async (request, response, next) => {
   try {
     const token = request.headers.authorization?.split(' ')[1]
-    console.log('token: ', token)
     if (!token) {
       return response.status(400).json({
         message: 'Token not provided',
@@ -22,7 +21,6 @@ const authorizeBearerToken = async (request, response, next) => {
           message: 'Unauthorized - invalid token',
         })
       }
-      console.log('auth: ', auth)
       request.auth = auth
       next()
     }

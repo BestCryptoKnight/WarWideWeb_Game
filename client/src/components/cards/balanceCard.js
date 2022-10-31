@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import '../../styles/card.css';
 import { useAuth } from '../../contexts/AuthContext';
@@ -10,7 +10,7 @@ const BalanceCard = () => {
     const balance = useSelector(state => state.getBalance);
     useEffect(() => {
         getBalance(dispatch);
-    }, [])
+    }, [dispatch])
     return (
         <div className="card-info">
             <div className="card-content">

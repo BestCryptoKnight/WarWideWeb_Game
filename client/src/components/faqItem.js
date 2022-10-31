@@ -2,9 +2,7 @@ import React, { useState } from "react";
 
 const FaqItem = (props) => {
   const [flag, setFlag] = useState(false);
-  const [oldId, setOldId] = useState("");
-  const handleClick = (e) => {
-    setOldId(props.id);
+  const handleClick = () => {
     if (flag) {
       setFlag(false);
       document.getElementById(props.id).parentElement.classList.remove("open");

@@ -1,10 +1,9 @@
 @import "../globals";
 
-@mixin scrollbars(
-  $size,
+@mixin scrollbars($size,
   $foreground-color,
-  $background-color: mix($foreground-color, white, 50%)
-) {
+  $background-color: mix($foreground-color, white, 50%)) {
+
   //stylesheet for the display in Google Chrome
   &::-webkit-scrollbar {
     height: $size;
@@ -62,6 +61,7 @@
       margin-top: 400px;
       width: 15%;
     }
+
     100% {
       opacity: 1;
       margin-top: 12vh;
@@ -92,6 +92,7 @@
       margin-top: 400px;
       width: 15%;
     }
+
     100% {
       opacity: 1;
       margin-top: 12vh;
@@ -241,6 +242,18 @@
   background-color: #834167;
 }
 
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
 .description {
   width: 100%;
   height: 40px;
@@ -296,6 +309,7 @@
 .pointer {
   cursor: pointer;
 }
+
 .place-guess-btn-anim {
   position: relative;
   background-image: url("../assets/img/Play Button.png");

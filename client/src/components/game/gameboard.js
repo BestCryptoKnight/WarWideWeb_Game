@@ -4,7 +4,6 @@ import { useNavigate, useLocation } from "react-router";
 import "../../styles/gameboard.scss";
 import "../../styles/modal.css";
 import { useMediaQuery } from "react-responsive";
-import { makeStyles } from "@material-ui/core/styles";
 import Counter from "./counter";
 import { leaveRoom } from "../../api/RoomApi";
 import Chat from "./chat";
@@ -22,38 +21,6 @@ import { getBalance } from "../../api/balanceApi";
 import AddFund from "./buttons/addFund";
 import { useAuth } from "../../contexts/AuthContext";
 
-const useStyles = makeStyles({
-  root: {
-    "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
-      borderColor: "#824c6b",
-    },
-    "&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
-      borderColor: "white",
-    },
-    "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
-      borderColor: "#824c6b",
-    },
-    "& .MuiOutlinedInput-input": {
-      color: "white",
-    },
-    "&:hover .MuiOutlinedInput-input": {
-      color: "white",
-    },
-    "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-input": {
-      color: "white",
-    },
-    "& .MuiInputLabel-outlined": {
-      color: "#824c6b",
-    },
-    "&:hover .MuiInputLabel-outlined": {
-      color: "white",
-    },
-    "& .MuiInputLabel-outlined.Mui-focused": {
-      color: "white",
-    },
-  },
-});
-
 const socket = io.connect(BACKEND_URL);
 
 const GameBoard = () => {
@@ -65,12 +32,16 @@ const GameBoard = () => {
   const { isLoggedIn } = useAuth();
 
   useEffect(() => {
-    console.log('isLoggedIn: ', isLoggedIn);
-    if (!isLoggedIn)
+    if (!isLoggedIn) {
       navigate('/signin')
-  }, [isLoggedIn])
+    }
+    return () => {
+      setJoinReq(false);
+      setIsFilled(false);
+      setWinner({});
+    }
+  }, [isLoggedIn, navigate])
 
-  const classes = useStyles();
   const location = useLocation();
   const roomname = location.state.url;
   const user1 = location.state.user1;
@@ -78,7 +49,7 @@ const GameBoard = () => {
   const amount = location.state.amount;
 
   const [joinReq, setJoinReq] = useState(false);
-  const [username, setUserName] = useState(user2 === "" ? user1 : user2);
+  const username = user2 === "" ? user1 : user2;
   const [otheruser, setOtheruser] = useState(user2 === "" ? user2 : user1);
   const [userValue, setUserValue] = useState("");
   const [price, setPrice] = useState(0);
@@ -120,13 +91,12 @@ const GameBoard = () => {
     });
     socket.on("start", (data) => {
       dispatch({ type: GAME_START, payload: true });
-      console.log(data);
       if (data) {
         setMyStyle({ backgroundImage: `url(${data.url})` });
         setPrice(data.price);
         setDescription(data.description);
       } else {
-        console.log("No Data.");
+
       }
     });
     socket.on("winner", async (data) => {
@@ -135,7 +105,6 @@ const GameBoard = () => {
       setWinner(data);
     });
     socket.on("discon", (data) => {
-      console.log("disconnected");
       toast.error(data.username + " left the room");
       navigate("/dashboard");
     });
@@ -157,6 +126,7 @@ const GameBoard = () => {
       case 116: // 'F5'
         event.returnValue = false;
         break;
+      default: return 0;
     }
   }
   useEffect(() => {

@@ -1,6 +1,5 @@
 
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { toast } from "react-hot-toast";
 import axios from "../utils/axios";
 const AuthContext = createContext();
 
@@ -24,7 +23,7 @@ export function AuthProvider({ children }) {
           resolve(true);
         })
         .catch((error) => {
-          console.error(error);
+
           reject(error?.response?.data?.message || error.message);
         });
     });
@@ -40,7 +39,7 @@ export function AuthProvider({ children }) {
           resolve(true);
         })
         .catch((error) => {
-          console.error(error);
+
           reject(error?.response?.data?.message || error.message);
         });
     });
@@ -65,7 +64,6 @@ export function AuthProvider({ children }) {
       setToken(accessToken);
       setIsLoggedIn(true);
     } catch (error) {
-      console.error(error);
       if (error?.response?.statusCode === 401) setToken(null);
     }
   };
@@ -90,9 +88,7 @@ export function AuthProvider({ children }) {
           authorization: `Bearer ${token}`,
         },
       });
-      console.log('response: ', response)
-      console.log('accountData: ', response.data.data);
-      console.log('accessToken: ', response.data.token);
+
       setAccount(response.data.data);
       setToken(response.data.token);
       setIsLoggedIn(true);

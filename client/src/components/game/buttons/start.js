@@ -12,7 +12,6 @@ const StartButton = ({ name, amount, socket, room, isFilled }) => {
     const [buttonClickable, setButtonClickable] = useState();
 
     useEffect(() => {
-        console.log('isFilled: ', isFilled);
         if (isFilled && !isStart)
             setButtonClickable(true)
         else

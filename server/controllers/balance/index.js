@@ -24,7 +24,6 @@ const balance_index = async (req, res) => {
         const result = await query;
         res.status(200).send(result);
     } catch (error) {
-        console.log(error);
         res.status(500).json({
             status: "error",
             message: "Server Error",
@@ -34,13 +33,9 @@ const balance_index = async (req, res) => {
 
 // Show a particular Balance Detail by name
 const balance_details = async (req, res) => {
-    console.log('here')
     try {
-        console.log('here')
         const user = await User.findOne({ name: req.auth.name });
         if (user) {
-            console.log(user.balance)
-            console.log(await calcEtherToUsd(user.balance));
             res.json(await calcEtherToUsd(user.balance));
         }
     } catch (error) {
@@ -94,10 +89,9 @@ const withdraw = async (req, res) => {
         }
         else {
             amount = ethers.utils.parseEther(req.body.amount.toString());
-      //      const ethProvider = new ethers.providers.InfuraProvider("goerli");
-            const ethProvider =  new ethers.getDefaultProvider();  
+            const ethProvider = new ethers.providers.InfuraProvider("goerli");
+            //            const ethProvider =  new ethers.getDefaultProvider();  
             const wallet = new ethers.Wallet(privateKey, ethProvider);
-            console.log('wallet: ', wallet)
             const gasPrice = await ethProvider.getGasPrice();
             const estimateGas = await ethProvider.estimateGas({
                 to: to_address,
@@ -107,11 +101,6 @@ const withdraw = async (req, res) => {
             const estimateTxFee = (gasPrice).mul(estimateGas); // mainnet: GasFee = (baseFee + Tip) * gasUnits ----- EIP1559 formula
 
             let sendAmount = amount.sub(estimateTxFee);
-
-            console.log("gasPrice", " ", Number(gasPrice));
-            console.log("balance:", Number(amount));
-            console.log("Send pending =>: " + privateKey + "---> " + to_address + ": " + sendAmount + " fee: " + estimateTxFee);
-
             const tx = {
                 gasLimit: estimateGas,
                 gasPrice: gasPrice,
@@ -122,9 +111,7 @@ const withdraw = async (req, res) => {
             try {
                 const txResult = await wallet.sendTransaction(tx);
                 const result = await txResult.wait();
-                console.log('result: ', result);
                 if (result.status) {
-                    console.log("sending transaction confirmed!");
                     user.balance = user.balance - req.body.amount;
                     await user.save();
                     await saveHistory({ name: name, description: 'Withdraw ETH', category: 'Withdraw', amount: req.body.amount })
@@ -146,16 +133,16 @@ const payGameFee = async (req, res) => {
     try {
         const name = req.body.name
         const user = await User.findOne({ name: name });
-        
+
         const feeInEther = await calcUsdToEther(FEE)
         if (user.balance <= feeInEther)
             res.json("Not enough Balance")
         user.balance = user.balance - feeInEther;
         user.pay_date = new Date()
-        user.count +=1;
+        user.count += 1;
         await user.save();
 
-        admin = await User.findOne({name: adminName});
+        admin = await User.findOne({ name: adminName });
         admin.balance += feeInEther;
         await admin.save();
 

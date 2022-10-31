@@ -12,7 +12,7 @@ const SignUp = () => {
   useEffect(() => {
     if (isLoggedIn)
       navigate('/dashboard');
-  }, []);
+  }, [isLoggedIn, navigate]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

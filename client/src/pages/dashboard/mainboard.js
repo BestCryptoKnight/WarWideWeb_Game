@@ -12,7 +12,7 @@ const MainBoard = () => {
     useEffect(() => {
         if (!isLoggedIn)
             navigate('/signin')
-    }, [isLoggedIn])
+    }, [isLoggedIn, navigate])
     return (
         <div className="gamepage">
             <div className='gamepage-container'>

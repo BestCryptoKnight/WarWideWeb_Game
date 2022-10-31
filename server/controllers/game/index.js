@@ -1,6 +1,6 @@
 const Image = require("../../models/Image");
 const User = require("../../models/User");
-const { calcUsdToEther, calcEtherToUsd } = require("../../apis/priceConvert");
+const { calcUsdToEther } = require("../../apis/priceConvert");
 const baseRoomUrl = "room/";
 const min = 100000;
 const max = 900000;
@@ -21,7 +21,6 @@ function randomIntFromInterval(min, max) {
 async function loadData() {
     try {
         const randomNumber = randomIntFromInterval(1, 99);
-        console.log("random: ", randomNumber);
         const item = await Image.findOne({ ID: randomNumber });
         const data = {
             url: item.Url,
@@ -30,8 +29,7 @@ async function loadData() {
         };
         return data;
     } catch (error) {
-        console.log(error);
-        const item = await Image.findOne({ ID: 1 });
+        const item = await Image.findOne({ ID: 2 });
         const data = {
             url: item.Url,
             description: item.Description,
@@ -45,7 +43,6 @@ const joinRoom = async (req, res) => {
     try {
         const name = req.auth.name;
         const amount = req.body.amount;
-        console.log("is joining: ", name);
         const user = await User.findOne({ name: name });
         if (!user) {
             res.json("Invalid User");
@@ -57,12 +54,8 @@ const joinRoom = async (req, res) => {
         }
         else {
             const url = baseRoomUrl + '#' + amount + name + randomIntFromInterval(min, max);
-            console.log('url: ', url)
             let data;
             if (PRICE1 == amount) {
-                console.log('price1: ', PRICE1);
-                console.log('amount: ', amount);
-                console.log('flag1: ', flag1)
                 if (flag1 == true) {
                     player1 = name;
                     rooms1 = url;
@@ -150,7 +143,6 @@ const joinRoom = async (req, res) => {
 const leaveRoom = async (req, res) => {
     const name = req.body.name;
     const amount = req.body.amount;
-    console.log("leaving room: ", name);
     if (amount == PRICE1) {
         if (flag1 == false && player1 == name) flag1 = true;
     } else if (amount == PRICE2) {
