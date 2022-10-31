@@ -31,6 +31,10 @@ const Counter = (props) => {
     };
     isStart ? tmp() : console.log("start game");
 
+    return () => {
+      setCount(countdown - 1);
+    }
+
   }, [countdown]);
   return (
     <div id="countdown">
