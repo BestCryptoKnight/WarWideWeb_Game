@@ -34,7 +34,7 @@ body {
     stroke-width: 2px;
     stroke: #B32A4B;
     fill: none;
-    animation: countdown 9s linear infinite forwards;
+    animation: countdown 11s linear infinite forwards;
   }
   
   @keyframes countdown {
