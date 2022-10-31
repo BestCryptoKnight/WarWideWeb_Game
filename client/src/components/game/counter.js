@@ -23,7 +23,7 @@ const Counter = (props) => {
   useEffect(() => {
     const tmp = async () => {
       await timer;
-      if (countdown > 1) setCount(countdown - 1);
+      if (countdown >= 1) setCount(countdown - 1);
       else {
         socket.emit("setwinner", { username: username, bidValue: bidValue, price: price, amount: amount })
         dispatch({ type: GAME_START, payload: false });

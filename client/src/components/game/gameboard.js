@@ -177,6 +177,8 @@ const GameBoard = () => {
                       type="number"
                       className="vs-input"
                       step={0.1}
+                      appearance="none"
+                      margin={0}
                       onChange={handleCHange}
                     />
                   </div>
