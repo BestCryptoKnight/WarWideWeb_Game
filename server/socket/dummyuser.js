@@ -13,15 +13,13 @@ function join_User(id, username, room) {
     isRoom
       ? isUser
         ? (c_users[
-            c_users.findIndex((p_user) => p_user.username === username)
-          ].id = id)
+          c_users.findIndex((p_user) => p_user.username === username)
+        ].id = id)
         : c_users.push(p_userNew)
       : c_users.push(p_userNew);
-
-    console.log(c_users, "-------c_users");
     return c_users.find((p_user) => p_user.username === p_userNew.username);
   } catch (error) {
-    console.log(error);
+
   }
 }
 
@@ -30,7 +28,7 @@ function broadcastToRoomUsers(room) {
     const room_users = c_users.filter((user) => user.room === room);
     return room_users;
   } catch (error) {
-    console.log(error);
+
   }
 }
 
@@ -39,7 +37,7 @@ function get_Current_User(id) {
   try {
     return c_users.find((p_user) => p_user.id === id);
   } catch (error) {
-    console.log(error);
+
   }
 }
 
@@ -52,12 +50,12 @@ function user_Disconnect(id) {
       return c_users.splice(index, 1)[0];
     }
   } catch (error) {
-    console.log(error);
+
   }
 }
 
 function setWinner(bidValueArray, price) {
-  try{
+  try {
     let winner = {};
     if (bidValueArray[0].value == "") {
       return bidValueArray[1];
@@ -66,13 +64,13 @@ function setWinner(bidValueArray, price) {
     } else {
       winner =
         Math.abs(bidValueArray[0].value - price) >
-        Math.abs(bidValueArray[1].value - price)
+          Math.abs(bidValueArray[1].value - price)
           ? bidValueArray[1]
           : bidValueArray[0];
     }
     return winner;
-  }catch(error){
-    console.log(error);
+  } catch (error) {
+
   }
 
 }

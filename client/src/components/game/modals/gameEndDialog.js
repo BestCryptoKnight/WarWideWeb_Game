@@ -43,7 +43,7 @@ export default function AlertDialogSlide(datas) {
     return () => {
       dispatch({ type: SET_WINNER, payload: false });
     };
-  }, []);
+  }, [dispatch]);
 
   return (
     <div>
@@ -66,7 +66,7 @@ export default function AlertDialogSlide(datas) {
           <div className="modal-header-text">
             {isSame
               ? "Draw"
-              : username == winner
+              : username === winner
                 ? "Congratulations! You win"
                 : " You Lost"}
           </div>
