@@ -28,7 +28,6 @@
   }
 }
 
-
 .gameboard-laptop {
   background-image: url("../assets/img/background.jpg");
   background-position: center;
@@ -182,6 +181,11 @@
 
 .vs-input {
   background-color: #712450 !important;
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
 }
 
 .vs-bid-value {
