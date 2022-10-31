@@ -1,6 +1,6 @@
 // api url (where your server is hosted at)
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://192.168.116.216:8080'
-const GAME_ADDRESS = '0x02AAC4407e220Ef6B9289521BC85676aC61Dbc77';
+const GAME_ADDRESS = '0xf1d82e397A4A5b820712f9116E892D0455692ea3';
 const FEE = 3;
 
 const HEADER = () => (
