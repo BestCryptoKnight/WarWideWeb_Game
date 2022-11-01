@@ -51,7 +51,7 @@ var httpsServer = https.createServer(credentials, app);
 httpsServer.listen(PORT, console.log("https: Server has started at port " + PORT));
 
 
-const server = require("socket.io")(http,
+const server = require("socket.io")(httpsServer,
   {
     cors: {
       origin: "*",
