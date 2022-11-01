@@ -7,6 +7,7 @@
     /* Center the image */
     background-repeat: no-repeat;
     background-size: 100% 100%;
+    padding: 0 20px 30px;
 }
 
 .homepage-container {
@@ -82,11 +83,22 @@
     opacity: 0.8;
 }
 
-@media (max-width:900px) {
+
+@media (max-width:899px) {
     .homepage-container {
         background-image: url('../assets/img/mobile.png');
-        background-size: 100% 80%;
+        background-size: 60%;
         padding-top: 65vh;
+        background-position: center;
+    }
+}
+
+@media (max-width:599px) {
+    .homepage-container {
+        background-image: url('../assets/img/mobile.png');
+        background-size: contain;
+        padding-top: 65vh;
+        background-position: center;
     }
 
     .row-justify-center {
