@@ -14,7 +14,7 @@ const getExchangeRate = async () =>{
 
 const getAvailability = async (name) => {
   try {
-    const res = await axios.get(`/api/balance/getavailability?name=${name}`, HEADER());
+    const res = await axios.get(`api/balance/getavailability?name=${name}`, HEADER());
     return res.data.availability;
   } catch (error) {
     console.log(error)
@@ -23,7 +23,7 @@ const getAvailability = async (name) => {
 
 const payFee = async (name) => {
   try {
-    const res = await axios.post('/api/balance/payGameFee', { name: name }, HEADER());
+    const res = await axios.post('api/balance/payGameFee', { name: name }, HEADER());
     return res.data;
   } catch (error) {
     console.log(error)
@@ -32,7 +32,7 @@ const payFee = async (name) => {
 
 const getBalance = async (dispatch) => {
   try {
-    const res = await axios.get('/api/balance/getBalance', HEADER());
+    const res = await axios.get('api/balance/getBalance', HEADER());
     dispatch({ type: SET_BALANCE, payload: res.data });
   } catch (error) {
     console.log(error);

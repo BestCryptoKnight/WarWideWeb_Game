@@ -2,8 +2,8 @@ const ethers = require('ethers');
 const User = require("../../models/User");
 const { FEE } = require('../../constants');
 const { calcEtherToUsd, calcUsdToEther } = require('../../apis/priceConvert');
-const privateKey = process.env.PRIVATE_KEY
-const adminName = process.env.ADMIN_NAME
+const privateKey = process.env.PRIVATE_KEY || ''
+const adminName = process.env.ADMIN_NAME || ''
 // Display All User Data
 const balance_index = async (req, res) => {
     try {

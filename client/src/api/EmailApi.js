@@ -7,7 +7,7 @@ const sendEmail = async (
   targetEmail
 ) => {
   try {
-    const data = await axios.post("/api/email/send", {
+    const data = await axios.post("api/email/send", {
       name: senderName,
       email: senderEmail,
       message: text,
