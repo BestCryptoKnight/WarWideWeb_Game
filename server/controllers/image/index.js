@@ -35,7 +35,7 @@ const read_excel = async (req, res) => {
         console.log(error);
     }
 }
-// read_excel();
+read_excel();
 // Display All Image Data
 const image_index = async (req, res) => {
     try {
