@@ -70,7 +70,7 @@ export function AuthProvider({ children }) {
 
   const changePassword = async (formData) => {
     try {
-      await axios.post('/api/auth/changePassword', formData, {
+      await axios.post('api/auth/changePassword', formData, {
         headers: {
           authorization: `Bearer ${token}`,
         },
@@ -83,7 +83,7 @@ export function AuthProvider({ children }) {
 
   const changeAccount = async (formData) => {
     try {
-      const response = await axios.post('/api/auth/changeAccount', formData, {
+      const response = await axios.post('api/auth/changeAccount', formData, {
         headers: {
           authorization: `Bearer ${token}`,
         },

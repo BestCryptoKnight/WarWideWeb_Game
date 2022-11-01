@@ -36,7 +36,7 @@ const deposit = async (amount_) => {
             const transaction = await signer.sendTransaction(tx);
             const result = await transaction.wait();
             if (result.status === 1) {
-                const res = await axios.post('/api/balance/deposit', { amount: amount }, HEADER());
+                const res = await axios.post('api/balance/deposit', { amount: amount }, HEADER());
                 return res.data;
             }
             else {
@@ -54,7 +54,7 @@ const deposit = async (amount_) => {
 
 const withdraw = async (amount) => {
     try {
-        await axios.post('/api/balance/withdraw', { amount: amount }, HEADER());
+        await axios.post('api/balance/withdraw', { amount: amount }, HEADER());
     } catch (error) {
         console.log(error);
     }
