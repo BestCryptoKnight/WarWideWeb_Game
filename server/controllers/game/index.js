@@ -20,7 +20,7 @@ function randomIntFromInterval(min, max) {
 
 async function loadData() {
     try {
-        const randomNumber = randomIntFromInterval(1, 99);
+        const randomNumber = randomIntFromInterval(1, 1000);
         const item = await Image.findOne({ ID: randomNumber });
         const data = {
             url: item.Url,

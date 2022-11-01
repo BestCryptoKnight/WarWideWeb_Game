@@ -5,14 +5,13 @@ const fs = require('fs');
 const read_excel = async (req, res) => {
     //    Image.remove();
     try {
-        readExcel(fs.createReadStream('E:/upwork/datas.xlsx'))
+        readExcel(fs.createReadStream('./controllers/image/datas.xlsx'))
             .then((rows) => {
                 let sRow = 0;
                 let eRow = 0;
                 let eCol = 0;
                 eCol = rows[0].length;
                 eRow = rows.length;
-                console.log(eCol, eRow);
 
                 let colData = [];
                 //Create insertion object to send to insertMany API of mongoose
@@ -36,7 +35,7 @@ const read_excel = async (req, res) => {
         console.log(error);
     }
 }
-//  read_excel();
+// read_excel();
 // Display All Image Data
 const image_index = async (req, res) => {
     try {

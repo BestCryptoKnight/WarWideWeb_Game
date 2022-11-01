@@ -2,6 +2,10 @@ require("dotenv").config(); // Secures variables
 const app = require("./utils/app"); // Backend App (server)
 const mongo = require("./utils/mongo"); // MongoDB (database)
 const { gameEnd } = require("./controllers/balance");
+const express = require('express');
+
+const fs = require('fs');
+const path = require('path');
 
 const {
   get_Current_User,
@@ -21,6 +25,15 @@ mongo.connect();
 
 app.use("/api", Routes);
 app.use(cors());
+
+//-------------
+app.use(express.static(path.join(__dirname, 'build/')));
+app.set('build', path.join(__dirname, 'build'))
+app.set('view engine', 'html');
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'build/index.html'));
+});
+//-------------
 
 var http = require("http").createServer(app);
 
