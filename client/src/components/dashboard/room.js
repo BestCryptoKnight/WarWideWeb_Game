@@ -50,7 +50,7 @@ const Room = (props) => {
         <div className="image-box">
           <div className={props.roomImg} />
         </div>
-        <div className="invest-text">Invest Amount</div>
+        <div className="invest-text">Game Room</div>
         <div className="text-price">${props.value}</div>
         <div className="play-button" onClick={handleClick}>
           Play Now

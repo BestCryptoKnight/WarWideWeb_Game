@@ -1,7 +1,8 @@
 import React from 'react';
 import '../../styles/rules.css';
-import { useNavigate } from 'react-router';
+import { useNavigate} from 'react-router';
 const Rule = () => {
+
     const navigate = useNavigate();
     return (
         <>
@@ -17,7 +18,10 @@ const Rule = () => {
                                     </div>
                                     <p>We never take a percentage of wins or losses, just a $3 in ETH initial fee to play. Never play against us or bots. What you win is what you keep!</p>
                                 </div>
-                                <a className="cmn--btn active mt-sm-5 mt-4" onClick={() => navigate('/signup')}>Get Started</a>
+                                <a className="cmn--btn active mt-sm-5 mt-4" onClick={() => navigate('/signup')} style={{width:'170px'}}>Get Started</a>
+                                <span style={{width:"30px"}}></span>
+                                <a className="cmn--btn active mt-sm-5 mt-4" onClick={() => navigate(-1)} style={{width:'170px'}}>BACK</a>
+
                             </div>
                             <div className="col-lg-6">
                                 <div className="aobut-thumb section-thumb">

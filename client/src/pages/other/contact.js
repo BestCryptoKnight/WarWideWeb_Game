@@ -61,22 +61,7 @@ const Contact = () => {
                                     free to drop us a message and we will be happy to get back to
                                     you.
                                 </p>
-                                <ul className="contact-info-list m-0">
-                                    <li>
-                                        <a href="mailto:warwideweb@gmail.com">
-                                            {" "}
-                                            <i className="fa fa-envelope"></i>{" "}
-                                            <span>warwideweb@gmail.com</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="mailto:happyhades123@gmail.com">
-                                            {" "}
-                                            <i className="fa fa-envelope"></i>{" "}
-                                            <span>happyhades123@gmail.com</span>
-                                        </a>
-                                    </li>
-                                </ul>
+                                
                             </div>
                         </div>
                         <div className="col-lg-7">

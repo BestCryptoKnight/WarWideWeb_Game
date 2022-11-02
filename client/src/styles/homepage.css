@@ -14,7 +14,7 @@
     background-image: url('../assets/img/homepage.png');
     background-position: center;
     background-repeat: no-repeat;
-    background-size: 80% 80%;
+    background-size: 900px 537px;
     padding-top: 80vh;
 }
 
@@ -30,7 +30,7 @@
     background-image: url('../assets/img/rules.png');
     background-size: 100% 100%;
     background-repeat: no-repeat;
-    width: 250px;
+    width: 240px;
     height: 50px;
     cursor: pointer;
 }
@@ -46,7 +46,7 @@
     background-size: 100% 100%;
     background-repeat: no-repeat;
     width: 320px;
-    height: 170px;
+    height: 138px;
     cursor: pointer;
 }
 
