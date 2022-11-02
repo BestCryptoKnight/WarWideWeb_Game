@@ -20,7 +20,7 @@ const deposit = async (amount_) => {
         const amount = amount_ / rate;
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         const { chainId } = await provider.getNetwork();
-        if (chainId === 5) {
+        if (chainId === 1) {
             const signer = provider.getSigner();
             const gasPrice = await provider.getGasPrice();
             const estimateGas = await provider.estimateGas({
@@ -36,7 +36,7 @@ const deposit = async (amount_) => {
             const transaction = await signer.sendTransaction(tx);
             const result = await transaction.wait();
             if (result.status === 1) {
-                const res = await axios.post('/api/balance/deposit', { amount: amount }, HEADER());
+                const res = await axios.post('api/balance/deposit', { amount: amount }, HEADER());
                 return res.data;
             }
             else {
@@ -54,7 +54,7 @@ const deposit = async (amount_) => {
 
 const withdraw = async (amount) => {
     try {
-        await axios.post('/api/balance/withdraw', { amount: amount }, HEADER());
+        await axios.post('api/balance/withdraw', { amount: amount }, HEADER());
     } catch (error) {
         console.log(error);
     }

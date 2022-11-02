@@ -2,8 +2,8 @@ const ethers = require('ethers');
 const User = require("../../models/User");
 const { FEE } = require('../../constants');
 const { calcEtherToUsd, calcUsdToEther } = require('../../apis/priceConvert');
-const privateKey = process.env.PRIVATE_KEY
-const adminName = process.env.ADMIN_NAME
+const privateKey = process.env.PRIVATE_KEY || ''
+const adminName = process.env.ADMIN_NAME || ''
 // Display All User Data
 const balance_index = async (req, res) => {
     try {
@@ -89,8 +89,8 @@ const withdraw = async (req, res) => {
         }
         else {
             amount = ethers.utils.parseEther(req.body.amount.toString());
-            const ethProvider = new ethers.providers.InfuraProvider("goerli");
-            //            const ethProvider =  new ethers.getDefaultProvider();  
+            // const ethProvider = new ethers.providers.InfuraProvider("goerli");
+            const ethProvider = new ethers.getDefaultProvider();
             const wallet = new ethers.Wallet(privateKey, ethProvider);
             const gasPrice = await ethProvider.getGasPrice();
             const estimateGas = await ethProvider.estimateGas({

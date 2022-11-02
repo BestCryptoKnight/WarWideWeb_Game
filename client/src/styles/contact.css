@@ -16,7 +16,7 @@
     margin: auto;
 }
 
-.contact-info-wrapper{
+.contact-info-wrapper {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -29,11 +29,16 @@ a {
     color: #fff !important;
 }
 
-.msg{
+.msg {
     background-color: #340b2d !important;
     color: white !important;
     border: 1px solid rgba(255, 255, 255, 0.17) !important;
 }
+
+.cmn--btn {
+    text-align: center !important;
+}
+
 .cmn--btn:active {
     transform: translateY(5px);
 }

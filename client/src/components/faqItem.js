@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { AiOutlineDown } from "react-icons/ai";
 const FaqItem = (props) => {
   const [flag, setFlag] = useState(false);
   const handleClick = () => {
@@ -21,6 +21,7 @@ const FaqItem = (props) => {
     <div className="faq-item" onClick={handleClick}>
       <div className="faq-item__title">
         <h5 className="title">{props.title}</h5>
+        <AiOutlineDown className="faq-item__title-icon" />
       </div>
       {flag ? (
         <div className="faq-item__content" id={props.id}>
