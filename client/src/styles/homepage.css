@@ -8,15 +8,14 @@
     background-repeat: no-repeat;
     background-size: 100% 100%;
     padding: 0 20px 30px;
-    padding-top: 50px;
 }
 
 .homepage-container {
     background-image: url('../assets/img/homepage.png');
     background-position: center;
     background-repeat: no-repeat;
-    background-size: 1097px 737px;
-    padding-top: 71vh;
+    background-size: 1200px 837px;
+    padding-top: 78vh;
 }
 
 .row-justify-center {
@@ -24,15 +23,15 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    gap: 30px;
+    gap: 50px;
 }
 
 .rules {
     background-image: url('../assets/img/rules.png');
     background-size: 100% 100%;
     background-repeat: no-repeat;
-    width: 200px;
-    height: 70px;
+    width: 220px;
+    height: 80px;
     cursor: pointer;
 }
 
@@ -46,7 +45,7 @@
     background-image: url('../assets/img/play_now.png');
     background-size: 100% 100%;
     background-repeat: no-repeat;
-    width: 420px;
+    width: 390px;
     height: 178px;
     cursor: pointer;
 }
@@ -61,8 +60,8 @@
     background-image: url('../assets/img/how_to_play.png');
     background-size: 100% 100%;
     background-repeat: no-repeat;
-    width: 260px;
-    height: 70px;
+    width: 300px;
+    height: 80px;
     cursor: pointer;
 }
 
@@ -98,7 +97,8 @@
     .homepage-container {
         background-image: url('../assets/img/mobile.png');
         background-size: contain;
-        padding-top: 65vh;
+        margin-top: -20vh;
+        padding-top: 75vh;
         background-position: center;
     }
 
