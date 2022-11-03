@@ -8,14 +8,15 @@
     background-repeat: no-repeat;
     background-size: 100% 100%;
     padding: 0 20px 30px;
+    padding-top: 50px;
 }
 
 .homepage-container {
     background-image: url('../assets/img/homepage.png');
     background-position: center;
     background-repeat: no-repeat;
-    background-size: 900px 537px;
-    padding-top: 80vh;
+    background-size: 1097px 737px;
+    padding-top: 71vh;
 }
 
 .row-justify-center {
@@ -23,15 +24,15 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    gap: 50px;
+    gap: 30px;
 }
 
 .rules {
     background-image: url('../assets/img/rules.png');
     background-size: 100% 100%;
     background-repeat: no-repeat;
-    width: 240px;
-    height: 50px;
+    width: 200px;
+    height: 70px;
     cursor: pointer;
 }
 
@@ -45,8 +46,8 @@
     background-image: url('../assets/img/play_now.png');
     background-size: 100% 100%;
     background-repeat: no-repeat;
-    width: 320px;
-    height: 138px;
+    width: 420px;
+    height: 178px;
     cursor: pointer;
 }
 
@@ -60,8 +61,8 @@
     background-image: url('../assets/img/how_to_play.png');
     background-size: 100% 100%;
     background-repeat: no-repeat;
-    width: 300px;
-    height: 60px;
+    width: 260px;
+    height: 70px;
     cursor: pointer;
 }
 
