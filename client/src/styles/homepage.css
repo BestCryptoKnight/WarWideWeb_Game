@@ -1,112 +1,123 @@
 .homepage {
-    background-image: url('../assets/img/background.jpg');
-    /* Used if the image is unavailable */
-    min-height: 100vh;
-    /* You must set a specified height */
-    background-position: center;
-    /* Center the image */
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    padding: 0 20px 30px;
+  background-image: url("../assets/img/background.jpg");
+  /* Used if the image is unavailable */
+  min-height: 100vh;
+  /* You must set a specified height */
+  background-position: center;
+  /* Center the image */
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  padding: 0 20px 30px;
 }
 
 .homepage-container {
-    background-image: url('../assets/img/homepage.png');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: 1200px 837px;
-    padding-top: 78vh;
+  background-image: url("../assets/img/homepage.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 1200px 837px;
+  padding-top: 78vh;
 }
 
 .row-justify-center {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
 }
 
 .rules {
-    background-image: url('../assets/img/rules.png');
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
-    width: 220px;
-    height: 80px;
-    cursor: pointer;
+  background-image: url("../assets/img/rules.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  width: 220px;
+  height: 80px;
+  cursor: pointer;
 }
 
 .rules:active {
-    box-shadow: 7px 6px 28px 1px rgba(231, 255, 19, 0.24);
-    transform: translateY(5px);
-    /* Moving button 4px to y-axis */
+  box-shadow: 7px 6px 28px 1px rgba(231, 255, 19, 0.24);
+  transform: translateY(5px);
+  /* Moving button 4px to y-axis */
 }
 
 .play-now {
-    background-image: url('../assets/img/play_now.png');
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
-    width: 390px;
-    height: 178px;
-    cursor: pointer;
+  background-image: url("../assets/img/play_now.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  width: 390px;
+  height: 178px;
+  cursor: pointer;
 }
 
 .play-now:active {
-    box-shadow: 7px 6px 28px 1px rgba(0, 0, 0, 0.24);
-    transform: translateY(5px);
-    /* Moving button 4px to y-axis */
+  box-shadow: 7px 6px 28px 1px rgba(0, 0, 0, 0.24);
+  transform: translateY(5px);
+  /* Moving button 4px to y-axis */
 }
 
 .how-to-play {
-    background-image: url('../assets/img/how_to_play.png');
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
-    width: 300px;
-    height: 80px;
-    cursor: pointer;
+  background-image: url("../assets/img/how_to_play.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  width: 300px;
+  height: 80px;
+  cursor: pointer;
 }
 
 .how-to-play:active {
-    box-shadow: 7px 6px 28px 1px rgba(0, 0, 0, 0.24);
-    transform: translateY(5px);
-    /* Moving button 4px to y-axis */
+  box-shadow: 7px 6px 28px 1px rgba(0, 0, 0, 0.24);
+  transform: translateY(5px);
+  /* Moving button 4px to y-axis */
 }
 
 .how-to-play:hover {
-    opacity: 0.8;
+  opacity: 0.8;
 }
 
 .play-now:hover {
-    opacity: 0.8;
+  opacity: 0.8;
 }
 
 .rules:hover {
-    opacity: 0.8;
+  opacity: 0.8;
 }
 
-
-@media (max-width:899px) {
-    .homepage-container {
-        background-image: url('../assets/img/mobile.png');
-        background-size: 60%;
-        padding-top: 65vh;
-        background-position: center;
-    }
+@media (max-width: 899px) {
+  .homepage-container {
+    background-image: url("../assets/img/mobile.png");
+    background-size: 60%;
+    padding-top: 65vh;
+    background-position: center;
+  }
 }
 
-@media (max-width:599px) {
-    .homepage-container {
-        background-image: url('../assets/img/mobile.png');
-        background-size: contain;
-        margin-top: -20vh;
-        padding-top: 75vh;
-        background-position: center;
-    }
+@media (max-width: 599px) {
+  .homepage-container {
+    background-image: url("../assets/img/mobile.png");
+    background-size: contain;
+    margin-top: -20vh;
+    padding-top: 75vh;
+    background-position: center;
+  }
 
-    .row-justify-center {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 0px;
-    }
+  .row-justify-center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0px;
+  }
+  .rules {
+    width: 200px;
+    height: 60px;
+  }
+  .how-to-play{
+    width: 330px;
+    height: 60px;
+  }
+  .play-now{
+    width: 340px;
+    height: 160px;
+  }
 }
