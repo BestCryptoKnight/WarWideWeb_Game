@@ -4,9 +4,9 @@ const mongo = require("./utils/mongo"); // MongoDB (database)
 const { gameEnd } = require("./controllers/balance");
 const express = require('express');
 
-const fs = require('fs');
+// const fs = require('fs');
 const path = require('path');
-const https = require('https');
+// const https = require('https');
 
 const {
   get_Current_User,
@@ -28,30 +28,30 @@ app.use("/api", Routes);
 app.use(cors());
 
 //-------------
-app.use(express.static(path.join(__dirname, 'build/')));
-app.set('build', path.join(__dirname, 'build'))
-app.set('view engine', 'html');
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'build/index.html'));
-});
-var privateKey = fs.readFileSync('../../certs/war.key', 'utf8');
-var certificate = fs.readFileSync('../../certs/war.crt', 'utf8');
-var credentials = { key: privateKey, cert: certificate };
+// app.use(express.static(path.join(__dirname, 'build/')));
+// app.set('build', path.join(__dirname, 'build'))
+// app.set('view engine', 'html');
+// app.get('*', (req, res) => {
+//     res.sendFile(path.join(__dirname, 'build/index.html'));
+// });
+// var privateKey = fs.readFileSync('../../certs/war.key', 'utf8');
+// var certificate = fs.readFileSync('../../certs/war.crt', 'utf8');
+// var credentials = { key: privateKey, cert: certificate };
 
 //-------------
 
 
 
-// var http = require("http").createServer(app);
-// let io = http.listen(PORT, () => {
-//   console.log(`✅ Server is listening on port: ${PORT}`);
-// });
+var http = require("http").createServer(app);
+let io = http.listen(PORT, () => {
+  console.log(`✅ Server is listening on port: ${PORT}`);
+});
 
-var httpsServer = https.createServer(credentials, app);
-httpsServer.listen(PORT, console.log("https: Server has started at port " + PORT));
+// var httpsServer = https.createServer(credentials, app);
+// httpsServer.listen(PORT, console.log("https: Server has started at port " + PORT));
 
 
-const server = require("socket.io")(httpsServer,
+const server = require("socket.io")(http,
   {
     cors: {
       origin: "*",

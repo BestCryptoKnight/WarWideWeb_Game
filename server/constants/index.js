@@ -1,6 +1,6 @@
 const ORIGIN = '*'
 const BASECLIENTURL = "http://localhost"
-const PORT = process.env.PORT || 443
+const PORT = process.env.PORT || 8080
 const ETHERPRICE = 1500;
 const PRICE1 = 0.50
 const PRICE2 = 1
